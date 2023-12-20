@@ -67,7 +67,7 @@
         
         | ID | USERNAME | EMAIL | NAME | PASSWORD | IS_DELETED | ROLE |
         | --- | --- | --- | --- | --- | --- | --- |
-    - PERMISSIONS_TABLE
+    - PERMISSIONS_TABLE (chua hoan thanh)
         
         
         | ROLE |  |  |  |
