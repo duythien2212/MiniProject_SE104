@@ -77,3 +77,5 @@
         
         | SCORE_ID | QUIZ_ID | STUDENT_ID | TRY | SCORE | IS_DELETED |
         | --- | --- | --- | --- | --- | --- |
+
+- Diagram: [click here](https://app.diagrams.net/?fbclid=IwAR1__82EQtcC_tp1GHFlCW6RWqUxmZ4HiMoM5QVG0g_zWusMboViByCH2Yo#Hduythien2212%2FMiniProject_SE104%2Fmain%2FUntitled%20Diagram.drawio)
