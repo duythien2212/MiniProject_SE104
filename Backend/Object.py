@@ -1,4 +1,5 @@
 import random
+import mysql.connector
 
 class Class:
     def __init__(self, classID, className, teacherID, isDeleted):
@@ -12,9 +13,10 @@ class Class:
     
 
 class Quiz:
-    def __init__(self, quizID, classID, startTime, endTime, length, weight, isDeleted, listQuestion):
+    def __init__(self, quizID, classID, quizName, startTime, endTime, length, weight, isDeleted, listQuestion=""):
         self.quizID = quizID
         self.classID = classID
+        self.quizName = quizName
         self.startTime = startTime
         self.endTime = endTime
         self.length = length
@@ -49,7 +51,7 @@ class Quiz:
     def setLenght(self, length):
         self.length = length
     
-    def getLenght(self, length):
+    def getLenght(self):
         return self.length
     
 class Question:
@@ -74,7 +76,7 @@ class Question:
 
 
 class USER:
-    def __init__(self, ID, userName, password, email, name, classes, isDeleted, isTeacher):
+    def __init__(self, ID, userName, email, name, password, isTeacher, isDeleted, classes=""):
         self.ID = ID
         self.userName = userName
         self.password = password
@@ -87,20 +89,18 @@ class USER:
     def getPassword(self):
         return self.password
     
-    def changePassword(self, newPassword):
-        self.password = newPassword
+    def changePassword(self, oldPassword, newPassword):
+        if oldPassword == self.password:
+            self.password = newPassword
+            return True
+        else:
+            return False
     
     def getID(self):
         return self.ID
     
     def getUserName(self):
         return self.userName
-    
-    def login(self):
-        pass
-
-    def logout(self):
-        pass
 
     def attemptQuizz(self):
         pass
@@ -108,18 +108,15 @@ class USER:
     def getScoreBoard(self):
         pass
 
-    def getPermission(self):
-        pass
-
 class Teacher(USER):
     def getScoreBoard(self):
         pass
     
-    def addQuiz(self):
+    def addQuiz(self, quiz):
         pass
 
-    def deleteQuiz(self):
-        pass
+    def deleteQuiz(self, quiz):
+        quiz.isDeleted = 1
     
     def deleteQuestion(self):
         pass
