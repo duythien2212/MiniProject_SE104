@@ -7,8 +7,15 @@
   - 22520969 - Lê Bình Nguyên
 - Mã nguồn: https://github.com/duythien2212/MiniProject_SE104/
 ## 1. Tổng quan:
-- Khảo sát hiện trạng:
+- Khảo sát hiện trạng: Hiện nay, do công nghệ đã phát triển nên cũng đã ra đời rất nhiều phương pháp học tập khác nhau, trong đó việc học trực tuyến ngày càng phát triển. Nhưng hiện tại các phần mềm quản lý các bài kiểm tra trực tuyến vẫn chưa được sử dụng rộng rãi trong các lớp học. Vì vậy, nhóm em đã quyết định viết một phần mềm để quản lý các bài kiểm tra trực tuyến đó với mong muốn giúp thầy cô và các bạn có thể học trực tuyến hiệu quả hơn.
 - Yêu cầu hệ thống:
+	- Hệ thống phải có các chức năng đăng nhập, đăng ký để quản lý các tài khoản.
+ - Giáo viên có thể tạo các lớp học và quyết định xem các học sinh nào sẽ học lớp đó.
+ - Giáo viên có thể tạo ra các bài kiểm tra với mỗi lớp học
+ - Giáo viên có thể xuất kết quả của các bài kiểm tra
+ - Giáo viên có thể gửi các thông báo đến cho các lớp học
+ - Học sinh có thể làm kiểm tra và xem kết quả của các bài kiểm tra đó
+   
 ## 2. Quy trình, kế hoạch, hệ thống
 - Quy trình Agile:
   - ![image](https://github.com/duythien2212/MiniProject_SE104/assets/112065049/1ef39b02-88e8-4835-8fe5-f0d3da270cf0)
