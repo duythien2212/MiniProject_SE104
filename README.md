@@ -14,13 +14,13 @@
   - ![image](https://github.com/duythien2212/MiniProject_SE104/assets/112065049/1ef39b02-88e8-4835-8fe5-f0d3da270cf0)
   - Trong quy trình Agile: quy trình lấy yêu cầu, thiết kế, triển khai và kiểm tra được thực hiện xen kẽ nhau và đầu ra của quá trình phát triển phần mềm được quyết định thông qua quá trình đàm phán trong suốt quá trình phát triển phần mềm.
 - Kế hoạch:
-  - Tìm các chức năng cơ bản mà phần mềm cần có.
-  - Thiết kế giao diện và cơ sở dữ liệu cho phần mềm
-  - Phát triển các tính năng cơ bản của phần mềm
-  - Kiểm tra và sửa lỗi
-  - Tìm thêm các chức năng khác để nâng cấp phần mềm
-  - Phát triển phần mềm dựa trên các tính năng đó
-  - Kiểm tra và sửa lỗi
+  - Tìm các chức năng cơ bản mà phần mềm cần có. (Ngày 18/12/2023 - 20/12/2023)
+  - Thiết kế giao diện và cơ sở dữ liệu cho phần mềm (Ngày 20/12/2023 - 21/12/2023)
+  - Phát triển các tính năng cơ bản của phần mềm (Ngày 21/12/2023 - 28/12/2023)
+  - Kiểm tra và sửa lỗi (Ngày 28/12/2023 - 29/12/2023)
+  - Tìm thêm các chức năng khác để nâng cấp phần mềm (Ngày 29/12/2023 - 30/12/2023)
+  - Phát triển phần mềm dựa trên các tính năng đó (Ngày 30/12/2023 - 3/1/2024)
+  - Kiểm tra và sửa lỗi (Ngày 3/1/2024 - 4/1/2024)
 - Công cụ:
   - Database: MySQL
   - Backend: Python
