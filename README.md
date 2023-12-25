@@ -153,5 +153,6 @@ NOTIFICATION
 | DATE | datetime | not null | Thời gian gửi thông báo |
 | IS_DELETED | tinyint | not null, 0 hoặc 1 | 0: chưa xóa, 1: đã xóa |
 
-.
-
+## 4. Thiết kế giao diện
+## 5. Thiết kế kiến trúc
+## 6. Kết quả
