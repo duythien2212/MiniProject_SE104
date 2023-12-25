@@ -77,6 +77,13 @@
         
         | SCORE_ID | QUIZ_ID | STUDENT_ID | TRY | SCORE | IS_DELETED |
         | --- | --- | --- | --- | --- | --- |
+    - NOTIFICATION
+    
+    
+        | NOTIFY_ID | TITLE | CONTENT | CLASS_ID | DATE | IS_DELETED |
+        | --- | --- | --- | --- | --- | --- |
 
+
+- Trang 19 để coi chart
 - Diagram: [click here](https://app.diagrams.net/?fbclid=IwAR1__82EQtcC_tp1GHFlCW6RWqUxmZ4HiMoM5QVG0g_zWusMboViByCH2Yo#Hduythien2212%2FMiniProject_SE104%2Fmain%2FUntitled%20Diagram.drawio)
 - [Slide](https://www.canva.com/design/DAF3x4Mfkew/bDBT3Vo74yZKO5kxbC1n_w/edit?utm_content=DAF3x4Mfkew&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
