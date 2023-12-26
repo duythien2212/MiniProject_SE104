@@ -9,18 +9,23 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height / 8;
     final width = MediaQuery.of(context).size.width / 3;
+    // print("height: ${MediaQuery.of(context).size.height}");
     return Container(
       color: AppThemes.mainScreenBackroundColor,
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const SizedBox(height: 20),
-            ...notificates.map((item) {
-              return notificationField(item, height, width);
-            }),
-          ],
+        child: Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height - 80.0,
+            child: ListView(
+              children: [
+                const SizedBox(height: 20),
+                ...notificates.map((item) {
+                  return notificationField(item, height, width);
+                }),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -49,7 +54,7 @@ Widget notificationField(Notificate notification, double height, double width) {
         Center(
             child: Text(
           notification.message,
-          style: TextStyle(color: AppThemes.buttonColor, fontSize: height / 8),
+          style: TextStyle(color: AppThemes.buttonColor, fontSize: height / 6),
         )),
         const Spacer(),
         Container(
