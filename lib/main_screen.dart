@@ -69,15 +69,18 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                if (_selectedIndex == 0)
-                  NotificationPage(notificates: _notification),
-                if (_selectedIndex == 1) curentQuizPage(),
-                if (_selectedIndex == 2) quizListPage(),
-                if (_selectedIndex == 3) const ProfilePage(),
-                if (_selectedIndex == 4) settingPage(),
-              ],
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 200,
+              child: Column(
+                children: [
+                  if (_selectedIndex == 0)
+                    NotificationPage(notificates: _notification),
+                  if (_selectedIndex == 1) curentQuizPage(),
+                  if (_selectedIndex == 2) quizListPage(),
+                  if (_selectedIndex == 3) const ProfilePage(),
+                  if (_selectedIndex == 4) settingPage(),
+                ],
+              ),
             ),
           ],
         ),
