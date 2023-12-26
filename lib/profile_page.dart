@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/utils/app_styles.dart';
 
-Widget profilePage(double screenWidth, double screenHeight) {
-  return Container(
-    color: AppThemes.mainScreenBackroundColor,
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          avatar(screenWidth),
-          SizedBox(height: screenHeight / 50),
-          informationField('USER NAME', screenWidth, screenHeight),
-          SizedBox(height: screenHeight / 50),
-          informationField('NAME', screenWidth, screenHeight),
-          SizedBox(height: screenHeight / 50),
-          informationField('CLASS', screenWidth, screenHeight),
-          SizedBox(height: screenHeight / 50),
-          informationField('EMAIL', screenWidth, screenHeight),
-        ],
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      color: AppThemes.mainScreenBackroundColor,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            avatar(screenWidth),
+            SizedBox(height: screenHeight / 50),
+            informationField('USER NAME', screenWidth, screenHeight),
+            SizedBox(height: screenHeight / 50),
+            informationField('NAME', screenWidth, screenHeight),
+            SizedBox(height: screenHeight / 50),
+            informationField('CLASS', screenWidth, screenHeight),
+            SizedBox(height: screenHeight / 50),
+            informationField('EMAIL', screenWidth, screenHeight),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Widget avatar(double screenWidth) {

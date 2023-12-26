@@ -2,22 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:new_project/data/notification.dart';
 import 'package:new_project/utils/app_styles.dart';
 
-Widget notificationPage(List<Notificate> notificates, double height, double width) {
-  return Container(
-    color: AppThemes.mainScreenBackroundColor,
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          const SizedBox(height: 20),
-          ...notificates.map((item) {
-            return notificationField(item, height, width);
-          }),
-        ],
+class NotificationPage extends StatelessWidget {
+  const NotificationPage({required this.notificates, super.key});
+  final List<Notificate> notificates;
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    return Container(
+      color: AppThemes.mainScreenBackroundColor,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            const SizedBox(height: 20),
+            ...notificates.map((item) {
+              return notificationField(item, height, width);
+            }),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Widget notificationField(Notificate notification, double height, double width) {
