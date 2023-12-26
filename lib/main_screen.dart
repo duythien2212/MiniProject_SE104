@@ -14,8 +14,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final List<Notificate> _notification = [];
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   void switchScreen(index) {
     setState(() {
@@ -74,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
               child: Column(
                 children: [
                   if (_selectedIndex == 0)
-                    NotificationPage(notificates: _notification),
+                    NotificationPage(notificates: notificates),
                   if (_selectedIndex == 1) curentQuizPage(),
                   if (_selectedIndex == 2) quizListPage(),
                   if (_selectedIndex == 3) const ProfilePage(),

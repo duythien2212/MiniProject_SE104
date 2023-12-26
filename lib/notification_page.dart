@@ -7,8 +7,8 @@ class NotificationPage extends StatelessWidget {
   final List<Notificate> notificates;
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height / 8;
+    final width = MediaQuery.of(context).size.width / 3;
     return Container(
       color: AppThemes.mainScreenBackroundColor,
       child: Center(
@@ -49,7 +49,7 @@ Widget notificationField(Notificate notification, double height, double width) {
         Center(
             child: Text(
           notification.message,
-          style: TextStyle(color: AppThemes.buttonColor, fontSize: height / 4),
+          style: TextStyle(color: AppThemes.buttonColor, fontSize: height / 8),
         )),
         const Spacer(),
         Container(
