@@ -32,7 +32,7 @@ class ProfilePage extends StatelessWidget {
 Widget avatar(double screenWidth) {
   return ClipOval(
     child: Image.asset(
-      'assets/images/logo_test.png',
+      'assets/images/avatar.jpg',
       width: screenWidth / 3,
       height: screenWidth / 3,
       fit: BoxFit.cover,
@@ -43,7 +43,7 @@ Widget avatar(double screenWidth) {
 Widget informationField(String text, double screenWidth, double screenHeight) {
   return Container(
     height: screenHeight / 30,
-    width: screenWidth / 1.5,
+    width: screenWidth / 3,
     decoration: BoxDecoration(
       color: AppThemes.navigationRailBackroundColor,
       borderRadius: BorderRadius.circular(screenWidth / 20),
