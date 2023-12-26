@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/notification_page.dart';
 import 'package:new_project/profile_page.dart';
+import 'package:new_project/setting_page.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';
@@ -72,12 +73,11 @@ class _MainScreenState extends State<MainScreen> {
               width: MediaQuery.of(context).size.width - 200,
               child: Column(
                 children: [
-                  if (_selectedIndex == 0)
-                    NotificationPage(notificates: notificates),
+                  if (_selectedIndex == 0) NotificationPage(notificates: notificates),
                   if (_selectedIndex == 1) curentQuizPage(),
                   if (_selectedIndex == 2) quizListPage(),
                   if (_selectedIndex == 3) const ProfilePage(),
-                  if (_selectedIndex == 4) settingPage(),
+                  if (_selectedIndex == 4) const SettingPage(),
                 ],
               ),
             ),
@@ -151,20 +151,6 @@ Widget quizListPage() {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("quizListPage"),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget settingPage() {
-  return Container(
-    color: AppThemes.mainScreenBackroundColor,
-    child: const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("settingPage"),
         ],
       ),
     ),
