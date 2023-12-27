@@ -58,4 +58,51 @@ def register(lastname, firstname, email, username, password, cPassword):
         userInstance = USER(*selected_row)
         return userInstance
 
-user = register("Lê", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123")
+def getInfoAllQuiz():
+    query = f"select quiz_name, end_time from quiz"
+    mycursor.execute(query)
+    selected_row = mycursor.fetchall()
+    if selected_row:
+        return list(*selected_row)
+    else:
+        return []
+
+def createQuiz(classID, nameQuiz, startTime, endTime, length, weight):
+    if weight < 0 or weight > 100:
+        return False
+    quizID = None
+    query = "insert into quiz values (%s, %s, %s, %s, %s, %s, %s, %s)"
+    values = (quizID, classID, nameQuiz, startTime, endTime, length, weight, 0)
+    mycursor.execute(query, values)
+    query = f"select * from quiz where quizID = {quizID}"
+    mycursor.execute(query)
+    row = mycursor.fetchone()
+    return Quiz(*row)
+
+def getClass():
+    query = f"select * from class"
+    mycursor.execute(query)
+    selected_row = mycursor.fetchall()
+    if selected_row:
+        return list(Class(*selected_row))
+    else:
+        return list()
+
+def getInfoQuiz(quizID):
+    query = f"select * from quiz where quiz_id = {quizID}"
+    mycursor.execute(query)
+    selected_row = mycursor.fetchone()
+    if selected_row:
+        return list(Quiz(*selected_row))
+    else:
+        return list()
+
+def getInfoQuestion(questionID):
+    query = f"select quiz_question where question_id = {questionID}"
+    mycursor.execute(query)
+    selected_row = mycursor.fetchone()
+    if selected_row:
+        return list(Question(*selected_row))
+    else:
+        return list()
+#user = register("Lê", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123")
