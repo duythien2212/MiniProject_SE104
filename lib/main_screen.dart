@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_project/notification_page.dart';
 import 'package:new_project/profile_page.dart';
 import 'package:new_project/quizListScreen.dart';
+import 'package:new_project/selectClassScreen.dart';
 import 'package:new_project/setting_page.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
@@ -21,11 +22,28 @@ class _MainScreenState extends State<MainScreen> {
   void switchScreen(index) {
     setState(() {
       _selectedIndex = index;
+      activeScreen = null;
     });
   }
 
+  void setScreen(Widget screen) {
+    setState(() {
+      activeScreen = screen;
+    });
+  }
+
+  Widget? activeScreen;
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> screens = [
+      NotificationPage(notificates: notificates),
+      curentQuizPage(),
+      SelectClassScreen(setScreen: setScreen),
+      ProfilePage(),
+      SettingPage(),
+    ];
+    activeScreen ??= screens[_selectedIndex];
     return Scaffold(
       appBar: MainAppBar(titles: appName),
       body: Expanded(
@@ -72,15 +90,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width - 200,
-              child: Column(
-                children: [
-                  if (_selectedIndex == 0) NotificationPage(notificates: notificates),
-                  if (_selectedIndex == 1) curentQuizPage(),
-                  if (_selectedIndex == 2) const QuizListScreen(),
-                  if (_selectedIndex == 3) const ProfilePage(),
-                  if (_selectedIndex == 4) const SettingPage(),
-                ],
-              ),
+              child: activeScreen,
             ),
           ],
         ),
