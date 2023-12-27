@@ -14,7 +14,7 @@ Widget bigLogo(double screenWidth, double screenHeight) {
 
 Widget avatar(double screenWidth) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 20),
+    padding: const EdgeInsets.symmetric(vertical: 40),
     child: ClipOval(
       child: Image.asset(
         'assets/images/avatar.jpg',
