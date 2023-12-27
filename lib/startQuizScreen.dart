@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/models/quiz.dart';
 
@@ -13,35 +12,114 @@ class StartQuizScreen extends StatefulWidget {
 }
 
 class _StartQuizScreenState extends State<StartQuizScreen> {
-  int _selectedQuestion = 0;
+  List<int>? selectedAnswer;
+  int selectedQuestion = 0;
+
+  void changeQuestion(index) {
+    setState(() {
+      selectedQuestion = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var nQuestion = widget.selectedQuiz.questions.length;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    var currentQuestion = widget.selectedQuiz.questions[_selectedQuestion];
+    var currentQuestion = widget.selectedQuiz.questions[selectedQuestion];
+    selectedAnswer ??= List.filled(nQuestion, -1);
     return Container(
       height: height,
       width: width,
       child: Expanded(
-        child: Column(
-          children: [
-            Text(currentQuestion.question),
-            const SizedBox(height: 30),
-            for (var i = 0; i < currentQuestion.listAnswer.length; i++)
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Container(
-                padding: const EdgeInsets.all(5),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Container(
-                      width: width * 2 / 3,
-                      child: Text(
-                        currentQuestion.listAnswer[i],
-                      )),
+                width: MediaQuery.of(context).size.width - 270,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Question ${selectedQuestion + 1}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(
+                      currentQuestion.question,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      softWrap: true,
+                    ),
+                    const SizedBox(height: 30),
+                    for (var i = 0; i < currentQuestion.listAnswer.length; i++)
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  (i == selectedAnswer![selectedQuestion])
+                                      ? Colors.white30
+                                      : Colors.white),
+                          onPressed: () {
+                            selectedAnswer![selectedQuestion] = i;
+                            if (selectedQuestion + 1 < nQuestion) {
+                              changeQuestion(selectedQuestion + 1);
+                            }
+                          },
+                          child: Container(
+                              width: width * 2 / 3,
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                currentQuestion.listAnswer[i],
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              )),
+                        ),
+                      ),
+                  ],
                 ),
               ),
-          ],
+              Container(
+                width: 170,
+                height: 170,
+                child: SelectQuestion(
+                    nQuestion: nQuestion, changeQuestion: changeQuestion),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class SelectQuestion extends StatelessWidget {
+  const SelectQuestion(
+      {super.key, required this.nQuestion, required this.changeQuestion});
+  final int nQuestion;
+  final void Function(int index) changeQuestion;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView(
+      padding: const EdgeInsets.all(3),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+      ),
+      children: [
+        for (int i = 0; i < nQuestion; i++)
+          TextButton(
+            onPressed: () {
+              changeQuestion(i);
+            },
+            child: Text(
+              (i + 1).toString(),
+              softWrap: false,
+            ),
+          ),
+      ],
     );
   }
 }
