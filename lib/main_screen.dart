@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/notification_page.dart';
 import 'package:new_project/profile_page.dart';
+import 'package:new_project/quizListScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';
@@ -75,7 +76,7 @@ class _MainScreenState extends State<MainScreen> {
                   if (_selectedIndex == 0)
                     NotificationPage(notificates: notificates),
                   if (_selectedIndex == 1) curentQuizPage(),
-                  if (_selectedIndex == 2) quizListPage(),
+                  if (_selectedIndex == 2) const QuizListScreen(),
                   if (_selectedIndex == 3) const ProfilePage(),
                   if (_selectedIndex == 4) settingPage(),
                 ],
