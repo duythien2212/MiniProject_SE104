@@ -33,55 +33,60 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
       width: width,
       child: Expanded(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 50),
-          child: Column(
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: height / 4),
-              Text(
-                'Question ${selectedQuestion + 1}',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    currentQuestion.question,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Container(
-                    width: 170,
-                    height: 170,
-                    child: SelectQuestion(
-                        nQuestion: nQuestion, changeQuestion: changeQuestion),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              for (var i = 0; i < currentQuestion.listAnswer.length; i++)
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            (i == selectedAnswer![selectedQuestion])
-                                ? Colors.white30
-                                : Colors.white),
-                    onPressed: () {
-                      selectedAnswer![selectedQuestion] = i;
-                      if (selectedQuestion + 1 < nQuestion) {
-                        changeQuestion(selectedQuestion + 1);
-                      }
-                    },
-                    child: Container(
-                        width: width * 2 / 3,
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          currentQuestion.listAnswer[i],
-                        )),
-                  ),
+              Container(
+                width: MediaQuery.of(context).size.width - 270,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Question ${selectedQuestion + 1}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(
+                      currentQuestion.question,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      softWrap: true,
+                    ),
+                    const SizedBox(height: 30),
+                    for (var i = 0; i < currentQuestion.listAnswer.length; i++)
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  (i == selectedAnswer![selectedQuestion])
+                                      ? Colors.white30
+                                      : Colors.white),
+                          onPressed: () {
+                            selectedAnswer![selectedQuestion] = i;
+                            if (selectedQuestion + 1 < nQuestion) {
+                              changeQuestion(selectedQuestion + 1);
+                            }
+                          },
+                          child: Container(
+                              width: width * 2 / 3,
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                currentQuestion.listAnswer[i],
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              )),
+                        ),
+                      ),
+                  ],
                 ),
+              ),
+              Container(
+                width: 170,
+                height: 170,
+                child: SelectQuestion(
+                    nQuestion: nQuestion, changeQuestion: changeQuestion),
+              ),
             ],
           ),
         ),
