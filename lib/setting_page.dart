@@ -28,11 +28,6 @@ class SettingPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: screenHeight / 70),
               child: settingButton(() => null, 'Change Password', screenHeight, screenWidth),
             ),
-            SizedBox(height: screenHeight / 50),
-            Container(
-              padding: EdgeInsets.only(bottom: screenHeight / 70),
-              child: settingButton(() => null, 'Logout', screenHeight, screenWidth),
-            ),
           ],
         ),
       ),
