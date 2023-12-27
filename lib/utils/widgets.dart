@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/utils/app_styles.dart';
 
 Widget bigLogo(double screenWidth, double screenHeight) {
