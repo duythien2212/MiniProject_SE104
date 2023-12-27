@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/main_screen.dart';
 import 'package:new_project/start_screen.dart';
 
 void main() {

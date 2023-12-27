@@ -12,10 +12,32 @@ Widget bigLogo(double screenWidth, double screenHeight) {
   );
 }
 
+Widget avatar(double screenWidth) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 20),
+    child: ClipOval(
+      child: Image.asset(
+        'assets/images/avatar.jpg',
+        width: screenWidth / 4,
+        height: screenWidth / 4,
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
+}
+
 ElevatedButton homeButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
   return ElevatedButton(
     onPressed: onPressed,
     style: homeButtonStyle(screenHeight, screenWidth),
+    child: Text(title),
+  );
+}
+
+ElevatedButton settingButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: settingButtonStyle(screenHeight, screenWidth),
     child: Text(title),
   );
 }

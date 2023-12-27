@@ -10,6 +10,7 @@ class AppThemes {
   static const Color barLogoutButtonColor = Colors.white;
   static const Color navigationRailBackroundColor = Color.fromARGB(31, 74, 137, 139);
   static const Color mainScreenBackroundColor = Colors.white;
+  static const Color mainButtonColor = Color.fromARGB(255, 52, 105, 197);
 }
 
 ButtonStyle homeButtonStyle(double screenHeight, double screenWidth) {
@@ -17,6 +18,15 @@ ButtonStyle homeButtonStyle(double screenHeight, double screenWidth) {
     fixedSize: Size(screenWidth / 6, screenHeight / 10),
     textStyle: TextStyle(fontSize: screenHeight / 30),
     backgroundColor: AppThemes.buttonColor,
+    foregroundColor: AppThemes.buttonTitleColor,
+  );
+}
+
+ButtonStyle settingButtonStyle(double screenHeight, double screenWidth) {
+  return ElevatedButton.styleFrom(
+    fixedSize: Size(screenWidth / 3, screenHeight / 14),
+    textStyle: TextStyle(fontSize: screenHeight / 30),
+    backgroundColor: AppThemes.mainButtonColor,
     foregroundColor: AppThemes.buttonTitleColor,
   );
 }

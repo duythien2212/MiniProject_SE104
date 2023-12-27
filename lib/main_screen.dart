@@ -3,6 +3,7 @@ import 'package:new_project/notification_page.dart';
 import 'package:new_project/profile_page.dart';
 import 'package:new_project/quizListScreen.dart';
 import 'package:new_project/selectClassScreen.dart';
+import 'package:new_project/setting_page.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';
@@ -40,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
       curentQuizPage(),
       SelectClassScreen(setScreen: setScreen),
       ProfilePage(),
-      settingPage(),
+      SettingPage(),
     ];
     activeScreen ??= screens[_selectedIndex];
     return Scaffold(
@@ -161,20 +162,6 @@ Widget quizListPage() {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("quizListPage"),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget settingPage() {
-  return Container(
-    color: AppThemes.mainScreenBackroundColor,
-    child: const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("settingPage"),
         ],
       ),
     ),
