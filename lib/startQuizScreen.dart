@@ -76,6 +76,7 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                     },
                     child: Container(
                         width: width * 2 / 3,
+                        padding: const EdgeInsets.all(10),
                         child: Text(
                           currentQuestion.listAnswer[i],
                         )),
