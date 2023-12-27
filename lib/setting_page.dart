@@ -19,7 +19,7 @@ class SettingPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            avatar(screenWidth),
+            avatar(screenWidth, screenHeight),
             Container(
               padding: EdgeInsets.only(bottom: screenHeight / 70),
               child: settingButton(() {

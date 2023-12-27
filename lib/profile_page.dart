@@ -14,7 +14,7 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            avatar(screenWidth),
+            avatar(screenWidth, screenHeight),
             informationField('USER NAME', screenWidth, screenHeight),
             informationField('NAME', screenWidth, screenHeight),
             informationField('CLASS', screenWidth, screenHeight),
