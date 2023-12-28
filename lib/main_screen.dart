@@ -40,8 +40,8 @@ class _MainScreenState extends State<MainScreen> {
       NotificationPage(notificates: notificates),
       curentQuizPage(),
       SelectClassScreen(setScreen: setScreen),
-      ProfilePage(),
-      SettingPage(),
+      const ProfilePage(),
+      SettingPage(setScreen: setScreen),
     ];
     activeScreen ??= screens[_selectedIndex];
     return Scaffold(
@@ -148,20 +148,6 @@ Widget curentQuizPage() {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("QuizPage"),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget quizListPage() {
-  return Container(
-    color: AppThemes.mainScreenBackroundColor,
-    child: const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("quizListPage"),
         ],
       ),
     ),

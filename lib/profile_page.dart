@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/widgets.dart';
 
@@ -14,11 +15,11 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            avatar(screenWidth),
-            informationField('USER NAME', screenWidth, screenHeight),
-            informationField('NAME', screenWidth, screenHeight),
-            informationField('CLASS', screenWidth, screenHeight),
-            informationField('EMAIL', screenWidth, screenHeight),
+            avatar(screenWidth, screenHeight),
+            informationField(userinfor.userName, screenWidth, screenHeight),
+            informationField('${userinfor.lastName} ${userinfor.firstName}', screenWidth, screenHeight),
+            informationField(userinfor.userClass, screenWidth, screenHeight),
+            informationField(userinfor.email, screenWidth, screenHeight),
           ],
         ),
       ),
@@ -40,7 +41,7 @@ Widget informationField(String text, double screenWidth, double screenHeight) {
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: screenHeight / 50),
+          style: TextStyle(fontSize: screenHeight / 40, fontWeight: FontWeight.bold),
         ),
       ),
     ),

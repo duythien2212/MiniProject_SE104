@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/delete_account_screen.dart';
+import 'package:new_project/information_change_screen.dart';
+import 'package:new_project/password_change_screen.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/widgets.dart';
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+  const SettingPage({super.key, required this.setScreen});
+  final void Function(Widget screen) setScreen;
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -15,18 +19,24 @@ class SettingPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            avatar(screenWidth),
+            avatar(screenWidth, screenHeight),
             Container(
               padding: EdgeInsets.only(bottom: screenHeight / 70),
-              child: settingButton(() => null, 'Account Setting', screenHeight, screenWidth),
+              child: settingButton(() {
+                setScreen(const InformationChangeScreen());
+              }, 'Account Setting', screenHeight, screenWidth),
             ),
             Container(
               padding: EdgeInsets.only(bottom: screenHeight / 70),
-              child: settingButton(() => null, 'Delete Account', screenHeight, screenWidth),
+              child: settingButton(() {
+                setScreen(const DeleteAccountScreen());
+              }, 'Delete Account', screenHeight, screenWidth),
             ),
             Container(
               padding: EdgeInsets.only(bottom: screenHeight / 70),
-              child: settingButton(() => null, 'Change Password', screenHeight, screenWidth),
+              child: settingButton(() {
+                setScreen(const PasswordChangeScreen());
+              }, 'Change Password', screenHeight, screenWidth),
             ),
           ],
         ),

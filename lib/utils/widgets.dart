@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/utils/app_styles.dart';
 
 Widget bigLogo(double screenWidth, double screenHeight) {
@@ -12,9 +13,9 @@ Widget bigLogo(double screenWidth, double screenHeight) {
   );
 }
 
-Widget avatar(double screenWidth) {
+Widget avatar(double screenWidth, double screenHeight) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 40),
+    padding: EdgeInsets.symmetric(vertical: screenHeight / 20),
     child: ClipOval(
       child: Image.asset(
         'assets/images/avatar.jpg',
@@ -61,6 +62,9 @@ Widget customTextField(double screenWidth, double screenHeight, String text) {
     child: TextField(
       decoration: InputDecoration(
         hintText: text,
+        hintStyle: TextStyle(
+          fontSize: screenHeight / 37,
+        ),
       ),
     ),
   );
