@@ -63,8 +63,8 @@ def make_student_in_class():
 
     for i in range(n):
         cmd = f'''INSERT INTO `STUDENT_IN_CLASS` VALUES (\'{root_ID + i}\',
-                                                        \'{classes['CLASS_ID'][i % len(classes['CLASS_ID'])]}\',
-                                                        \'{user['ID'][i % (len(user['ID'])-7) + 7]}\',
+                                                        \'{classes['CLASS_ID'][(i+random.randint(1,10)) % len(classes['CLASS_ID'])]}\',
+                                                        \'{user['ID'][(i+random.randint(1,10)) % (len(user['ID'])-7) + 7]}\',
                                                         \'{round(random.random()*5 + 5, 2)}\',
                                                         \'0\');\n'''
         file.write(cmd)
@@ -132,24 +132,48 @@ def make_score():
 
     for i in range(n):
         cmd = f'''INSERT INTO `SCORE` VALUES (\'{root_ID + i}\',
-                                            \'{quiz['QUIZ_ID'][i % len(quiz['QUIZ_ID'])]}\',
-                                            \'{user['ID'][i % (len(user['ID'])-7) + 7]}\',
-                                            \'{random.randint(0,3)}\',
-                                            \'{random.randint(0,3)}\',
+                                            \'{quiz['QUIZ_ID'][(i+random.randint(1,10)) % len(quiz['QUIZ_ID'])]}\',
+                                            \'{user['ID'][(i+random.randint(1,10)) % (len(user['ID'])-7) + 7]}\',
+                                            \'{random.randint(0,2)}\',
+                                            \'{random.randint(0,2)}\',
+                                            \'0\');\n'''
+        file.write(cmd)
+    file.write('UNLOCK TABLES;\n')
+    file.close()
+##
+##  Make class notification example
+##
+def make_noti():
+    n = len(classes['CLASS_ID'])
+    print(n)
+    root_ID = 110000
+    file = open('import_noti.sql', mode='w', encoding="utf-8")
+    file.write('USE `QuizApp`;\n')
+    file.write('LOCK TABLES `NOTIFICATION` WRITE;\n')
+
+    for i in range(n):
+        cmd = f'''INSERT INTO `NOTIFICATION` VALUES (\'{root_ID + i}\',
+                                            \'REMIND\',
+                                            \'You have some quiz to do.\',
+                                            \'{classes['CLASS_ID'][i]}\',
+                                            \'2023-09-15 08:30:00\',
                                             \'0\');\n'''
         file.write(cmd)
     file.write('UNLOCK TABLES;\n')
     file.close()
 
+make_noti()
 make_user()
 make_class()
 make_student_in_class()
 make_quiz()
 make_question()
 make_score()
+
 os.system('mysql -u root -p < import_user.sql')
 os.system('mysql -u root -p < import_class.sql')
 os.system('mysql -u root -p < import_student_in_class.sql')
 os.system('mysql -u root -p < import_quiz.sql')
 os.system('mysql -u root -p < import_question.sql')
 os.system('mysql -u root -p < import_score.sql')
+os.system('mysql -u root -p < import_noti.sql')
