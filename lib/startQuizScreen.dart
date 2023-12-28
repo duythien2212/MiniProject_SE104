@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/models/quiz.dart';
+import 'package:new_project/utils/app_styles.dart';
 
 class StartQuizScreen extends StatefulWidget {
   const StartQuizScreen({super.key, required this.selectedQuiz});
@@ -33,7 +34,7 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
       width: width,
       child: Expanded(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,6 +44,7 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                 width: MediaQuery.of(context).size.width - 270,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Question ${selectedQuestion + 1}',
@@ -78,14 +80,43 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                               )),
                         ),
                       ),
+                    const SizedBox(height: 50),
+                    Container(
+                      width: width - 270,
+                      alignment: Alignment.bottomRight,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppThemes.headingColor,
+                          foregroundColor: AppThemes.headingTextColor,
+                        ),
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppThemes.headingTextColor,
+                          ),
+                        ),
+                        onPressed: () {},
+                      ),
+                    )
                   ],
                 ),
               ),
-              Container(
-                width: 170,
-                height: 170,
-                child: SelectQuestion(
-                    nQuestion: nQuestion, changeQuestion: changeQuestion),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      'Select questions',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    SizedBox(
+                      width: 170,
+                      height: 170,
+                      child: SelectQuestion(
+                          nQuestion: nQuestion, changeQuestion: changeQuestion),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
