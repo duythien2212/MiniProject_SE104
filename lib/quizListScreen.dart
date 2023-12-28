@@ -46,7 +46,7 @@ class QuizListScreen extends StatelessWidget {
                         Text('Length: ${quiz.length} minute'),
                         Text('Deadline: ${quiz.endTime}'),
                         Text('Weight: ${quiz.weight}'),
-                        Text('Notifications: '),
+                        Text('Notifications: ${quiz.notification}'),
                       ],
                     ),
                   ),

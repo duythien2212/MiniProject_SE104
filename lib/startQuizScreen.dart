@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/models/quiz.dart';
+import 'package:new_project/resultScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
 
 class StartQuizScreen extends StatefulWidget {
@@ -69,6 +70,8 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                             selectedAnswer![selectedQuestion] = i;
                             if (selectedQuestion + 1 < nQuestion) {
                               changeQuestion(selectedQuestion + 1);
+                            } else {
+                              changeQuestion(selectedQuestion);
                             }
                           },
                           child: Container(
@@ -96,7 +99,16 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                             color: AppThemes.headingTextColor,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (ctx) => ResultScreen(
+                                quiz: widget.selectedQuiz,
+                                selectedAnswer: selectedAnswer!,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     )
                   ],
@@ -113,7 +125,10 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                       width: 170,
                       height: 170,
                       child: SelectQuestion(
-                          nQuestion: nQuestion, changeQuestion: changeQuestion),
+                        nQuestion: nQuestion,
+                        changeQuestion: changeQuestion,
+                        selectedAnswer: selectedAnswer!,
+                      ),
                     ),
                   ],
                 ),
@@ -128,9 +143,13 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
 
 class SelectQuestion extends StatelessWidget {
   const SelectQuestion(
-      {super.key, required this.nQuestion, required this.changeQuestion});
+      {super.key,
+      required this.nQuestion,
+      required this.changeQuestion,
+      required this.selectedAnswer});
   final int nQuestion;
   final void Function(int index) changeQuestion;
+  final List<int> selectedAnswer;
 
   @override
   Widget build(BuildContext context) {
@@ -148,6 +167,11 @@ class SelectQuestion extends StatelessWidget {
             child: Text(
               (i + 1).toString(),
               softWrap: false,
+              style: TextStyle(
+                  color: selectedAnswer[i] == -1
+                      ? Colors.black
+                      : AppThemes.headingColor,
+                  fontWeight: FontWeight.bold),
             ),
           ),
       ],
