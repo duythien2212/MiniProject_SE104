@@ -27,7 +27,8 @@ Widget avatar(double screenWidth, double screenHeight) {
   );
 }
 
-ElevatedButton homeButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
+ElevatedButton homeButton(Function()? onPressed, String title,
+    double screenHeight, double screenWidth) {
   return ElevatedButton(
     onPressed: onPressed,
     style: homeButtonStyle(screenHeight, screenWidth),
@@ -35,7 +36,8 @@ ElevatedButton homeButton(Function()? onPressed, String title, double screenHeig
   );
 }
 
-ElevatedButton settingButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
+ElevatedButton settingButton(Function()? onPressed, String title,
+    double screenHeight, double screenWidth) {
   return ElevatedButton(
     onPressed: onPressed,
     style: settingButtonStyle(screenHeight, screenWidth),

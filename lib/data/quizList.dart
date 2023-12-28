@@ -10,7 +10,7 @@ List<Quiz> quizList = [
       questions, 0, 'Kiểm tra thử'),
   Quiz('Q4', 'SE104', 'Kiem tra chuong 4', DateTime.now(), DateTime.now(), 60,
       questions, 0, 'Kiểm tra thử'),
-  Quiz('Q5', 'IT001', 'Kiem tra chuong 1', DateTime.now(), DateTime.now(), 60,
+  Quiz('Q5', 'SE104', 'Kiem tra chuong 5', DateTime.now(), DateTime.now(), 60,
       questions, 0, 'Kiểm tra thử'),
   Quiz('Q6', 'IT001', 'Kiem tra chuong 2', DateTime.now(), DateTime.now(), 60,
       questions, 0, 'Kiểm tra thử'),

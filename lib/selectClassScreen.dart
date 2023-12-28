@@ -32,8 +32,7 @@ class SelectClassScreen extends StatelessWidget {
               ),
               onPressed: () {
                 setScreen(QuizListScreen(
-                  classID: lop.classID,
-                  className: lop.className,
+                  selectedClass: lop,
                   setScreen: setScreen,
                 ));
               },
