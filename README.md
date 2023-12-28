@@ -30,7 +30,7 @@
   - Kiểm tra và sửa lỗi (Ngày 3/1/2024 - 4/1/2024)
 - Công cụ:
   - Database: MySQL
-  - Backend: Python
+  - Backend: Python và Flutter
   - Frontend: Flutter
   - Code Repositories: Github
 ## 3. Thiết kế dữ liệu
