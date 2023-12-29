@@ -43,6 +43,8 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
     });
   }
 
+  List<int> questionID = [];
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -50,7 +52,6 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(100),
-        height: screenHeight,
         width: screenWidth,
         alignment: Alignment.center,
         child: Column(
@@ -76,6 +77,28 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
             customTextField(screenWidth * 5, screenHeight, 'Enter weight'),
             customTextField(
                 screenWidth * 5, screenHeight, 'Enter notification'),
+            for (var i in questionID)
+              Row(
+                children: [
+                  CreateQuestion(key: Key(i.toString())),
+                  IconButton.filledTonal(
+                    onPressed: () {
+                      setState(() {
+                        questionID.remove(i);
+                      });
+                    },
+                    icon: const Icon(Icons.remove),
+                  )
+                ],
+              ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  questionID.add(questionID.length);
+                });
+              },
+              child: const Text('Add question'),
+            ),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,6 +117,31 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CreateQuestion extends StatelessWidget {
+  const CreateQuestion({super.key});
+  @override
+  Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: Column(
+        children: [
+          customTextField(screenWidth, screenHeight, 'Enter question'),
+          customTextField(screenWidth, screenHeight, 'Enter answer'),
+          customTextField(screenWidth, screenHeight, 'Enter answer'),
+          customTextField(screenWidth, screenHeight, 'Enter answer'),
+          customTextField(screenWidth, screenHeight, 'Enter answer'),
+        ],
       ),
     );
   }
