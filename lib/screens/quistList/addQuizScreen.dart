@@ -92,8 +92,47 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                 onChange: (input) {
                   weight = double.parse(input);
                 }).createTextField(),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _presentDatePicker(0);
+                  },
+                  icon: const Icon(Icons.calendar_month),
+                ),
+                Text(
+                    'Start date: ${dates[0]!.day}/${dates[0]!.month}/${dates[0]!.year}'),
+                const SizedBox(width: 50),
+                IconButton(
+                  onPressed: () {
+                    _presentDatePicker(1);
+                  },
+                  icon: const Icon(Icons.calendar_month),
+                ),
+                Text(
+                    'End date: ${dates[1]!.day}/${dates[1]!.month}/${dates[1]!.year}'),
+              ],
+            ),
             for (var i = 0; i < nQuestion; i++)
               createQuestion(i, setQuestion, setAnswer, setCorrectAnswer),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
+            )
           ],
         ),
       ),
