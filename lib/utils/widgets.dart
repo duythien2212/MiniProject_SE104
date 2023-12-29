@@ -27,8 +27,7 @@ Widget avatar(double screenWidth, double screenHeight) {
   );
 }
 
-ElevatedButton homeButton(Function()? onPressed, String title,
-    double screenHeight, double screenWidth) {
+ElevatedButton homeButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
   return ElevatedButton(
     onPressed: onPressed,
     style: homeButtonStyle(screenHeight, screenWidth),
@@ -36,8 +35,7 @@ ElevatedButton homeButton(Function()? onPressed, String title,
   );
 }
 
-ElevatedButton settingButton(Function()? onPressed, String title,
-    double screenHeight, double screenWidth) {
+ElevatedButton settingButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
   return ElevatedButton(
     onPressed: onPressed,
     style: settingButtonStyle(screenHeight, screenWidth),
@@ -54,21 +52,6 @@ ElevatedButton logoutMainButton(Function()? onPressed) {
       foregroundColor: AppThemes.barLogoutButtonTitleColor,
     ),
     child: const Text("LOGOUT"),
-  );
-}
-
-Widget customTextField(double screenWidth, double screenHeight, String text) {
-  return SizedBox(
-    width: screenWidth / 5,
-    height: screenHeight / 11,
-    child: TextField(
-      decoration: InputDecoration(
-        hintText: text,
-        hintStyle: TextStyle(
-          fontSize: screenHeight / 37,
-        ),
-      ),
-    ),
   );
 }
 

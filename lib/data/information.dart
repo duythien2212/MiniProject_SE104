@@ -1,6 +1,5 @@
 class Information {
-  Information(this.firstName, this.lastName, this.email, this.avatarURL,
-      this.userName, this.userClass, this.isTeacher);
+  Information(this.firstName, this.lastName, this.email, this.avatarURL, this.userName, this.userClass, this.isTeacher);
   final String firstName;
   final String lastName;
   final String email;
@@ -10,5 +9,12 @@ class Information {
   final bool isTeacher;
 }
 
-Information userinfor = Information("Nguyên", 'Lê Bình', 'nguyenle@gmail.com',
-    '', '22520969', 'KHTN2022', true);
+Information userinfor = Information("Nguyên", 'Lê Bình', 'nguyenle@gmail.com', '', '22520969', 'KHTN2022', true);
+
+class loginInformation {
+  loginInformation(this.username, this.password);
+  final username;
+  final password;
+}
+
+loginInformation loginInput = loginInformation("", "");

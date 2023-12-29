@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/main_screen.dart';
 import 'package:new_project/utils/app_styles.dart';
+import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/functions.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';
@@ -13,6 +14,24 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmController = TextEditingController();
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+    confirmController.dispose();
+    return super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -32,15 +51,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Row(
                     children: [
-                      customTextField((screenWidth - 20) / 2, screenHeight, 'First name'),
+                      customTextField(controller: firstNameController, text: "First name", screenWidth: (screenWidth - 20) / 2, screenHeight: screenHeight),
                       const SizedBox(width: 10),
-                      customTextField((screenWidth - 20) / 2, screenHeight, 'Last name'),
+                      customTextField(controller: lastNameController, text: "Last name", screenWidth: (screenWidth - 20) / 2, screenHeight: screenHeight),
                     ],
                   ),
-                  customTextField(screenWidth, screenHeight, 'Enter email'),
-                  customTextField(screenWidth, screenHeight, 'Enter username'),
-                  customTextField(screenWidth, screenHeight, 'Enter password'),
-                  customTextField(screenWidth, screenHeight, 'Confirm password'),
+                  customTextField(controller: emailController, text: 'Enter email', screenWidth: screenWidth, screenHeight: screenHeight),
+                  customTextField(controller: usernameController, text: 'Enter username', screenWidth: screenWidth, screenHeight: screenHeight),
+                  customTextField(controller: passwordController, text: 'Enter password', screenWidth: screenWidth, screenHeight: screenHeight),
+                  customTextField(controller: confirmController, text: 'Confirm password', screenWidth: screenWidth, screenHeight: screenHeight),
                   const SizedBox(height: 10),
                   homeButton(() {
                     navigateToPage(context, const MainScreen());

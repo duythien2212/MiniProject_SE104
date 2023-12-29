@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/data/quizList.dart';
-import 'package:new_project/utils/widgets.dart';
+import 'package:new_project/utils/custom_text_field.dart';
 
 class AddQuizScreen extends StatefulWidget {
   const AddQuizScreen({super.key});
@@ -12,16 +12,25 @@ class AddQuizScreen extends StatefulWidget {
 
 class _AddQuizScreenState extends State<AddQuizScreen> {
   DateTime startTime = DateTime.now(), endTime = DateTime.now();
+  final TextEditingController lengthController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController notificationController = TextEditingController();
+  final TextEditingController quizNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    lengthController.dispose();
+    weightController.dispose();
+    notificationController.dispose();
+    quizNameController.dispose();
+    super.dispose();
+  }
 
   void _selectStartTime() async {
     final now = DateTime.now();
     final firstDate = DateTime.now();
     final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final pickedDate = await showDatePicker(
-        context: context,
-        initialDate: now,
-        firstDate: firstDate,
-        lastDate: lastDate);
+    final pickedDate = await showDatePicker(context: context, initialDate: now, firstDate: firstDate, lastDate: lastDate);
 
     setState(() {
       startTime = pickedDate!;
@@ -32,11 +41,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
     final now = DateTime.now();
     final firstDate = DateTime.now();
     final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final pickedDate = await showDatePicker(
-        context: context,
-        initialDate: now,
-        firstDate: firstDate,
-        lastDate: lastDate);
+    final pickedDate = await showDatePicker(context: context, initialDate: now, firstDate: firstDate, lastDate: lastDate);
 
     setState(() {
       endTime = pickedDate!;
@@ -62,7 +67,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 20),
-            customTextField(screenWidth * 5, screenHeight, 'Enter quiz name'),
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter quiz name', controller: quizNameController),
             _SelectTime(
               text: 'Start time',
               time: startTime,
@@ -99,6 +104,11 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
               },
               child: const Text('Add question'),
             ),
+=======
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter length', controller: lengthController),
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter weight', controller: weightController),
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter notification', controller: notificationController),
+>>>>>>> cc1c347856f6ecdf265351d8af871d6c31e32ee1
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,11 +158,7 @@ class CreateQuestion extends StatelessWidget {
 }
 
 class _SelectTime extends StatelessWidget {
-  const _SelectTime(
-      {super.key,
-      required this.text,
-      required this.time,
-      required this.selectTime});
+  const _SelectTime({super.key, required this.text, required this.time, required this.selectTime});
   final void Function() selectTime;
   final DateTime time;
   final String text;

@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/widgets.dart';
 
-class PasswordChangeScreen extends StatelessWidget {
+class PasswordChangeScreen extends StatefulWidget {
   const PasswordChangeScreen({super.key});
+
+  @override
+  State<PasswordChangeScreen> createState() => _PasswordChangeScreenState();
+}
+
+class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
+  final TextEditingController oldController = TextEditingController();
+  final TextEditingController newController = TextEditingController();
+  final TextEditingController confirmController = TextEditingController();
+
+  @override
+  void dispose() {
+    oldController.dispose();
+    newController.dispose();
+    confirmController.dispose();
+    return super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -20,9 +39,9 @@ class PasswordChangeScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: screenHeight / 16),
-        customTextField(screenWidth * 1.5, screenHeight, 'OLD PASSWORD'),
-        customTextField(screenWidth * 1.5, screenHeight, 'NEW PASSWORD'),
-        customTextField(screenWidth * 1.5, screenHeight, 'CONFIRM PASSWORD'),
+        customTextField(controller: oldController, text: 'OLD PASSWORD', screenWidth: screenWidth * 1.5, screenHeight: screenHeight),
+        customTextField(controller: newController, text: 'NEW PASSWORD', screenWidth: screenWidth * 1.5, screenHeight: screenHeight),
+        customTextField(controller: confirmController, text: 'CONFIRM PASSWORD', screenWidth: screenWidth * 1.5, screenHeight: screenHeight),
         SizedBox(height: screenHeight / 20),
         settingButton(() => null, "CHANGE PASSWORD", screenHeight, screenWidth),
       ],

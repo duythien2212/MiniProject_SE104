@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
+import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/widgets.dart';
 
-class InformationChangeScreen extends StatelessWidget {
+class InformationChangeScreen extends StatefulWidget {
   const InformationChangeScreen({super.key});
+
+  @override
+  State<InformationChangeScreen> createState() => _InformationChangeScreenState();
+}
+
+class _InformationChangeScreenState extends State<InformationChangeScreen> {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastnameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastnameController.dispose();
+    emailController.dispose();
+    return super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +56,9 @@ class InformationChangeScreen extends StatelessWidget {
           ],
         ),
         SizedBox(height: screenHeight / 60),
-        customTextField(screenWidth * 1.2, screenHeight, "Enter new first name"),
-        customTextField(screenWidth * 1.2, screenHeight, "Enter new last name"),
-        customTextField(screenWidth * 1.2, screenHeight, "Enter new email"),
+        customTextField(controller: firstNameController, text: "Enter new first name", screenWidth: screenWidth * 1.2, screenHeight: screenHeight),
+        customTextField(controller: lastnameController, text: "Enter new last name", screenWidth: screenWidth * 1.2, screenHeight: screenHeight),
+        customTextField(controller: emailController, text: "Enter new email", screenWidth: screenWidth * 1.2, screenHeight: screenHeight),
         SizedBox(height: screenHeight / 60),
         settingButton(() => null, 'Save', screenHeight, screenWidth / 1.5),
       ],
