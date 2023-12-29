@@ -94,6 +94,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                 }).createTextField(),
             Row(
               children: [
+                const Text('Select dates:'),
                 IconButton(
                   onPressed: () {
                     _presentDatePicker(0);
@@ -135,20 +136,6 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class TextInput {
-  TextInput({required this.name, required this.onChange});
-  String name;
-  final void Function(String input) onChange;
-  TextField createTextField() {
-    return TextField(
-      onChanged: onChange,
-      decoration: InputDecoration(
-        label: Text(name),
       ),
     );
   }

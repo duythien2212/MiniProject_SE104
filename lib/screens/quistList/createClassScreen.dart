@@ -11,45 +11,74 @@ class CreateClassScreen extends StatefulWidget {
 }
 
 class _CreateClassScreenState extends State<CreateClassScreen> {
-  var nStudent = 5;
-  final TextEditingController idController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController studentIDController = TextEditingController();
-
-  @override
-  void dispose() {
-    idController.dispose();
-    nameController.dispose();
-    studentIDController.dispose();
-    return super.dispose();
-  }
-
+  var nStudent = 0;
+  String classID = '', className = '';
+  List<String> studentIDs = [];
   @override
   Widget build(BuildContext context) {
+    while (studentIDs.length < nStudent) {
+      studentIDs.add('');
+    }
+    while (studentIDs.length > nStudent) {
+      studentIDs.removeLast();
+    }
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
-    return Expanded(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Text('Create Class', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 30),
-            customTextField(controller: idController, text: 'Enter class ID', screenWidth: screenWidth, screenHeight: screenHeight),
-            customTextField(controller: nameController, text: 'Enter class name', screenWidth: screenWidth, screenHeight: screenHeight),
+            TextInput(
+              name: 'Class ID',
+              onChange: (input) {
+                classID = input;
+              },
+            ).createTextField(),
+            TextInput(
+              name: 'Class name',
+              onChange: (input) {
+                className = input;
+              },
+            ).createTextField(),
+            TextInput(
+              name: 'Number of students',
+              onChange: (input) {
+                setState(() {
+                  nStudent = int.parse(input);
+                });
+              },
+            ).createTextField(),
+            const SizedBox(height: 20),
+            if (nStudent > 0) const Text('Students'),
             for (int i = 0; i < nStudent; i++)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  customTextField(controller: studentIDController, text: 'Student ID', screenWidth: screenWidth, screenHeight: screenHeight),
-                  IconButton.filledTonal(
-                      onPressed: () {
-                        setState(() {
-                          nStudent--;
-                        });
-                      },
-                      icon: Icon(Icons.remove))
-                ],
-              )
+              TextInput(
+                name: 'Student ID',
+                onChange: (input) {
+                  studentIDs[i] = input;
+                },
+              ).createTextField(),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
+            )
           ],
         ),
       ),
