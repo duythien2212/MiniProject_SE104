@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/delete_account_screen.dart';
-import 'package:new_project/information_change_screen.dart';
-import 'package:new_project/password_change_screen.dart';
+import 'package:new_project/screens/setting/delete_account_screen.dart';
+import 'package:new_project/screens/setting/information_change_screen.dart';
+import 'package:new_project/screens/setting/password_change_screen.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/widgets.dart';
 

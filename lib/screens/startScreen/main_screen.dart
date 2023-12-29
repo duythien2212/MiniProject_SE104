@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/notification_page.dart';
-import 'package:new_project/profile_page.dart';
-import 'package:new_project/quizListScreen.dart';
-import 'package:new_project/selectClassScreen.dart';
-import 'package:new_project/setting_page.dart';
+import 'package:new_project/screens/notifications/notification_page.dart';
+import 'package:new_project/screens/profile/profile_page.dart';
+import 'package:new_project/screens/quistList/selectClassScreen.dart';
+import 'package:new_project/screens/setting/setting_page.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';

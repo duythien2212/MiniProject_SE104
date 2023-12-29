@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/start_screen.dart';
+import 'package:new_project/screens/startScreen/start_screen.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/functions.dart';
 import 'package:new_project/utils/widgets.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/createClassScreen.dart';
+import 'package:new_project/screens/quistList/createClassScreen.dart';
 import 'package:new_project/data/classes.dart';
-import 'package:new_project/quizListScreen.dart';
+import 'package:new_project/screens/quistList/quizListScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/functions.dart';
 

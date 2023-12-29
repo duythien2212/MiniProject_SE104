@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/login_screen.dart';
-import 'package:new_project/register_screen.dart';
+import 'package:new_project/screens/startScreen/login_screen.dart';
+import 'package:new_project/screens/startScreen/register_screen.dart';
 import 'package:new_project/utils/functions.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/app_styles.dart';

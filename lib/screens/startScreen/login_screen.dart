@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
-import 'package:new_project/main_screen.dart';
+import 'package:new_project/screens/startScreen/main_screen.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/functions.dart';
@@ -42,11 +42,20 @@ class _LoginScreenState extends State<LoginScreen> {
               bigLogo(screenWidth, screenHeight),
               Column(
                 children: [
-                  customTextField(screenWidth: screenWidth, screenHeight: screenHeight, text: "Enter username", controller: usernameController),
-                  customTextField(screenWidth: screenWidth, screenHeight: screenHeight, text: "Enter password", controller: passwordController),
+                  customTextField(
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                      text: "Enter username",
+                      controller: usernameController),
+                  customTextField(
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                      text: "Enter password",
+                      controller: passwordController),
                   const SizedBox(height: 10),
                   homeButton(() {
-                    loginInput = loginInformation(usernameController.text, passwordController.text);
+                    loginInput = loginInformation(
+                        usernameController.text, passwordController.text);
                     navigateToPage(context, const MainScreen());
                   }, 'LOGIN', screenHeight, screenWidth),
                 ],
