@@ -31,9 +31,8 @@ class SelectClassScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            lop.classID + ' - ' + lop.className,
-                            style: const TextStyle(
-                                fontSize: 20, color: AppThemes.headingColor),
+                            '${lop.classID} - ${lop.className}',
+                            style: const TextStyle(fontSize: 20, color: AppThemes.headingColor),
                           ),
                           Text('Teacher: ${lop.teacherID}'),
                         ],
@@ -60,8 +59,7 @@ class SelectClassScreen extends StatelessWidget {
                     builder: (ctx) => CreateClassScreen(),
                   );
                 },
-                child: Text('Create Class',
-                    style: Theme.of(context).textTheme.titleLarge),
+                child: Text('Create Class', style: Theme.of(context).textTheme.titleLarge),
               ),
             ],
           )

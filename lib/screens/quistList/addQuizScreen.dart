@@ -30,11 +30,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
     final now = DateTime.now();
     final firstDate = DateTime.now();
     final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final pickedDate = await showDatePicker(
-        context: context,
-        initialDate: now,
-        firstDate: firstDate,
-        lastDate: lastDate);
+    final pickedDate = await showDatePicker(context: context, initialDate: now, firstDate: firstDate, lastDate: lastDate);
 
     setState(() {
       startTime = pickedDate!;
@@ -45,11 +41,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
     final now = DateTime.now();
     final firstDate = DateTime.now();
     final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final pickedDate = await showDatePicker(
-        context: context,
-        initialDate: now,
-        firstDate: firstDate,
-        lastDate: lastDate);
+    final pickedDate = await showDatePicker(context: context, initialDate: now, firstDate: firstDate, lastDate: lastDate);
 
     setState(() {
       endTime = pickedDate!;
@@ -75,11 +67,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 20),
-            customTextField(
-                screenWidth: screenWidth * 5,
-                screenHeight: screenHeight,
-                text: 'Enter quiz name',
-                controller: quizNameController),
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter quiz name', controller: quizNameController),
             _SelectTime(
               text: 'Start time',
               time: startTime,
@@ -90,21 +78,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
               time: endTime,
               selectTime: _selectEndTime,
             ),
-            customTextField(
-                controller: lengthController,
-                text: "Enter lenght",
-                screenWidth: screenWidth * 5,
-                screenHeight: screenHeight),
-            customTextField(
-                controller: weightController,
-                text: "Enter weight",
-                screenWidth: screenWidth * 5,
-                screenHeight: screenHeight),
-            customTextField(
-                controller: notificationController,
-                text: "Enter notificaton",
-                screenWidth: screenWidth * 5,
-                screenHeight: screenHeight),
+            customTextField(controller: lengthController, text: "Enter lenght", screenWidth: screenWidth * 5, screenHeight: screenHeight),
+            customTextField(controller: weightController, text: "Enter weight", screenWidth: screenWidth * 5, screenHeight: screenHeight),
+            customTextField(controller: notificationController, text: "Enter notificaton", screenWidth: screenWidth * 5, screenHeight: screenHeight),
             for (var i in questionID)
               Row(
                 children: [
@@ -127,21 +103,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
               },
               child: const Text('Add question'),
             ),
-            customTextField(
-                screenWidth: screenWidth * 5,
-                screenHeight: screenHeight,
-                text: 'Enter length',
-                controller: lengthController),
-            customTextField(
-                screenWidth: screenWidth * 5,
-                screenHeight: screenHeight,
-                text: 'Enter weight',
-                controller: weightController),
-            customTextField(
-                screenWidth: screenWidth * 5,
-                screenHeight: screenHeight,
-                text: 'Enter notification',
-                controller: notificationController),
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter length', controller: lengthController),
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter weight', controller: weightController),
+            customTextField(screenWidth: screenWidth * 5, screenHeight: screenHeight, text: 'Enter notification', controller: notificationController),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,12 +129,35 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   }
 }
 
-class CreateQuestion extends StatelessWidget {
+class CreateQuestion extends StatefulWidget {
   const CreateQuestion({super.key});
+
+  @override
+  State<CreateQuestion> createState() => _CreateQuestionState();
+}
+
+class _CreateQuestionState extends State<CreateQuestion> {
+  final TextEditingController questionController = TextEditingController();
+  final TextEditingController answer1Controller = TextEditingController();
+  final TextEditingController answer2Controller = TextEditingController();
+  final TextEditingController answer3Controller = TextEditingController();
+  final TextEditingController answer4Controller = TextEditingController();
+
+  @override
+  void dispose() {
+    questionController.dispose();
+    answer1Controller.dispose();
+    answer2Controller.dispose();
+    answer3Controller.dispose();
+    answer4Controller.dispose();
+    return super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
+
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -179,11 +166,11 @@ class CreateQuestion extends StatelessWidget {
       ),
       child: Column(
         children: [
-          customTextField(screenWidth, screenHeight, 'Enter question'),
-          customTextField(screenWidth, screenHeight, 'Enter answer'),
-          customTextField(screenWidth, screenHeight, 'Enter answer'),
-          customTextField(screenWidth, screenHeight, 'Enter answer'),
-          customTextField(screenWidth, screenHeight, 'Enter answer'),
+          customTextField(controller: questionController, text: 'Enter question', screenWidth: screenWidth, screenHeight: screenHeight),
+          customTextField(controller: answer1Controller, text: 'Enter question', screenWidth: screenWidth, screenHeight: screenHeight),
+          customTextField(controller: answer2Controller, text: 'Enter question', screenWidth: screenWidth, screenHeight: screenHeight),
+          customTextField(controller: answer3Controller, text: 'Enter question', screenWidth: screenWidth, screenHeight: screenHeight),
+          customTextField(controller: answer4Controller, text: 'Enter question', screenWidth: screenWidth, screenHeight: screenHeight),
         ],
       ),
     );
@@ -191,11 +178,7 @@ class CreateQuestion extends StatelessWidget {
 }
 
 class _SelectTime extends StatelessWidget {
-  const _SelectTime(
-      {super.key,
-      required this.text,
-      required this.time,
-      required this.selectTime});
+  const _SelectTime({super.key, required this.text, required this.time, required this.selectTime});
   final void Function() selectTime;
   final DateTime time;
   final String text;
