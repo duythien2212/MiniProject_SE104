@@ -78,10 +78,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
               time: endTime,
               selectTime: _selectEndTime,
             ),
-            customTextField(screenWidth * 5, screenHeight, 'Enter length'),
-            customTextField(screenWidth * 5, screenHeight, 'Enter weight'),
-            customTextField(
-                screenWidth * 5, screenHeight, 'Enter notification'),
+            customTextField(controller: lenghtController, text: "Enter lenght", screenWidth: screenWidth*5, screenHeight: screenHeight),
+            customTextField(controller: weightController, text: "Enter weight", screenWidth: screenWidth*5, screenHeight: screenHeight),
+            customTextField(controller: notificationController, text: "Enter notificaton", screenWidth: screenWidth*5, screenHeight: screenHeight),
             for (var i in questionID)
               Row(
                 children: [
