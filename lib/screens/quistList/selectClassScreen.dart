@@ -3,7 +3,6 @@ import 'package:new_project/screens/quistList/createClassScreen.dart';
 import 'package:new_project/data/classes.dart';
 import 'package:new_project/screens/quistList/quizListScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
-import 'package:new_project/utils/functions.dart';
 
 class SelectClassScreen extends StatelessWidget {
   const SelectClassScreen({super.key, required this.setScreen});

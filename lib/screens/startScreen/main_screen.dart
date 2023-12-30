@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/screens/current/current_quiz_page.dart';
 import 'package:new_project/screens/notifications/notification_page.dart';
 import 'package:new_project/screens/profile/profile_page.dart';
 import 'package:new_project/screens/quistList/selectClassScreen.dart';
@@ -37,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     List<Widget> screens = [
       NotificationPage(notificates: notificates),
-      curentQuizPage(),
+      const CurrentQuizPage(),
       SelectClassScreen(setScreen: setScreen),
       const ProfilePage(),
       SettingPage(setScreen: setScreen),
@@ -137,18 +138,4 @@ class _DrawerListTileState extends State<DrawerListTile> {
       ),
     );
   }
-}
-
-Widget curentQuizPage() {
-  return Container(
-    color: AppThemes.mainScreenBackroundColor,
-    child: const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("QuizPage"),
-        ],
-      ),
-    ),
-  );
 }

@@ -30,3 +30,20 @@ ButtonStyle settingButtonStyle(double screenHeight, double screenWidth) {
     foregroundColor: AppThemes.buttonTitleColor,
   );
 }
+
+TextStyle tableHeadingTextStyle() {
+  return const TextStyle(
+    fontSize: 25,
+    height: 2.5,
+    fontWeight: FontWeight.bold,
+    color: AppThemes.headingColor,
+  );
+}
+
+TextStyle tableItemTextStyle() {
+  return const TextStyle(
+    fontSize: 18,
+    height: 3,
+    color: Colors.black,
+  );
+}

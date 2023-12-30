@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/data/information.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/widgets.dart';
 
