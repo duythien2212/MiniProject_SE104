@@ -166,12 +166,14 @@ class SelectQuestion extends StatelessWidget {
             },
             child: Text(
               (i + 1).toString(),
-              softWrap: false,
-              style: TextStyle(
-                  color: selectedAnswer[i] == -1
-                      ? Colors.black
-                      : AppThemes.headingColor,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: selectedAnswer[i] == -1
+                        ? Colors.black
+                        : AppThemes.headingColor,
+                    fontWeight: selectedAnswer[i] == -1
+                        ? FontWeight.normal
+                        : FontWeight.bold,
+                  ),
             ),
           ),
       ],

@@ -31,7 +31,8 @@ class SelectClassScreen extends StatelessWidget {
                         children: [
                           Text(
                             '${lop.classID} - ${lop.className}',
-                            style: const TextStyle(fontSize: 20, color: AppThemes.headingColor),
+                            style: const TextStyle(
+                                fontSize: 20, color: AppThemes.headingColor),
                           ),
                           Text('Teacher: ${lop.teacherID}'),
                         ],
@@ -48,6 +49,8 @@ class SelectClassScreen extends StatelessWidget {
             ),
           ),
           Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
                 onPressed: () {
@@ -58,7 +61,8 @@ class SelectClassScreen extends StatelessWidget {
                     builder: (ctx) => CreateClassScreen(),
                   );
                 },
-                child: Text('Create Class', style: Theme.of(context).textTheme.titleLarge),
+                child: Text('Create Class',
+                    style: Theme.of(context).textTheme.titleLarge),
               ),
             ],
           )
