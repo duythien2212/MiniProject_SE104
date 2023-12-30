@@ -13,7 +13,7 @@ class Class:
     
 
 class Quiz:
-    def __init__(self, quizID, classID, quizName, startTime, endTime, length, weight, isDeleted, listQuestion=""):
+    def __init__(self, quizID, classID, quizName, startTime, endTime, length, weight, isDeleted, listQuestion=[]):
         self.quizID = quizID
         self.classID = classID
         self.quizName = quizName
@@ -55,11 +55,13 @@ class Quiz:
         return self.length
     
 class Question:
-    def __init__(self, questionID, question, listAnswer, correctAnswer):
+    def __init__(self, questionID, quizID, question, listAnswer, correctAnswer, isDeleted):
         self.questionID = questionID
+        self.quizID = quizID
         self.question = question
         self.listAnswer = listAnswer
         self.correctAnswer = correctAnswer
+        self.isDeleted = isDeleted
     
     def changeQuesttion(self, question):
         self.question = question
@@ -73,7 +75,8 @@ class Question:
     def shuffleAnswer(self):
         shuffledList = random.sample(self.listAnswer, len(self.listAnswer))
         return shuffledList
-
+    def delete(self):
+        self.isDeleted = 1
 
 class USER:
     def __init__(self, ID, userName, email, name, password, isTeacher, isDeleted, classes=""):
@@ -102,6 +105,9 @@ class USER:
     def getUserName(self):
         return self.userName
 
+    def delete(self):
+        self.isDeleted = 1
+
     def attemptQuizz(self):
         pass
 
@@ -127,3 +133,24 @@ class Student(USER):
     
     def getScoreBoard(self):
         pass
+
+class Notification:
+    def __init__(self, notifyID, title, content, classID, date, isDeleted):
+        self.notifyID = notifyID
+        self.title = title
+        self.content = content
+        self.classID = classID
+        self.date = date
+        self.isDeleted = isDeleted
+
+    def changeTitle(self, newTitle):
+        self.title = newTitle
+    
+    def changeContent(self, newContent):
+        self.content = newContent
+    
+    def changeDate(self, newDate):
+        self.date = newDate
+
+    def delete(self):
+        self.isDeleted = 1
