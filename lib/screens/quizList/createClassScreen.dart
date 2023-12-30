@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/data/classes.dart';
+import 'package:new_project/data/information.dart';
+import 'package:new_project/models/class.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/widgets.dart';
 
 class CreateClassScreen extends StatefulWidget {
-  const CreateClassScreen({super.key});
+  const CreateClassScreen({super.key, required this.addClass});
+  final void Function(Class newClass) addClass;
   @override
   State<StatefulWidget> createState() {
     return _CreateClassScreenState();
@@ -73,6 +77,10 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    widget.addClass(Class(
+                        classID: classID,
+                        teacherID: userinfor.userID,
+                        className: className));
                     Navigator.pop(context);
                   },
                   child: const Text('Save'),

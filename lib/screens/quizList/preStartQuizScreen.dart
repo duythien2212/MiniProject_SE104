@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/models/quiz.dart';
-import 'package:new_project/screens/quistList/quizListScreen.dart';
-import 'package:new_project/screens/quistList/startQuizScreen.dart';
+import 'package:new_project/screens/quizList/quizListScreen.dart';
+import 'package:new_project/screens/quizList/startQuizScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
 
 class PreStartQuizScreen extends StatelessWidget {

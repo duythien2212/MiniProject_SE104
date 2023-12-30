@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/screens/quistList/addQuizScreen.dart';
+import 'package:new_project/screens/quizList/addQuizScreen.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/data/quizList.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/models/quiz.dart';
-import 'package:new_project/screens/quistList/preStartQuizScreen.dart';
-import 'package:new_project/screens/quistList/selectClassScreen.dart';
+import 'package:new_project/screens/quizList/preStartQuizScreen.dart';
+import 'package:new_project/screens/quizList/selectClassScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
 
-class QuizListScreen extends StatelessWidget {
+class QuizListScreen extends StatefulWidget {
   const QuizListScreen({
     super.key,
     required this.selectedClass,
@@ -16,12 +16,22 @@ class QuizListScreen extends StatelessWidget {
   });
   final Class selectedClass;
   final void Function(Widget screen) setScreen;
+  @override
+  State<StatefulWidget> createState() {
+    return _QuizListScreenState();
+  }
+}
 
+class _QuizListScreenState extends State<QuizListScreen> {
   @override
   Widget build(BuildContext context) {
+    final Class selectedClass = widget.selectedClass;
+    final void Function(Widget screen) setScreen = widget.setScreen;
+
     List<Quiz> classQuiz = quizList
         .where((quiz) => quiz.classID == selectedClass.classID)
         .toList();
+
     return Column(
       children: [
         Container(
@@ -94,7 +104,14 @@ class QuizListScreen extends StatelessWidget {
                     useSafeArea: true,
                     isScrollControlled: true,
                     context: context,
-                    builder: (ctx) => AddQuizScreen(),
+                    builder: (ctx) => AddQuizScreen(
+                      selectedClass: selectedClass,
+                      addQuiz: (newQuiz) {
+                        setState(() {
+                          quizList.add(newQuiz);
+                        });
+                      },
+                    ),
                   );
                 },
                 child: const Icon(

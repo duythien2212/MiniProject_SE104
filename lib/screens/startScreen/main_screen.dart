@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_project/screens/current/current_quiz_page.dart';
 import 'package:new_project/screens/notifications/notification_page.dart';
 import 'package:new_project/screens/profile/profile_page.dart';
-import 'package:new_project/screens/quistList/selectClassScreen.dart';
+import 'package:new_project/screens/quizList/selectClassScreen.dart';
 import 'package:new_project/screens/setting/setting_page.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_app_bar.dart';

@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/screens/quistList/createClassScreen.dart';
+import 'package:new_project/models/class.dart';
+import 'package:new_project/screens/quizList/createClassScreen.dart';
 import 'package:new_project/data/classes.dart';
-import 'package:new_project/screens/quistList/quizListScreen.dart';
+import 'package:new_project/screens/quizList/quizListScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
 
-class SelectClassScreen extends StatelessWidget {
+class SelectClassScreen extends StatefulWidget {
   const SelectClassScreen({super.key, required this.setScreen});
   final void Function(Widget screen) setScreen;
+
+  @override
+  State<StatefulWidget> createState() {
+    return _SelectClassScreen();
+  }
+}
+
+class _SelectClassScreen extends State<SelectClassScreen> {
+  void addClass(Class newClass) {
+    setState(() {
+      classes.add(newClass);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -39,9 +54,9 @@ class SelectClassScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      setScreen(QuizListScreen(
+                      widget.setScreen(QuizListScreen(
                         selectedClass: lop,
-                        setScreen: setScreen,
+                        setScreen: widget.setScreen,
                       ));
                     },
                   )
@@ -58,7 +73,9 @@ class SelectClassScreen extends StatelessWidget {
                     useSafeArea: true,
                     isScrollControlled: true,
                     context: context,
-                    builder: (ctx) => CreateClassScreen(),
+                    builder: (ctx) => CreateClassScreen(
+                      addClass: addClass,
+                    ),
                   );
                 },
                 child: Text('Create Class',

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/data/quizList.dart';
+import 'package:new_project/models/class.dart';
+import 'package:new_project/models/question.dart';
+import 'package:new_project/models/quiz.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 
 class AddQuizScreen extends StatefulWidget {
-  const AddQuizScreen({super.key});
+  const AddQuizScreen(
+      {super.key, required this.addQuiz, required this.selectedClass});
+  final void Function(Quiz newQuiz) addQuiz;
+  final Class selectedClass;
   @override
   State<StatefulWidget> createState() {
     return _AddQuizScreenState();
@@ -17,13 +24,18 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   List<String> questions = [];
   List<List<String>> answers = [];
   List<int> correctAnswers = [];
+  String notifications = '';
 
   List<DateTime?> dates = [DateTime.now(), DateTime.now()];
   void _presentDatePicker(i) async {
     final now = DateTime.now();
     final firstDate = now;
     final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final pickedDate = await showDatePicker(context: context, initialDate: now, firstDate: firstDate, lastDate: lastDate);
+    final pickedDate = await showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: firstDate,
+        lastDate: lastDate);
 
     setState(() {
       dates[i] = pickedDate;
@@ -96,7 +108,8 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                   },
                   icon: const Icon(Icons.calendar_month),
                 ),
-                Text('Start date: ${dates[0]!.day}/${dates[0]!.month}/${dates[0]!.year}'),
+                Text(
+                    'Start date: ${dates[0]!.day}/${dates[0]!.month}/${dates[0]!.year}'),
                 const SizedBox(width: 50),
                 IconButton(
                   onPressed: () {
@@ -104,10 +117,17 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                   },
                   icon: const Icon(Icons.calendar_month),
                 ),
-                Text('End date: ${dates[1]!.day}/${dates[1]!.month}/${dates[1]!.year}'),
+                Text(
+                    'End date: ${dates[1]!.day}/${dates[1]!.month}/${dates[1]!.year}'),
               ],
             ),
-            for (var i = 0; i < nQuestion; i++) createQuestion(i, setQuestion, setAnswer, setCorrectAnswer),
+            TextInput(
+                name: 'Notifications',
+                onChange: (input) {
+                  notifications = input;
+                }).createTextField(),
+            for (var i = 0; i < nQuestion; i++)
+              createQuestion(i, setQuestion, setAnswer, setCorrectAnswer),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,6 +140,21 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    List<Question> newQuestionList = [];
+                    for (var i = 0; i < nQuestion; i++) {
+                      newQuestionList.add(Question(
+                          '', questions[i], answers[i], correctAnswers[i]));
+                    }
+                    widget.addQuiz(Quiz(
+                        'Q' + quizList.length.toString(),
+                        widget.selectedClass.classID,
+                        quizName,
+                        dates[0]!,
+                        dates[1]!,
+                        length.toDouble(),
+                        newQuestionList,
+                        weight.toInt(),
+                        notifications));
                     Navigator.pop(context);
                   },
                   child: const Text('Save'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/models/quiz.dart';
-import 'package:new_project/screens/quistList/resultScreen.dart';
+import 'package:new_project/screens/quizList/resultScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
 
 class StartQuizScreen extends StatefulWidget {
