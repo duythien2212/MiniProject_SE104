@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:new_project/data/quizList.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/models/question.dart';
 import 'package:new_project/models/quiz.dart';
 import 'package:new_project/utils/custom_text_field.dart';
-import 'package:http/http.dart' as http;
 
 class AddQuizScreen extends StatefulWidget {
   const AddQuizScreen(
@@ -60,8 +57,6 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
     while (questions.length < nQuestion) {
       questions.add('');
       answers.add(['', '', '', '']);

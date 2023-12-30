@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/data/classes.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/utils/custom_text_field.dart';
-import 'package:new_project/utils/widgets.dart';
 
 class CreateClassScreen extends StatefulWidget {
   const CreateClassScreen({super.key, required this.addClass});
@@ -26,8 +24,6 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
     while (studentIDs.length > nStudent) {
       studentIDs.removeLast();
     }
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(20),
