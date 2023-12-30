@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/screens/startScreen/main_screen.dart';
@@ -6,6 +8,7 @@ import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/functions.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +20,17 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final url = 'http://127.0.0.1:5000';
+
+  Future<void> _login() async {
+    final response = await http.post(
+      Uri.parse(url + '/api/login/'),
+      body: json.encode({
+        'username': usernameController.text,
+        'password': passwordController.text,
+      }),
+    );
+  }
 
   @override
   void dispose() {
@@ -56,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   homeButton(() {
                     loginInput = loginInformation(
                         usernameController.text, passwordController.text);
+                    _login();
                     navigateToPage(context, const MainScreen());
                   }, 'LOGIN', screenHeight, screenWidth),
                 ],
