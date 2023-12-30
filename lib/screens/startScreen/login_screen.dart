@@ -20,16 +20,17 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final url = 'http://127.0.0.1:5000';
+  final url = 'http://127.0.0.1:4000';
 
-  Future<void> _login() async {
-    final response = await http.post(
-      Uri.parse(url + '/api/login/'),
-      body: json.encode({
-        'username': usernameController.text,
-        'password': passwordController.text,
-      }),
-    );
+  Future<int> _login() async {
+    final response = await http.post(Uri.parse(url + '/api/login'),
+        body: json.encode({
+          'username': usernameController.text,
+          'password': passwordController.text
+        }));
+    var response_data = jsonDecode(response.body);
+    print(response_data['message']);
+    return int.parse(response_data['status']);
   }
 
   @override
@@ -68,10 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: passwordController),
                   const SizedBox(height: 10),
                   homeButton(() {
-                    loginInput = loginInformation(
-                        usernameController.text, passwordController.text);
-                    _login();
-                    navigateToPage(context, const MainScreen());
+                    var status = _login();
+                    if ((status) == 1) {
+                      loginInput = loginInformation(
+                          usernameController.text, passwordController.text);
+                      navigateToPage(context, const MainScreen());
+                    } else {}
                   }, 'LOGIN', screenHeight, screenWidth),
                 ],
               ),
