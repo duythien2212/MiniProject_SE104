@@ -2,10 +2,13 @@ import pandas as pd
 import random
 import os 
 
-user = pd.read_excel(r'D:\UIT\HOC KI 3\Nhập môn SE\Thực hành\import_data\user_table.xlsx')
-classes = pd.read_excel(r'D:\UIT\HOC KI 3\Nhập môn SE\Thực hành\import_data\class_table.xlsx')
-quiz = pd.read_excel(r'D:\UIT\HOC KI 3\Nhập môn SE\Thực hành\import_data\quiz_table.xlsx')
-question = pd.read_excel(r'D:\UIT\HOC KI 3\Nhập môn SE\Thực hành\import_data\quiz_question.xlsx')
+path = r'D:/UIT/HOC KI 3/Nhập môn SE/Thực hành/import_data'
+
+user = pd.read_excel(os.path.join(path,'user_table.xlsx'))
+classes = pd.read_excel(os.path.join(path,'class_table.xlsx'))
+quiz = pd.read_excel(os.path.join(path,'quiz_table.xlsx'))
+question = pd.read_excel(os.path.join(path,'quiz_question.xlsx'))
+
 ## Fill nan
 user = user.fillna('')
 classes = classes.fillna('')
@@ -170,6 +173,7 @@ make_quiz()
 make_question()
 make_score()
 
+os.system('mysql -u root -p < table.sql')
 os.system('mysql -u root -p < import_user.sql')
 os.system('mysql -u root -p < import_class.sql')
 os.system('mysql -u root -p < import_student_in_class.sql')
