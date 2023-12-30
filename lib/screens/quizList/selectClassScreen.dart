@@ -69,12 +69,37 @@ class _SelectClassScreen extends State<SelectClassScreen> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  showModalBottomSheet(
-                    useSafeArea: true,
-                    isScrollControlled: true,
+                  showDialog(
                     context: context,
-                    builder: (ctx) => CreateClassScreen(
-                      addClass: addClass,
+                    builder: (ctx) => AlertDialog(
+                      title: Text(
+                        'Create new class',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      content: Text(
+                        'Import a class or create a new class',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text('Import'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            showModalBottomSheet(
+                              useSafeArea: true,
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (ctx) => CreateClassScreen(
+                                addClass: addClass,
+                              ),
+                            );
+                          },
+                          child: const Text('Create'),
+                        ),
+                      ],
                     ),
                   );
                 },

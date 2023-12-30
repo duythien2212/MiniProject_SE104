@@ -100,17 +100,42 @@ class _QuizListScreenState extends State<QuizListScreen> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AppThemes.headingColor),
                 onPressed: () {
-                  showModalBottomSheet(
-                    useSafeArea: true,
-                    isScrollControlled: true,
+                  showDialog(
                     context: context,
-                    builder: (ctx) => AddQuizScreen(
-                      selectedClass: selectedClass,
-                      addQuiz: (newQuiz) {
-                        setState(() {
-                          quizList.add(newQuiz);
-                        });
-                      },
+                    builder: (ctx) => AlertDialog(
+                      title: Text(
+                        'Add a new quiz',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      content: Text(
+                        'Import a new quiz from a file or create a new quiz',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text('Import'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            showModalBottomSheet(
+                              useSafeArea: true,
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (ctx) => AddQuizScreen(
+                                selectedClass: selectedClass,
+                                addQuiz: (newQuiz) {
+                                  setState(() {
+                                    quizList.add(newQuiz);
+                                  });
+                                },
+                              ),
+                            );
+                          },
+                          child: const Text('Create'),
+                        ),
+                      ],
                     ),
                   );
                 },
