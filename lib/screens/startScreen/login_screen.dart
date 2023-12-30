@@ -73,8 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: passwordController),
                   const SizedBox(height: 10),
                   homeButton(() {
-                    _login();
-                    Timer(const Duration(milliseconds: 10), () {
+                    _login().then((value) {
                       if ((responseStatus) == 1) {
                         loginInput = loginInformation(
                             usernameController.text, passwordController.text);
