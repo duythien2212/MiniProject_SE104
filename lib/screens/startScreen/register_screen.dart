@@ -48,11 +48,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               'email': emailController.text,
               'username': usernameController.text,
               'password': passwordController.text,
-              'cpassword': confirmController.text,
+              'cPassword': confirmController.text,
             }))
         .then((value) => value);
     var response_data = jsonDecode(response.body);
-    print(response.body);
+    responseMessage = response_data['message'];
+    responseStatus = response_data['status'];
   }
 
   @override
@@ -110,10 +111,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 10),
                   homeButton(
                     () {
-                      // _register().then((value) {
-                      //   navigateToPage(context, const MainScreen());
-                      // });
-                      navigateToPage(context, const MainScreen());
+                      _register().then((value) {
+                        if (responseStatus == 1) {
+                          navigateToPage(context, const MainScreen());
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text(
+                                'Error',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              content: Text(
+                                responseMessage,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(ctx);
+                                  },
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      });
                     },
                     'REGISTER',
                     screenHeight,
