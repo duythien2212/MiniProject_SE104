@@ -1,3 +1,5 @@
+final url = 'http://127.0.0.1:4000';
+
 class Information {
   Information(this.firstName, this.lastName, this.email, this.avatarURL,
       this.userName, this.userID, this.userClass, this.isTeacher);

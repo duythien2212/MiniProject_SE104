@@ -20,7 +20,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final url = 'http://127.0.0.1:4000';
   int responseStatus = 0;
   String responseMessage = 'Chưa nhập username và mật khẩu!';
 

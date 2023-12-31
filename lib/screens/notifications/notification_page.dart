@@ -1,31 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/data/notification.dart';
+import 'package:new_project/screens/notifications/createNotification.dart';
 import 'package:new_project/utils/app_styles.dart';
 
-class NotificationPage extends StatelessWidget {
-  const NotificationPage({required this.notificates, super.key});
-  final List<Notificate> notificates;
+List<Notificate> getNotifications(String username) {
+  return notificates;
+}
+
+class NotificationPage extends StatefulWidget {
+  NotificationPage({super.key});
+  final List<Notificate> notifications = getNotifications(userinfor.userName);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _NotificationPageState();
+  }
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  void addNotification(Notificate notification) {
+    setState(() {
+      widget.notifications.add(notification);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height / 8;
     final width = MediaQuery.of(context).size.width / 3;
     // print("height: ${MediaQuery.of(context).size.height}");
     return Container(
+      padding: EdgeInsets.all(20),
       color: AppThemes.mainScreenBackroundColor,
       child: Center(
-        child: Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 80.0,
-            child: ListView(
-              children: [
-                const SizedBox(height: 20),
-                ...notificates.map((item) {
-                  return notificationField(item, height, width);
-                }),
-              ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height - 80.0,
+                child: ListView(
+                  children: [
+                    const SizedBox(height: 20),
+                    ...widget.notifications.map((item) {
+                      return notificationField(item, height, width);
+                    }),
+                  ],
+                ),
+              ),
             ),
-          ),
+            if (userinfor.isTeacher)
+              IconButton.filledTonal(
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (ctx) => createNotificationScreen(
+                            addNotification: addNotification,
+                          ));
+                },
+                icon: const Icon(Icons.add),
+              ),
+          ],
         ),
       ),
     );

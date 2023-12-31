@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/screens/startScreen/main_screen.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/functions.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -30,6 +34,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
     passwordController.dispose();
     confirmController.dispose();
     return super.dispose();
+  }
+
+  String responseMessage = '';
+  String responseStatus = '';
+
+  Future<void> _register() async {
+    final response = await http
+        .post(Uri.parse(url + '/api/register'),
+            body: json.encode({
+              'lastname': lastNameController.text,
+              'firstname': firstNameController.text,
+              'email': emailController.text,
+              'username': usernameController.text,
+              'password': passwordController.text,
+              'cpassword': confirmController.text,
+            }))
+        .then((value) => value);
+    var response_data = jsonDecode(response.body);
+    print(response.body);
   }
 
   @override
@@ -85,9 +108,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       screenWidth: screenWidth,
                       screenHeight: screenHeight),
                   const SizedBox(height: 10),
-                  homeButton(() {
-                    navigateToPage(context, const MainScreen());
-                  }, 'REGISTER', screenHeight, screenWidth),
+                  homeButton(
+                    () {
+                      // _register().then((value) {
+                      //   navigateToPage(context, const MainScreen());
+                      // });
+                      navigateToPage(context, const MainScreen());
+                    },
+                    'REGISTER',
+                    screenHeight,
+                    screenWidth,
+                  ),
                 ],
               ),
             ],

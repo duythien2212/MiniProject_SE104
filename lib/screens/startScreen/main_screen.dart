@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
-      NotificationPage(notificates: notificates),
+      NotificationPage(),
       const CurrentQuizPage(),
       SelectClassScreen(setScreen: setScreen),
       const ProfilePage(),
