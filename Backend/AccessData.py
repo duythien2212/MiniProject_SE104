@@ -23,7 +23,7 @@ def findUserName(username):
         else:
             return False
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: check if username in database. If yes then check if password is match to the password of that username
 def login(username, password):
@@ -38,28 +38,26 @@ def login(username, password):
         else:
             return ("Không tìm thấy Username trong database !", 0)
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: check if username in database. if not yet then add into database
 def register(lastname, firstname, email, username, password, cPassword):
     if password != cPassword:
-        return "Password Unmatching !"
+        return ("Password Unmatching !", 0)
     if firstname == "" or lastname == "" or email == "" or username == "" or password == "":
-        return "Kiểm tra lại thông tin !"
+        return ("Kiểm tra lại thông tin !", 1)
     try:
         selected_row = findUserName(username)
         if selected_row:
-            print("Tồn tại username !")
+            return ("Tồn tại username !", 0)
         else:
             fullname = lastname + " " + firstname
             query = f"insert into user values (\'{123}\', \'{username}\', \'{email}\', \'{fullname}\', \'{password}\', '0', '1')"
             mycursor.execute(query)
             mydb.commit()
-            selected_row = findUserName(username)
-            userInstance = USER(*selected_row)
-            return userInstance
+            return ("Đăng ký thành công !", 1)
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: return all information of all quiz
 def getInfoAllQuiz():
@@ -72,7 +70,7 @@ def getInfoAllQuiz():
         else:
             return []
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: create a new quiz and return it
 def createQuiz(classID, nameQuiz, startTime, endTime, length, weight):
@@ -86,7 +84,7 @@ def createQuiz(classID, nameQuiz, startTime, endTime, length, weight):
         row = mycursor.fetchone()
         return Quiz(*row)
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: get all information of all class
 def getClass():
@@ -99,7 +97,7 @@ def getClass():
         else:
             return list()
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: get all information of a quiz
 def getInfoQuiz(quizID):
@@ -112,7 +110,7 @@ def getInfoQuiz(quizID):
         else:
             return list()
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: get all information of a question
 def getInfoQuestion(questionID):
@@ -125,7 +123,7 @@ def getInfoQuestion(questionID):
             infoQuestion.append(selected_row[i])
         return Question(selected_row[0], selected_row[1], selected_row[2], infoQuestion, selected_row[7], selected_row[8])
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 def getQuestionInQuiz(quiz_id):
     try:
@@ -137,7 +135,7 @@ def getQuestionInQuiz(quiz_id):
             listQuestion.extend(row[0] for row in selected_row)
         return listQuestion
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
 
 # Function: get info of all notification.
 def getAllNoti():
@@ -150,7 +148,6 @@ def getAllNoti():
         else:
             return list()
     except Exception as e:
-        return error(e)
+        return (error(e), 0)
     
 #user = register("Lê", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123")
-print(getAllNoti())
