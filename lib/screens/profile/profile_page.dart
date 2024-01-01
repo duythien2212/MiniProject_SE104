@@ -17,8 +17,10 @@ class ProfilePage extends StatelessWidget {
           children: [
             avatar(screenWidth, screenHeight),
             informationField(userinfor.userName, screenWidth, screenHeight),
-            informationField('${userinfor.lastName} ${userinfor.firstName}', screenWidth, screenHeight),
-            informationField(userinfor.userClass, screenWidth, screenHeight),
+            informationField('${userinfor.lastName} ${userinfor.firstName}',
+                screenWidth, screenHeight),
+            informationField(
+                userinfor.userClasses[0], screenWidth, screenHeight),
             informationField(userinfor.email, screenWidth, screenHeight),
           ],
         ),
@@ -41,7 +43,8 @@ Widget informationField(String text, double screenWidth, double screenHeight) {
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: screenHeight / 40, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: screenHeight / 40, fontWeight: FontWeight.bold),
         ),
       ),
     ),

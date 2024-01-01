@@ -5,7 +5,9 @@ import 'package:new_project/screens/notifications/createNotification.dart';
 import 'package:new_project/utils/app_styles.dart';
 
 List<Notificate> getNotifications(String username) {
-  return notificates;
+  return notificates
+      .where((notify) => userinfor.userClasses.contains(notify.classID))
+      .toList();
 }
 
 class NotificationPage extends StatefulWidget {
