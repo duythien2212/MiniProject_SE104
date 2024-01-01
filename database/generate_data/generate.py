@@ -18,15 +18,14 @@ question = question.fillna('')
 ##  Make user example
 ##
 def make_user():
-    n = len(user['ID'])
+    n = len(user['USER_NAME'])
     print(n)
     file = open('import_user.sql', mode='w', encoding="utf-8")
     file.write('USE `QuizApp`;\n')
     file.write('LOCK TABLES `USER` WRITE;\n')
 
     for i in range(n):
-        cmd = f'''INSERT INTO `USER` VALUES (\'{user['ID'][i]}\',
-                                            \'{user['USER_NAME'][i]}\',
+        cmd = f'''INSERT INTO `USER` VALUES (\'{user['USER_NAME'][i]}\',
                                             \'{user['EMAIL'][i]}\',
                                             \'{user['NAME'][i]}\',
                                             \'{user['PASSWORD'][i]}\',
@@ -57,7 +56,7 @@ def make_class():
 ##  Make student_in_class example
 ##
 def make_student_in_class():
-    n = len(classes['CLASS_ID'])*len(user['ID'])//2
+    n = len(classes['CLASS_ID'])*len(user['USER_NAME'])//2
     print(n)
     root_ID = 240001
     file = open('import_student_in_class.sql', mode='w', encoding="utf-8")
@@ -67,7 +66,7 @@ def make_student_in_class():
     for i in range(n):
         cmd = f'''INSERT INTO `STUDENT_IN_CLASS` VALUES (\'{root_ID + i}\',
                                                         \'{classes['CLASS_ID'][(i+random.randint(1,10)) % len(classes['CLASS_ID'])]}\',
-                                                        \'{user['ID'][(i+random.randint(1,10)) % (len(user['ID'])-7) + 7]}\',
+                                                        \'{user['USER_NAME'][(i+random.randint(1,10)) % (len(user['USER_NAME'])-7) + 7]}\',
                                                         \'{round(random.random()*5 + 5, 2)}\',
                                                         \'0\');\n'''
         file.write(cmd)
@@ -124,7 +123,7 @@ def make_question():
 ##  Make score example
 ##
 def make_score():
-    n = len(quiz['QUIZ_ID'])*len(user['ID'])//2
+    n = len(quiz['QUIZ_ID'])*len(user['USER_NAME'])//2
     print(n)
 
     root_ID = 120001
@@ -136,7 +135,7 @@ def make_score():
     for i in range(n):
         cmd = f'''INSERT INTO `SCORE` VALUES (\'{root_ID + i}\',
                                             \'{quiz['QUIZ_ID'][(i+random.randint(1,10)) % len(quiz['QUIZ_ID'])]}\',
-                                            \'{user['ID'][(i+random.randint(1,10)) % (len(user['ID'])-7) + 7]}\',
+                                            \'{user['USER_NAME'][(i+random.randint(1,10)) % (len(user['USER_NAME'])-7) + 7]}\',
                                             \'{random.randint(0,2)}\',
                                             \'{random.randint(0,2)}\',
                                             \'0\');\n'''
