@@ -7,7 +7,6 @@ import 'package:new_project/screens/setting/setting_page.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/custom_app_bar.dart';
 import 'package:new_project/utils/widgets.dart';
-import 'package:new_project/data/notification.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -59,8 +58,8 @@ class _MainScreenState extends State<MainScreen> {
                   switchScreen: switchScreen,
                 ),
                 DrawerListTile(
-                  title: 'Current Quiz',
-                  icon: const Icon(Icons.question_mark),
+                  title: 'Quiz Result',
+                  icon: const Icon(Icons.done_all_sharp),
                   index: 1,
                   currentIndex: _selectedIndex,
                   switchScreen: switchScreen,

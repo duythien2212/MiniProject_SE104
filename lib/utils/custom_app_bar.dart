@@ -12,6 +12,7 @@ class StartScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Center(
         child: Text(
           titles,
@@ -35,6 +36,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       leading: Image.asset(logoPath),
       // actions: [logoutMainButton(() => null)],
       title: Center(child: Text(titles, style: const TextStyle(fontSize: 30))),

@@ -28,9 +28,7 @@ class _QuizListScreenState extends State<QuizListScreen> {
     final Class selectedClass = widget.selectedClass;
     final void Function(Widget screen) setScreen = widget.setScreen;
 
-    List<Quiz> classQuiz = quizList
-        .where((quiz) => quiz.classID == selectedClass.classID)
-        .toList();
+    List<Quiz> classQuiz = quizList.where((quiz) => quiz.classID == selectedClass.classID).toList();
 
     return Column(
       children: [
@@ -76,8 +74,7 @@ class _QuizListScreenState extends State<QuizListScreen> {
                         children: [
                           Text(
                             quiz.quizName,
-                            style: const TextStyle(
-                                fontSize: 20, color: AppThemes.headingColor),
+                            style: const TextStyle(fontSize: 20, color: AppThemes.headingColor),
                           ),
                           Text('Length: ${quiz.length} minute'),
                           Text('Deadline: ${quiz.endTime}'),
@@ -97,8 +94,7 @@ class _QuizListScreenState extends State<QuizListScreen> {
           children: [
             if (userinfor.isTeacher)
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: AppThemes.headingColor),
+                style: ElevatedButton.styleFrom(backgroundColor: AppThemes.headingColor),
                 onPressed: () {
                   showDialog(
                     context: context,

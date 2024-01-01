@@ -18,7 +18,7 @@ class ProfilePage extends StatelessWidget {
             avatar(screenWidth, screenHeight),
             informationField(userinfor.userName, screenWidth, screenHeight),
             informationField('${userinfor.lastName} ${userinfor.firstName}', screenWidth, screenHeight),
-            informationField(userinfor.userClass, screenWidth, screenHeight),
+            informationField(userinfor.userRole, screenWidth, screenHeight),
             informationField(userinfor.email, screenWidth, screenHeight),
           ],
         ),

@@ -8,6 +8,7 @@ import 'package:new_project/utils/widgets.dart';
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key, required this.setScreen});
   final void Function(Widget screen) setScreen;
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -23,7 +24,7 @@ class SettingPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(bottom: screenHeight / 70),
               child: settingButton(() {
-                setScreen(const InformationChangeScreen());
+                setScreen(InformationChangeScreen(setScreen: setScreen));
               }, 'Account Setting', screenHeight, screenWidth),
             ),
             Container(
@@ -35,7 +36,7 @@ class SettingPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(bottom: screenHeight / 70),
               child: settingButton(() {
-                setScreen(const PasswordChangeScreen());
+                setScreen(PasswordChangeScreen(setScreen: setScreen));
               }, 'Change Password', screenHeight, screenWidth),
             ),
           ],
