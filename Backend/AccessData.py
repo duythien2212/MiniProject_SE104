@@ -24,6 +24,18 @@ def findUserName(username):
             return False
     except Exception as e:
         return (error(e), 0)
+    
+def getUserName(username):
+    try:
+        query = f"select * from user WHERE user_name = '{username}'"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchone()
+        if selected_row:
+            return USER(*selected_row)
+        else:
+            return False
+    except Exception as e:
+        return (error(e), 0)
 
 # Function: check if username in database. If yes then check if password is match to the password of that username
 def login(username, password):
@@ -45,7 +57,7 @@ def register(lastname, firstname, email, username, password, cPassword):
     if password != cPassword:
         return ("Password Unmatching !", 0)
     if firstname == "" or lastname == "" or email == "" or username == "" or password == "":
-        return ("Kiểm tra lại thông tin !", 1)
+        return ("Kiểm tra lại thông tin !", 0)
     try:
         selected_row = findUserName(username)
         if selected_row:
@@ -99,6 +111,18 @@ def getClass():
     except Exception as e:
         return (error(e), 0)
 
+def getClassofUser(studentID):
+    try:
+        query = f"select class_id from student_in_class where student_id = {studentID}"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchall()
+        if selected_row:
+            return [row[0] for row in selected_row]
+        else:
+            return list()
+    except Exception as e:
+        return (error(e), 0)
+
 # Function: get all information of a quiz
 def getInfoQuiz(quizID):
     try:
@@ -127,7 +151,7 @@ def getInfoQuestion(questionID):
 
 def getQuestionInQuiz(quiz_id):
     try:
-        query = f"select question_id from quiz_question where quiz_id = {quiz_id}"
+        query = f"select question_id from quiz_question where quiz_id = '{quiz_id}'"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listQuestion = []
@@ -137,16 +161,28 @@ def getQuestionInQuiz(quiz_id):
     except Exception as e:
         return (error(e), 0)
 
+def getQuizinClass(classID):
+    try:
+        query = f"select *  from quiz where class_id = '{classID}'"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchall()
+        listQuiz = []
+        if selected_row:
+            listQuiz.append(Quiz(*row) for row in selected_row)
+        return listQuiz
+    except Exception as e:
+        return error(e)
+    
 # Function: get info of all notification.
 def getAllNoti():
     try:
         query = f"select * from notification"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
+        listNoti = []
         if selected_row:
-            return list(Notification(*selected_row))
-        else:
-            return list()
+            listNoti = [Notification(*row) for row in selected_row]
+        return listNoti
     except Exception as e:
         return (error(e), 0)
     

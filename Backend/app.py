@@ -29,7 +29,40 @@ def callRegister():
                     "status" : message[1]}
     return jsonify(respone_data)
 
+@app.route('/api/notification', methods=['GET'])
+def callNoti():
+    listNoti = getAllNoti()
+    stoNoti = []
+    for noti in listNoti:
+        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date})
+    respone_data = {"notifications": stoNoti}
+    return jsonify(respone_data)
 
+@app.route('/api/profile/<username>', methods=['GET'])
+def callProfile(username):
+    userInstance = findUserName(username)
+    respone_data = {"username": userInstance.userName,
+                    "name": userInstance.name,
+                    "class": userInstance.classes,
+                    "email": userInstance.email}
+    return jsonify(respone_data)
+
+@app.route('/api/class', methods=['GET'])
+def callClass():
+    listClass = getClass()
+    teacher = getUserName(cl.teacherID)
+    stoClass = []
+    for cl in listClass:
+        stoClass.append({"classID": cl.classID,
+                        "className": cl.className,
+                        "teacherName": teacher.name})
+    respone_data = {"class": stoClass}
+    return jsonify(respone_data)
+
+@app.route('/api/infoQuiz/<quizID>', methods=["GET"])
+def callInfoQuiz(quizID):
+    quizInfo = getInfoQuiz(quizID)
+    
 if __name__ == '__main__':
     flask_cors.CORS(app, max_age=3600)
     app.run(port=4000)  # Run on all interfaces
