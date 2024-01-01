@@ -37,10 +37,11 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
         initialDate: now,
         firstDate: firstDate,
         lastDate: lastDate);
-
-    setState(() {
-      dates[i] = pickedDate;
-    });
+    if (pickedDate != null) {
+      setState(() {
+        dates[i] = pickedDate;
+      });
+    }
   }
 
   void setQuestion(index, input) {

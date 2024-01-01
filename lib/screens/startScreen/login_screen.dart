@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if ((responseStatus) == 1) {
                         loginInput = loginInformation(
                             usernameController.text, passwordController.text);
+                        getInformation(usernameController.text);
                         navigateToPage(context, const MainScreen());
                       } else {
                         showDialog(

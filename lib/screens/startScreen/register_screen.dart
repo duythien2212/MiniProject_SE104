@@ -114,6 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     () {
                       _register().then((value) {
                         if (responseStatus == 1) {
+                          getInformation(usernameController.text);
                           navigateToPage(context, const MainScreen());
                         } else {
                           showDialog(
