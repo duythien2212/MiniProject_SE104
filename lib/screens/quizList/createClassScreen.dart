@@ -16,6 +16,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
   var nStudent = 0;
   String classID = '', className = '';
   List<String> studentIDs = [];
+
   @override
   Widget build(BuildContext context) {
     while (studentIDs.length < nStudent) {

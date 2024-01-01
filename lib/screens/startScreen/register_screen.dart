@@ -37,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   String responseMessage = '';
-  String responseStatus = '';
+  int responseStatus = 0;
 
   Future<void> _register() async {
     final response = await http
@@ -51,6 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               'cPassword': confirmController.text,
             }))
         .then((value) => value);
+
     var response_data = jsonDecode(response.body);
     responseMessage = response_data['message'];
     responseStatus = response_data['status'];
@@ -113,6 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     () {
                       _register().then((value) {
                         if (responseStatus == 1) {
+                          getInformation(usernameController.text);
                           navigateToPage(context, const MainScreen());
                         } else {
                           showDialog(

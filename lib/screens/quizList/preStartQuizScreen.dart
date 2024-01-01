@@ -79,16 +79,17 @@ class PreStartQuizScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Download results',
-                          style: TextStyle(
-                            color: AppThemes.headingColor,
-                            fontSize: 15,
+                      if (userinfor.isTeacher)
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Download results',
+                            style: TextStyle(
+                              color: AppThemes.headingColor,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
-                      ),
                     ],
                   ),
               ],

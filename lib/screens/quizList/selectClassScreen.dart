@@ -1,9 +1,15 @@
+import 'dart:html';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/screens/quizList/createClassScreen.dart';
 import 'package:new_project/data/classes.dart';
 import 'package:new_project/screens/quizList/quizListScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
 
 class SelectClassScreen extends StatefulWidget {
   const SelectClassScreen({super.key, required this.setScreen});
@@ -67,45 +73,56 @@ class _SelectClassScreen extends State<SelectClassScreen> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                      title: Text(
-                        'Create new class',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      content: Text(
-                        'Import a class or create a new class',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text('Import'),
+              if (userinfor.isTeacher)
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text(
+                          'Create new class',
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            showModalBottomSheet(
-                              useSafeArea: true,
-                              isScrollControlled: true,
-                              context: context,
-                              builder: (ctx) => CreateClassScreen(
-                                addClass: addClass,
-                              ),
-                            );
-                          },
-                          child: const Text('Create'),
+                        content: Text(
+                          'Import a class or create a new class',
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      ],
-                    ),
-                  );
-                },
-                child: Text('Create Class',
-                    style: Theme.of(context).textTheme.titleLarge),
-              ),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              String filePath = '';
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles();
+
+                              if (result != null) {
+                                Uint8List fileBytes = result.files.first.bytes!;
+                                String fileName = result.files.first.name;
+                                print(fileBytes);
+                              }
+                            },
+                            child: const Text('Import'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              showModalBottomSheet(
+                                useSafeArea: true,
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (ctx) => CreateClassScreen(
+                                  addClass: addClass,
+                                ),
+                              );
+                            },
+                            child: const Text('Create'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: Text('Create Class',
+                      style: Theme.of(context).textTheme.titleLarge),
+                ),
             ],
           )
         ],
