@@ -1,4 +1,5 @@
 import mysql.connector
+import datetime
 from Object import *
 
 mydb = mysql.connector.connect(
@@ -74,7 +75,7 @@ def register(lastname, firstname, email, username, password, cPassword):
 # Function: return all information of all quiz
 def getInfoAllQuiz():
     try:
-        query = f"select * from quiz"
+        query = f"select * from quiz where is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         if selected_row:
@@ -94,6 +95,7 @@ def createQuiz(classID, nameQuiz, startTime, endTime, length, weight):
         query = f"select * from quiz where quizID = {quizID}"
         mycursor.execute(query)
         row = mycursor.fetchone()
+        mydb.commit()
         return Quiz(*row)
     except Exception as e:
         return (error(e), 0)
@@ -101,7 +103,7 @@ def createQuiz(classID, nameQuiz, startTime, endTime, length, weight):
 # Function: get all information of all class
 def getClass():
     try:
-        query = f"select * from class"
+        query = f"select * from class where is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         if selected_row:
@@ -126,13 +128,13 @@ def getClassofUser(studentID):
 # Function: get all information of a quiz
 def getInfoQuiz(quizID):
     try:
-        query = f"select * from quiz where quiz_id = {quizID}"
+        query = f"select * from quiz where quiz_id = {quizID} and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
         if selected_row:
-            return list(Quiz(*selected_row))
+            return (Quiz(*selected_row), 1)
         else:
-            return list()
+            return ("Không tồn tại quiz !", 0)
     except Exception as e:
         return (error(e), 0)
 
@@ -151,7 +153,7 @@ def getInfoQuestion(questionID):
 
 def getQuestionInQuiz(quiz_id):
     try:
-        query = f"select question_id from quiz_question where quiz_id = '{quiz_id}'"
+        query = f"select question_id from quiz_question where quiz_id = '{quiz_id}' and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listQuestion = []
@@ -163,12 +165,12 @@ def getQuestionInQuiz(quiz_id):
 
 def getQuizinClass(classID):
     try:
-        query = f"select *  from quiz where class_id = '{classID}'"
+        query = f"select * from quiz where class_id = '{classID}' and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listQuiz = []
         if selected_row:
-            listQuiz.append(Quiz(*row) for row in selected_row)
+            listQuiz = [Quiz(*row) for row in selected_row]
         return listQuiz
     except Exception as e:
         return error(e)
@@ -176,7 +178,7 @@ def getQuizinClass(classID):
 # Function: get info of all notification.
 def getAllNoti():
     try:
-        query = f"select * from notification"
+        query = f"select * from notification where isDeleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listNoti = []
@@ -186,4 +188,24 @@ def getAllNoti():
     except Exception as e:
         return (error(e), 0)
     
+def createNoti(title, content, classID):
+    try:
+        query = f"select count(*) from class where class_id = '{classID}' and is_deleted = 0"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchone()
+        count = int(selected_row[0])
+        if count == 0:
+            return ("Không tồn tại lớp có mã ID phù hợp !", 0)
+        query = "select count(*) from notification"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchone()
+        notiID = int(selected_row[0])
+        query = "insert into notification values (%s, %s, %s, %s, %s, %s)"
+        values = (notiID, title, content, classID, datetime.datetime.now(), 0)
+        mycursor.execute(query, values)
+        mydb.commit()
+        return ("Tạo thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
+
 #user = register("Lê", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123")
