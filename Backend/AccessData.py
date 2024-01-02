@@ -113,9 +113,9 @@ def getClass():
     except Exception as e:
         return (error(e), 0)
 
-def getClassofUser(studentID):
+def getClassofUser(username):
     try:
-        query = f"select class_id from student_in_class where student_id = {studentID}"
+        query = f"select distinct class_id from student_in_class where student_id = {username} and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         if selected_row:
@@ -178,12 +178,7 @@ def getQuizinClass(classID):
 # Function: get info of all notification.
 def getAllNotiinClass(username):
     try:
-        query = f"select distinct class_id from student_in_class where student_id = '{username}'"
-        mycursor.execute(query)
-        selected_row = mycursor.fetchall()
-        stoClass = []
-        if selected_row:
-            stoClass = [row[0] for row in selected_row]
+        stoClass = getClassofUser(username)
         if len(stoClass) == 0:
             return []
         query = "select * from notification where class_id in ('{}')".format("','".join(map(str, stoClass)))
@@ -253,4 +248,4 @@ def updatePassword(username, oldPassword, newPassword, cPassword):
     except Exception as e:
         return (error(e), 0)
 
-#user = register("Lê", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123")
+print(register("Phan", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123"))

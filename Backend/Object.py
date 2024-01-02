@@ -1,5 +1,4 @@
 import random
-import mysql.connector
 
 class Class:
     def __init__(self, classID, className, teacherID, isDeleted):
