@@ -176,9 +176,17 @@ def getQuizinClass(classID):
         return error(e)
     
 # Function: get info of all notification.
-def getAllNoti():
+def getAllNotiinClass(username):
     try:
-        query = f"select * from notification where is_deleted = 0"
+        query = f"select distinct class_id from student_in_class where student_id = '{username}'"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchall()
+        stoClass = []
+        if selected_row:
+            stoClass = [row[0] for row in selected_row]
+        if len(stoClass) == 0:
+            return []
+        query = "select * from notification where class_id in ('{}')".format("','".join(map(str, stoClass)))
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listNoti = []

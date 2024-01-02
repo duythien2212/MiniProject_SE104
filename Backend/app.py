@@ -29,9 +29,9 @@ def callRegister():
                     "status" : message[1]}
     return jsonify(response_data)
 
-@app.route('/api/notification', methods=['GET'])
-def callNoti():
-    listNoti = getAllNoti()
+@app.route('/api/notification/<username>', methods=['GET'])
+def callNoti(username):
+    listNoti = getAllNotiinClass(username)
     stoNoti = []
     for noti in listNoti:
         print(noti)
