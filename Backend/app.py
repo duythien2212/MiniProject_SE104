@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from AccessData import *
 import flask_cors
 import json
+import io
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -25,50 +27,27 @@ def callRegister():
     password = data['password']
     cPassword = data['cPassword']
     message = register(lastname, firstname, email, username, password, cPassword)
-    response_data = {"message": message[0],
+    respone_data = {"message": message[0],
                     "status" : message[1]}
-    return jsonify(response_data)
-
-@app.route('/api/notification/<username>', methods=['GET'])
-def callNoti(username):
-    listNoti = getAllNotiinClass(username)
-    stoNoti = []
-    for noti in listNoti:
-        print(noti)
-        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date})
-    response_data = {"notifications": stoNoti}
-    return jsonify(response_data)
+    return jsonify(respone_data)
 
 @app.route('/api/notification', methods=['GET'])
-def callgetAllNoti():
+def callNoti():
     listNoti = getAllNoti()
     stoNoti = []
     for noti in listNoti:
-        print(noti)
-        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date, "classID": noti.classID})
-    response_data = {"notifications": stoNoti}
-    return jsonify(response_data)
-
+        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date})
+    respone_data = {"notifications": stoNoti}
+    return jsonify(respone_data)
 
 @app.route('/api/profile/<username>', methods=['GET'])
 def callProfile(username):
     userInstance = findUserName(username)
-    response_data = {"username": userInstance.userName,
+    respone_data = {"username": userInstance.userName,
                     "name": userInstance.name,
                     "class": userInstance.classes,
                     "email": userInstance.email}
-    return jsonify(response_data)
-
-@app.route('/api/createNoti', methods=['POST'])
-def callCreateNoti():
-    data = json.loads(request.data.decode("utf-8"))
-    title = data['title']
-    content = data['content']
-    classID = data['classID']
-    message = createNoti(title, content, classID)
-    response_data = {"message": message[0],
-                     "status": message[1]}
-    return jsonify(response_data)
+    return jsonify(respone_data)
 
 @app.route('/api/class', methods=['GET'])
 def callClass():
@@ -79,56 +58,49 @@ def callClass():
         stoClass.append({"classID": cl.classID,
                         "className": cl.className,
                         "teacherName": teacher.name})
-    response_data = {"class": stoClass}
-    return jsonify(response_data)
+    respone_data = {"class": stoClass}
+    return jsonify(respone_data)
 
 @app.route('/api/infoQuiz/<quizID>', methods=["GET"])
-def callInfofQuiz(quizID):
+def callInfoQuiz(quizID):
     quizInfo = getInfoQuiz(quizID)
-    if quizInfo[1] == 0:
-        return jsonify({"message": quizInfo[0],
-                        "status": quizInfo[1]})
-    else:
-        response_data = {"quizName": quizInfo.quizName, 
-                        "startTime": quizInfo.startTime,
-                        "endTime"  : quizInfo.endTime,
-                        "length"   : quizInfo.length,
-                        "weight"   : quizInfo.weight}
-        return jsonify(response_data)
+    
+@app.route('/api/createClass', methods=['POST'])
+def callMakeClass():
+    input = json.loads(request.data.decode("utf-8"))
+    b = io.BytesIO(input)
+    data = pd.read_excel(b.read())
 
-@app.route('/api/quizList/<classID>', methods=["GET"])
-def callgetQuizinClass(classID):
-    quizList = getQuizinClass(classID)
-    stoQuiz = []
-    for quiz in quizList[0]:
-        stoQuiz.append({"name": quiz.quizName,
-                        "endTime": quiz.endTime,
-                        "weight": quiz.weight})
-    response_data = {"quiz": stoQuiz}
+    clss = {'classID': None,'className': None, 'teacherID': None}
+    clss['classID'] = data['classID']
+    clss['className'] = data['className']
+    clss['teacherID'] = data['teacherID']
+    response_data = makeClass(clss)
+
+    lst_student = data['student']
+    addStudentToDatabase(listStudent=lst_student, classID=data['classID'])
+
     return jsonify(response_data)
 
-@app.route('/api/updateProfile/<username>', methods=['POST'])
-def callUpdateProfile(username):
-    data = json.loads(request.data.decode("utf-8"))
-    firstname = data['firstname']
-    lastname = data['lastname']
-    email = data['email']
-    message = updateProfile(username, firstname, lastname, email)
-    response_data = {"message": message[0],
-                     "status": message[1]}
-    return jsonify(response_data)
+@app.route('/api/createQuiz', methods=['POST'])
+def callMakeClass():
+    input = json.loads(request.data.decode("utf-8"))
+    b = io.BytesIO(input)
+    data = pd.read_excel(b.read())
 
-@app.route('/api/updatePassword/<username>', methods=['POST'])
-def callUpdatePassword(username):
-    data = json.loads(request.data.decode("utf-8"))
-    oldPassword = data['oldPassword']
-    newPassword = data['newPassword']
-    cPassword = data['cPassword']
-    message = updatePassword(username, oldPassword, newPassword, cPassword)
-    response_data = {"message": message[0],
-                     "status": message[1]}
-    return jsonify(response_data)
+    quiz = {'classID':None, 'quizName':None, 'startTime':None, 'endTime':None, 'length':None, 'weight':None}
+    quiz['classID'] = data['classID']
+    quiz['quizName'] = data['quizName']
+    quiz['startTime'] = data['startTime']
+    quiz['endTime'] = data['endTime']
+    quiz['length'] = data['length']
+    quiz['weight'] = data['weight']
+    response_data = makeQuiz(quiz)
+    
+    lst_question = data['listQuestion']
+    addQuestionToDatabase(listQuestion=lst_question, quizID=response_data[1])
+    return jsonify(response_data[0])
 
 if __name__ == '__main__':
     flask_cors.CORS(app, max_age=3600)
-    app.run(port=4000)
+    app.run(port=4000)  # Run on all interfaces
