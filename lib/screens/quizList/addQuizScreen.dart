@@ -83,13 +83,6 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                   quizName = input;
                 }).createTextField(),
             TextInput(
-                name: 'Number of question (number)',
-                onChange: (input) {
-                  setState(() {
-                    nQuestion = int.parse(input);
-                  });
-                }).createTextField(),
-            TextInput(
                 name: 'Length (minutes)',
                 onChange: (input) {
                   length = int.parse(input);
@@ -126,8 +119,22 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                 onChange: (input) {
                   notifications = input;
                 }).createTextField(),
+            TextInput(
+                name: 'Number of question (number)',
+                onChange: (input) {
+                  setState(() {
+                    nQuestion = int.parse(input);
+                  });
+                }).createTextField(),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Import questions'),
+            ),
+            const SizedBox(height: 50),
             for (var i = 0; i < nQuestion; i++)
-              createQuestion(i, setQuestion, setAnswer, setCorrectAnswer),
+              createQuestion(i, setQuestion, setAnswer, setCorrectAnswer,
+                  questions[i], answers[i], correctAnswers[i] + 1),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,7 +175,8 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   }
 }
 
-Widget createQuestion(index, setQuestion, setAnswer, setCorrectAnswer) {
+Widget createQuestion(index, setQuestion, setAnswer, setCorrectAnswer,
+    initialQuestion, initialAnswers, initialCorrectAnswer) {
   return Card(
     child: Container(
       padding: const EdgeInsets.all(20),
@@ -183,6 +191,7 @@ Widget createQuestion(index, setQuestion, setAnswer, setCorrectAnswer) {
             onChanged: (input) {
               setQuestion(index, input);
             },
+            controller: TextEditingController(text: initialQuestion),
             decoration: const InputDecoration(
               label: Text('Question'),
             ),
@@ -192,6 +201,7 @@ Widget createQuestion(index, setQuestion, setAnswer, setCorrectAnswer) {
               onChanged: (input) {
                 setAnswer(index, answerID, input);
               },
+              controller: TextEditingController(text: initialAnswers[answerID]),
               decoration: const InputDecoration(
                 label: Text('Answer'),
               ),
@@ -200,6 +210,8 @@ Widget createQuestion(index, setQuestion, setAnswer, setCorrectAnswer) {
             onChanged: (input) {
               setCorrectAnswer(index, input);
             },
+            controller:
+                TextEditingController(text: initialCorrectAnswer.toString()),
             decoration: const InputDecoration(
               label: Text('Correct answer (1-4)'),
             ),

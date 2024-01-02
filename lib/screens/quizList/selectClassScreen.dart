@@ -76,47 +76,12 @@ class _SelectClassScreen extends State<SelectClassScreen> {
               if (userinfor.isTeacher)
                 ElevatedButton(
                   onPressed: () {
-                    showDialog(
+                    showModalBottomSheet(
+                      useSafeArea: true,
+                      isScrollControlled: true,
                       context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text(
-                          'Create new class',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        content: Text(
-                          'Import a class or create a new class',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () async {
-                              String filePath = '';
-                              FilePickerResult? result =
-                                  await FilePicker.platform.pickFiles();
-
-                              if (result != null) {
-                                Uint8List fileBytes = result.files.first.bytes!;
-                                String fileName = result.files.first.name;
-                                print(fileBytes);
-                              }
-                            },
-                            child: const Text('Import'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              showModalBottomSheet(
-                                useSafeArea: true,
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (ctx) => CreateClassScreen(
-                                  addClass: addClass,
-                                ),
-                              );
-                            },
-                            child: const Text('Create'),
-                          ),
-                        ],
+                      builder: (ctx) => CreateClassScreen(
+                        addClass: addClass,
                       ),
                     );
                   },

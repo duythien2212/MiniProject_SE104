@@ -28,7 +28,9 @@ class _QuizListScreenState extends State<QuizListScreen> {
     final Class selectedClass = widget.selectedClass;
     final void Function(Widget screen) setScreen = widget.setScreen;
 
-    List<Quiz> classQuiz = quizList.where((quiz) => quiz.classID == selectedClass.classID).toList();
+    List<Quiz> classQuiz = quizList
+        .where((quiz) => quiz.classID == selectedClass.classID)
+        .toList();
 
     return Column(
       children: [
@@ -74,7 +76,8 @@ class _QuizListScreenState extends State<QuizListScreen> {
                         children: [
                           Text(
                             quiz.quizName,
-                            style: const TextStyle(fontSize: 20, color: AppThemes.headingColor),
+                            style: const TextStyle(
+                                fontSize: 20, color: AppThemes.headingColor),
                           ),
                           Text('Length: ${quiz.length} minute'),
                           Text('Deadline: ${quiz.endTime}'),
@@ -94,44 +97,20 @@ class _QuizListScreenState extends State<QuizListScreen> {
           children: [
             if (userinfor.isTeacher)
               ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: AppThemes.headingColor),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AppThemes.headingColor),
                 onPressed: () {
-                  showDialog(
+                  showModalBottomSheet(
+                    useSafeArea: true,
+                    isScrollControlled: true,
                     context: context,
-                    builder: (ctx) => AlertDialog(
-                      title: Text(
-                        'Add a new quiz',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      content: Text(
-                        'Import a new quiz from a file or create a new quiz',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text('Import'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            showModalBottomSheet(
-                              useSafeArea: true,
-                              isScrollControlled: true,
-                              context: context,
-                              builder: (ctx) => AddQuizScreen(
-                                selectedClass: selectedClass,
-                                addQuiz: (newQuiz) {
-                                  setState(() {
-                                    quizList.add(newQuiz);
-                                  });
-                                },
-                              ),
-                            );
-                          },
-                          child: const Text('Create'),
-                        ),
-                      ],
+                    builder: (ctx) => AddQuizScreen(
+                      selectedClass: selectedClass,
+                      addQuiz: (newQuiz) {
+                        setState(() {
+                          quizList.add(newQuiz);
+                        });
+                      },
                     ),
                   );
                 },
