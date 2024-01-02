@@ -1,5 +1,4 @@
-import 'dart:html';
-import 'dart:typed_data';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
@@ -14,7 +13,6 @@ import 'package:http/http.dart' as http;
 class SelectClassScreen extends StatefulWidget {
   const SelectClassScreen({super.key, required this.setScreen});
   final void Function(Widget screen) setScreen;
-
   @override
   State<StatefulWidget> createState() {
     return _SelectClassScreen();
@@ -22,9 +20,30 @@ class SelectClassScreen extends StatefulWidget {
 }
 
 class _SelectClassScreen extends State<SelectClassScreen> {
+  List<Class>? userClasses;
+
   void addClass(Class newClass) {
     setState(() {
       classes.add(newClass);
+    });
+  }
+
+  Future<void> getClasses() async {
+    final response = await http.get(Uri.parse(url + '/api/class'));
+    final parsedData = jsonDecode(response.body);
+    List<dynamic> newData = parsedData['class'];
+    setState(() {
+      userClasses = newData
+          .map(
+            (e) => Class(
+              classID: e['classID'],
+              teacherID: e['teacherName'],
+              className: e['className'],
+            ),
+          )
+          .toList()
+          .where((element) => userinfor.userClasses.contains(element.classID))
+          .toList();
     });
   }
 
@@ -32,6 +51,9 @@ class _SelectClassScreen extends State<SelectClassScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    if (userClasses == null) {
+      getClasses();
+    }
     return Expanded(
       child: Column(
         children: [
@@ -40,32 +62,33 @@ class _SelectClassScreen extends State<SelectClassScreen> {
             height: height - 100,
             child: ListView(
               children: [
-                for (var lop in classes)
-                  TextButton(
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${lop.classID} - ${lop.className}',
-                            style: const TextStyle(
-                                fontSize: 20, color: AppThemes.headingColor),
-                          ),
-                          Text('Teacher: ${lop.teacherID}'),
-                        ],
+                if (userClasses != null)
+                  for (var lop in userClasses!)
+                    TextButton(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${lop.classID} - ${lop.className}',
+                              style: const TextStyle(
+                                  fontSize: 20, color: AppThemes.headingColor),
+                            ),
+                            Text('Teacher: ${lop.teacherID}'),
+                          ],
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      widget.setScreen(QuizListScreen(
-                        selectedClass: lop,
-                        setScreen: widget.setScreen,
-                      ));
-                    },
-                  )
+                      onPressed: () {
+                        widget.setScreen(QuizListScreen(
+                          selectedClass: lop,
+                          setScreen: widget.setScreen,
+                        ));
+                      },
+                    )
               ],
             ),
           ),

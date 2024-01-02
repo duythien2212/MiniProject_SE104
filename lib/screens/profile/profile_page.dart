@@ -5,6 +5,7 @@ import 'package:new_project/utils/widgets.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -17,8 +18,10 @@ class ProfilePage extends StatelessWidget {
           children: [
             avatar(screenWidth, screenHeight),
             informationField(userinfor.userName, screenWidth, screenHeight),
-            informationField('${userinfor.lastName} ${userinfor.firstName}', screenWidth, screenHeight),
-            informationField(userinfor.isTeacher ? 'Teacher' : 'Student', screenWidth, screenHeight),
+            informationField('${userinfor.lastName} ${userinfor.firstName}',
+                screenWidth, screenHeight),
+            informationField(userinfor.isTeacher ? 'Teacher' : 'Student',
+                screenWidth, screenHeight),
             informationField(userinfor.email, screenWidth, screenHeight),
           ],
         ),
@@ -41,7 +44,8 @@ Widget informationField(String text, double screenWidth, double screenHeight) {
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: screenHeight / 40, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: screenHeight / 40, fontWeight: FontWeight.bold),
         ),
       ),
     ),

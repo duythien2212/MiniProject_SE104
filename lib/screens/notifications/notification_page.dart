@@ -1,18 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/data/notification.dart';
 import 'package:new_project/screens/notifications/createNotification.dart';
 import 'package:new_project/utils/app_styles.dart';
-
-List<Notificate> getNotifications(String username) {
-  return notificates
-      .where((notify) => userinfor.userClasses.contains(notify.classID))
-      .toList();
-}
+import 'package:http/http.dart' as http;
 
 class NotificationPage extends StatefulWidget {
-  NotificationPage({super.key});
-  final List<Notificate> notifications = getNotifications(userinfor.userName);
+  const NotificationPage({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -21,9 +18,26 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  List<Notificate>? notifications;
+
   void addNotification(Notificate notification) {
     setState(() {
-      widget.notifications.add(notification);
+      notifications!.add(notification);
+    });
+  }
+
+  Future<void> getNotificates() async {
+    final response = await http
+        .get(Uri.parse(url + '/api/notification/' + userinfor.userName));
+    final parsedData = jsonDecode(response.body);
+    List<dynamic> newData = parsedData['notifications'];
+    setState(() {
+      notifications = newData
+          .map(
+            (e) => Notificate(
+                e['title'], e['content'], 'KHTN2022', DateTime.now()),
+          )
+          .toList();
     });
   }
 
@@ -31,7 +45,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height / 8;
     final width = MediaQuery.of(context).size.width / 3;
-    // print("height: ${MediaQuery.of(context).size.height}");
+    if (notifications == null) getNotificates();
     return Container(
       padding: EdgeInsets.all(20),
       color: AppThemes.mainScreenBackroundColor,
@@ -46,9 +60,10 @@ class _NotificationPageState extends State<NotificationPage> {
                 child: ListView(
                   children: [
                     const SizedBox(height: 20),
-                    ...widget.notifications.map((item) {
-                      return notificationField(item, height, width);
-                    }),
+                    if (notifications != null)
+                      ...notifications!.map((item) {
+                        return notificationField(item, height, width);
+                      }),
                   ],
                 ),
               ),
