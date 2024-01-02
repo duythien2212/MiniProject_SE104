@@ -129,6 +129,42 @@ def callUpdatePassword(username):
                      "status": message[1]}
     return jsonify(response_data)
 
+@app.route('/api/createClass', methods=['POST'])
+def callMakeClass():
+    input = json.loads(request.data.decode("utf-8"))
+    b = io.BytesIO(input)
+    data = pd.read_excel(b.read())
+
+    clss = {'classID': None,'className': None, 'teacherID': None}
+    clss['classID'] = data['classID']
+    clss['className'] = data['className']
+    clss['teacherID'] = data['teacherID']
+    response_data = makeClass(clss)
+
+    lst_student = data['student']
+    addStudentToDatabase(listStudent=lst_student, classID=data['classID'])
+
+    return jsonify(response_data)
+
+@app.route('/api/createQuiz', methods=['POST'])
+def callMakeQuiz():
+    input = json.loads(request.data.decode("utf-8"))
+    b = io.BytesIO(input)
+    data = pd.read_excel(b.read())
+
+    quiz = {'classID':None, 'quizName':None, 'startTime':None, 'endTime':None, 'length':None, 'weight':None}
+    quiz['classID'] = data['classID']
+    quiz['quizName'] = data['quizName']
+    quiz['startTime'] = data['startTime']
+    quiz['endTime'] = data['endTime']
+    quiz['length'] = data['length']
+    quiz['weight'] = data['weight']
+    response_data = makeQuiz(quiz)
+    
+    lst_question = data['listQuestion']
+    addQuestionToDatabase(listQuestion=lst_question, quizID=response_data[1])
+    return jsonify(response_data[0])
+
 if __name__ == '__main__':
     flask_cors.CORS(app, max_age=3600)
     app.run(port=4000)
