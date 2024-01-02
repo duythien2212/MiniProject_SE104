@@ -23,6 +23,14 @@ class _LoginScreenState extends State<LoginScreen> {
   int responseStatus = 0;
   String responseMessage = 'Chưa nhập username và mật khẩu!';
 
+  Future<void> getUserInfor() async {
+    final response = await http
+        .get(Uri.parse(url + '/api/profile/' + usernameController.text));
+    var user = jsonDecode(response.body);
+    userinfor = Information(user['name'], user['name'], user['email'],
+        'avatarURL', user['username'], 'userID', user['class'], true);
+  }
+
   Future<void> _login() async {
     final response = await http
         .post(Uri.parse(url + '/api/login'),
@@ -77,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         loginInput = loginInformation(
                             usernameController.text, passwordController.text);
                         getInformation(usernameController.text);
+                        getUserInfor();
                         navigateToPage(context, const MainScreen());
                       } else {
                         showDialog(

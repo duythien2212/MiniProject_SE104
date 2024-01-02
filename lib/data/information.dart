@@ -17,7 +17,7 @@ class Information {
 }
 
 Information userinfor = Information("Nguyên", 'Lê Bình', 'nguyenle@gmail.com',
-    '', '27520010', 'U1', ['KHTN2022'], true);
+    '', '27520010', 'U1', ['IT001'], true);
 
 class loginInformation {
   loginInformation(this.username, this.password);

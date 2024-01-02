@@ -25,6 +25,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmController = TextEditingController();
 
+  Future<void> getUserInfor() async {
+    final response = await http
+        .get(Uri.parse(url + '/api/profile/' + usernameController.text));
+    var user = jsonDecode(response.body);
+    userinfor = Information(user['name'], user['name'], user['email'],
+        'avatarURL', user['username'], 'userID', user['class'], true);
+  }
+
   @override
   void dispose() {
     firstNameController.dispose();
@@ -114,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     () {
                       _register().then((value) {
                         if (responseStatus == 1) {
-                          getInformation(usernameController.text);
+                          getUserInfor();
                           navigateToPage(context, const MainScreen());
                         } else {
                           showDialog(
