@@ -259,3 +259,46 @@ def updatePassword(username, oldPassword, newPassword, cPassword):
         return ("Thay đổi thành công !", 1)
     except Exception as e:
         return (error(e), 0)
+      
+def makeClass(clss):
+    try:
+        cmd = f"INSERT INTO class VALUES ({clss['classID']}, {clss['className']}, {clss['teachetID']}, 0);\n"
+        mycursor.execute(cmd)
+        return Class(clss['classID'], clss['className'], clss['teacherID'], 0)
+    except Exception as e:
+        return (error(e), 0)
+
+def addStudentToDatabase(listStudent, classID):
+    try:
+        cmd = f"SELECT COUNT(*) FROM student_in_class;"
+        mycursor.execute(cmd)
+        numID = mycursor.fetchall()
+        for i in range(len(listStudent)):
+            ID = numID + i + 1
+            studentID = listStudent[i]
+            cmd = f"INSERT INTO student_in_class VALUES ({ID}, {classID}, {studentID}, NULL, 0);"
+            mycursor.execute(cmd)
+    except Exception as e:
+        return (error(e), 0)
+
+def makeQuiz(quiz):
+    try:
+        cmd = f"SELECT COUNT(*) FROM quiz;"
+        mycursor.execute(cmd)
+        numID = mycursor.fetchall()
+        cmd = f"INSERT INTO quiz VALUE ({numID+1},{quiz['classID']},{quiz['quizName']},{quiz['startTime']},{quiz['endTime']},{quiz['length']},{quiz['weight']},0);"
+        mycursor.execute(cmd)
+        return (Quiz(numID+1, quiz['classID'], quiz['quizName'], quiz['startTime'], quiz['endTime'], quiz['length'], quiz['weight'], 0), numID+1)
+    except Exception as e:
+        return (error(e), 0)
+    
+def addQuestionToDatabase(listQuestion, quizID):
+    try:
+        cmd = f"SELECT COUNT(*) FROM quiz_question;"
+        mycursor.execute(cmd)
+        numID = mycursor.fetchall()
+        for i in range(len(listQuestion)):
+            cmd = f"INSERT INTO quiz_question VALUE({numID+i+1},{quizID},{listQuestion['question'][i]},{listQuestion['answer1'][i]},{listQuestion['answer2'][i]},{listQuestion['answer3'][i]},{listQuestion['answer4'][i]},{listQuestion['correctAnswer'][i]},0)"
+            mycursor.execute(cmd)
+    except Exception as e:
+        return (error(e),0)
