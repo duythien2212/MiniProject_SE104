@@ -58,16 +58,15 @@ def make_class():
 def make_student_in_class():
     n = len(classes['CLASS_ID'])*len(user['USER_NAME'])//2
     print(n)
-    root_ID = 240001
     file = open('import_student_in_class.sql', mode='w', encoding="utf-8")
     file.write('USE `QuizApp`;\n')
     file.write('LOCK TABLES `STUDENT_IN_CLASS` WRITE;\n')
 
     for i in range(n):
-        cmd = f'''INSERT INTO `STUDENT_IN_CLASS` VALUES (\'{root_ID + i}\',
+        cmd = f'''INSERT INTO `STUDENT_IN_CLASS` VALUES (\'{i}\',
                                                         \'{classes['CLASS_ID'][(i+random.randint(1,10)) % len(classes['CLASS_ID'])]}\',
                                                         \'{user['USER_NAME'][(i+random.randint(1,10)) % (len(user['USER_NAME'])-7) + 7]}\',
-                                                        \'{round(random.random()*5 + 5, 2)}\',
+                                                        NULL,
                                                         \'0\');\n'''
         file.write(cmd)
     file.write('UNLOCK TABLES;\n')
@@ -126,14 +125,12 @@ def make_score():
     n = len(quiz['QUIZ_ID'])*len(user['USER_NAME'])//2
     print(n)
 
-    root_ID = 120001
-
     file = open('import_score.sql', mode='w', encoding="utf-8")
     file.write('USE `QuizApp`;\n')
     file.write('LOCK TABLES `SCORE` WRITE;\n')
 
     for i in range(n):
-        cmd = f'''INSERT INTO `SCORE` VALUES (\'{root_ID + i}\',
+        cmd = f'''INSERT INTO `SCORE` VALUES (\'{i}\',
                                             \'{quiz['QUIZ_ID'][(i+random.randint(1,10)) % len(quiz['QUIZ_ID'])]}\',
                                             \'{user['USER_NAME'][(i+random.randint(1,10)) % (len(user['USER_NAME'])-7) + 7]}\',
                                             \'{random.randint(0,2)}\',
@@ -148,13 +145,12 @@ def make_score():
 def make_noti():
     n = len(classes['CLASS_ID'])
     print(n)
-    root_ID = 110000
     file = open('import_noti.sql', mode='w', encoding="utf-8")
     file.write('USE `QuizApp`;\n')
     file.write('LOCK TABLES `NOTIFICATION` WRITE;\n')
 
     for i in range(n):
-        cmd = f'''INSERT INTO `NOTIFICATION` VALUES (\'{root_ID + i}\',
+        cmd = f'''INSERT INTO `NOTIFICATION` VALUES (\'{i}\',
                                             \'REMIND\',
                                             \'You have some quiz to do.\',
                                             \'{classes['CLASS_ID'][i]}\',
