@@ -176,6 +176,18 @@ def getQuizinClass(classID):
         return error(e)
     
 # Function: get info of all notification.
+def getAllNoti():
+    try:
+        query = f"select * from notification where is_deleted = 0"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchall()
+        listNoti = []
+        if selected_row:
+            listNoti = [Notification(*row) for row in selected_row]
+        return listNoti
+    except Exception as e:
+        return (error(e), 0)    
+
 def getAllNotiinClass(username):
     try:
         stoClass = getClassofUser(username)
@@ -247,5 +259,3 @@ def updatePassword(username, oldPassword, newPassword, cPassword):
         return ("Thay đổi thành công !", 1)
     except Exception as e:
         return (error(e), 0)
-
-print(register("Phan", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123"))

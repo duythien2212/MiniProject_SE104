@@ -39,6 +39,17 @@ def callNoti(username):
     response_data = {"notifications": stoNoti}
     return jsonify(response_data)
 
+@app.route('/api/notification', methods=['GET'])
+def callgetAllNoti():
+    listNoti = getAllNoti()
+    stoNoti = []
+    for noti in listNoti:
+        print(noti)
+        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date, "classID": noti.classID})
+    response_data = {"notifications": stoNoti}
+    return jsonify(response_data)
+
+
 @app.route('/api/profile/<username>', methods=['GET'])
 def callProfile(username):
     userInstance = findUserName(username)
