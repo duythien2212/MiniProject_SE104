@@ -79,8 +79,7 @@ class Question:
         self.isDeleted = 1
 
 class USER:
-    def __init__(self, ID, userName, email, name, password, isTeacher, isDeleted, classes=""):
-        self.ID = ID
+    def __init__(self, userName, email, name, password, isTeacher, isDeleted, classes=""):
         self.userName = userName
         self.password = password
         self.email = email

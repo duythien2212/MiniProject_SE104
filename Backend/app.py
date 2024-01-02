@@ -34,6 +34,7 @@ def callNoti():
     listNoti = getAllNoti()
     stoNoti = []
     for noti in listNoti:
+        print(noti)
         stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date})
     response_data = {"notifications": stoNoti}
     return jsonify(response_data)

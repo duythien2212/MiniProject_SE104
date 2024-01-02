@@ -16,7 +16,7 @@ def error(e):
 # Function: find a row that have same username in database
 def findUserName(username):
     try:
-        query = f"select * from user WHERE user_name = '{username}'"
+        query = f"select * from user WHERE user_name = '{username}' and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
         if selected_row:
@@ -28,7 +28,7 @@ def findUserName(username):
     
 def getUserName(username):
     try:
-        query = f"select * from user WHERE user_name = '{username}'"
+        query = f"select * from user WHERE user_name = '{username}' and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
         if selected_row:
@@ -65,7 +65,7 @@ def register(lastname, firstname, email, username, password, cPassword):
             return ("Tồn tại username !", 0)
         else:
             fullname = lastname + " " + firstname
-            query = f"insert into user values (\'{123}\', \'{username}\', \'{email}\', \'{fullname}\', \'{password}\', '0', '1')"
+            query = f"insert into user values ('{username}', '{email}', '{fullname}', '{password}', '0', '1')"
             mycursor.execute(query)
             mydb.commit()
             return ("Đăng ký thành công !", 1)
@@ -178,7 +178,7 @@ def getQuizinClass(classID):
 # Function: get info of all notification.
 def getAllNoti():
     try:
-        query = f"select * from notification where isDeleted = 0"
+        query = f"select * from notification where is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listNoti = []
@@ -245,5 +245,4 @@ def updatePassword(username, oldPassword, newPassword, cPassword):
     except Exception as e:
         return (error(e), 0)
 
-print(updatePassword("27520001", "60945", "60943", "60943"))
 #user = register("Lê", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123")
