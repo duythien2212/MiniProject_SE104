@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/screens/setting/setting_page.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class PasswordChangeScreen extends StatefulWidget {
   const PasswordChangeScreen({super.key, required this.setScreen});
@@ -15,6 +19,21 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
   final TextEditingController oldController = TextEditingController();
   final TextEditingController newController = TextEditingController();
   final TextEditingController confirmController = TextEditingController();
+
+  String rMessage = '';
+  int rStatus = 0;
+  Future<void> changePassword() async {
+    final response = await http.post(
+        Uri.parse(url + '/api/updatePassword/' + userinfor.userName),
+        body: json.encode({
+          'oldPassword': oldController.text,
+          'newPassword': newController.text,
+          'cPassword': confirmController.text,
+        }));
+    var r_data = jsonDecode(response.body);
+    rMessage = r_data['message'];
+    rStatus = r_data['status'];
+  }
 
   @override
   void dispose() {
@@ -61,13 +80,51 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
           ),
         ),
         SizedBox(height: screenHeight / 20),
-        customTextField(controller: oldController, text: 'Old password', screenWidth: screenWidth * 1.2, screenHeight: screenHeight * 0.8),
-        customTextField(controller: newController, text: 'New password', screenWidth: screenWidth * 1.2, screenHeight: screenHeight * 0.8),
-        customTextField(controller: confirmController, text: 'Confirm password', screenWidth: screenWidth * 1.2, screenHeight: screenHeight * 0.8),
+        customTextField(
+            controller: oldController,
+            text: 'Old password',
+            screenWidth: screenWidth * 1.2,
+            screenHeight: screenHeight * 0.8),
+        customTextField(
+            controller: newController,
+            text: 'New password',
+            screenWidth: screenWidth * 1.2,
+            screenHeight: screenHeight * 0.8),
+        customTextField(
+            controller: confirmController,
+            text: 'Confirm password',
+            screenWidth: screenWidth * 1.2,
+            screenHeight: screenHeight * 0.8),
         SizedBox(height: screenHeight / 20),
-        settingButton(() {
-          setScreen(SettingPage(setScreen: setScreen));
-        }, "CHANGE PASSWORD", screenHeight * 0.8, screenWidth * 0.8),
+        settingButton(
+          () {
+            changePassword().then((value) {
+              if (rStatus == 1) {
+                setScreen(SettingPage(setScreen: setScreen));
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text("Error",
+                        style: Theme.of(context).textTheme.titleLarge),
+                    content: Text(rMessage),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            });
+          },
+          "CHANGE PASSWORD",
+          screenHeight * 0.8,
+          screenWidth * 0.8,
+        ),
       ],
     );
   }
