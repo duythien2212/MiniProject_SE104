@@ -47,7 +47,7 @@ def callProfile(username):
                     "email": userInstance.email}
     return jsonify(response_data)
 
-@app.route('api/createNoti', methods=['POST'])
+@app.route('/api/createNoti', methods=['POST'])
 def callCreateNoti():
     data = json.loads(request.data.decode("utf-8"))
     title = data['title']
@@ -84,7 +84,7 @@ def callInfofQuiz(quizID):
                         "weight"   : quizInfo.weight}
         return jsonify(response_data)
 
-@app.route('api/quizList/<classID>', methods=["GET"])
+@app.route('/api/quizList/<classID>', methods=["GET"])
 def callgetQuizinClass(classID):
     quizList = getQuizinClass(classID)
     stoQuiz = []
@@ -95,6 +95,28 @@ def callgetQuizinClass(classID):
     response_data = {"quiz": stoQuiz}
     return jsonify(response_data)
 
+@app.route('/api/updateProfile/<username>', methods=['POST'])
+def callUpdateProfile(username):
+    data = json.loads(request.data.decode("utf-8"))
+    firstname = data['firstname']
+    lastname = data['lastname']
+    email = data['email']
+    message = updateProfile(username, firstname, lastname, email)
+    response_data = {"message": message[0],
+                     "status": message[1]}
+    return jsonify(response_data)
+
+@app.route('/api/updatePassword/<username>', methods=['POST'])
+def callUpdatePassword(username):
+    data = json.loads(request.data.decode("utf-8"))
+    oldPassword = data['oldPassword']
+    newPassword = data['newPassword']
+    cPassword = data['cPassword']
+    message = updatePassword(username, oldPassword, newPassword, cPassword)
+    response_data = {"message": message[0],
+                     "status": message[1]}
+    return jsonify(response_data)
+
 if __name__ == '__main__':
     flask_cors.CORS(app, max_age=3600)
-    app.run(port=4000)  # Run on all interfaces
+    app.run(port=4000)

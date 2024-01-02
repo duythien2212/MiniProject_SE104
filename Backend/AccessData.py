@@ -208,4 +208,42 @@ def createNoti(title, content, classID):
     except Exception as e:
         return (error(e), 0)
 
+def updateProfile(username, firstname, lastname, email):
+    try:
+        userInstance = getUserName(username)
+        if userInstance == False:
+            return ("Không tồn tại username !", 0)
+        if firstname == "":
+            firstname = " ".join(userInstance.name.split()[1:])
+        if lastname == "":
+            lastname = userInstance.name.split()[0]
+        newName = lastname + " " + firstname
+        if email == "":
+            email = userInstance.email
+        query = f"update user set name = '{newName}', email = '{email}' where user_name = '{username}'"
+        mycursor.execute(query)
+        mydb.commit()
+        return ("Thay đổi thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
+    
+def updatePassword(username, oldPassword, newPassword, cPassword):
+    try:
+        userInstance = getUserName(username)
+        if userInstance == False:
+            return ("Không tồn tại username !", 0)
+        if oldPassword != userInstance.password:
+            return ("Mật khẩu hiện tại không khớp với mật khẩu đã nhập !", 0)
+        if newPassword == "":
+            return ("Mật khẩu mới không được trống !", 0)
+        if cPassword != newPassword:
+            return ("Mật khẩu mới không đúng với mật khẩu xác nhận !", 0)
+        query = f"update user set password = '{newPassword}' where user_name = '{username}'"
+        mycursor.execute(query)
+        mydb.commit()
+        return ("Thay đổi thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
+
+print(updatePassword("27520001", "60945", "60943", "60943"))
 #user = register("Lê", "Bình Nguyên", "2252xxxx@gm.uit.edu.vn", "hahaha", "123", "123")
