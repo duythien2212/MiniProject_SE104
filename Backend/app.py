@@ -37,7 +37,7 @@ def callNoti(username):
     stoNoti = []
     for noti in listNoti:
         print(noti)
-        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date, "classID": noti.classI})
+        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date, "classID": noti.classID})
     response_data = {"notifications": stoNoti}
     return jsonify(response_data)
 
@@ -67,7 +67,8 @@ def callCreateNoti():
     title = data['title']
     content = data['content']
     classID = data['classID']
-    message = createNoti(title, content, classID)
+    date = data['date']
+    message = createNoti(title, content, classID, date)
     response_data = {"message": message[0],
                      "status": message[1]}
     return jsonify(response_data)
@@ -104,9 +105,12 @@ def callInfofQuiz(quizID):
 def callgetQuizinClass(classID):
     quizList = getQuizinClass(classID)
     stoQuiz = []
-    for quiz in quizList[0]:
-        stoQuiz.append({"name": quiz.quizName,
+    for quiz in quizList:
+        stoQuiz.append({"quizID": quiz.quizID,
+                        "name": quiz.quizName,
+                        "startTime": quiz.startTime,
                         "endTime": quiz.endTime,
+                        "length": quiz.length,
                         "weight": quiz.weight})
     response_data = {"quiz": stoQuiz}
     return jsonify(response_data)
@@ -163,7 +167,6 @@ def callCreateQuiz(classID):
 @app.route('/api/getQuestionQuiz/<quizID>', methods=['GET'])
 def callgetQuestioninQuiz(quizID):
     listQuestion = getQuestionInQuiz(quizID)
-    random.shuffle(listQuestion)
 
     stoQuestion = []
     for question in listQuestion:

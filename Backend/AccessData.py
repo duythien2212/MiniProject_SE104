@@ -1,5 +1,4 @@
 import mysql.connector
-import datetime
 from Object import *
 
 mydb = mysql.connector.connect(
@@ -184,17 +183,6 @@ def getQuestionInQuiz(quiz_id):
     except Exception as e:
         return (error(e), 0)
 
-def callgetQuestioninQuiz(quizID):
-    listQuestion = getQuestionInQuiz(quizID)
-    stoQuestion = []
-    for question in listQuestion:
-        correctAnswer = question.listAnswer[question.correctAnswer]
-        stoQuestion.append({"question": question.question,
-                           "listAnswer": question.shuffleAnswer(),
-                           "correctAnswer": correctAnswer})
-    response_data = {"message": stoQuestion}
-    return response_data
-
 def getQuizinClass(classID):
     try:
         query = f"select * from quiz where class_id = '{classID}' and is_deleted = 0"
@@ -235,7 +223,7 @@ def getAllNotiinClass(username):
     except Exception as e:
         return (error(e), 0)
     
-def createNoti(title, content, classID):
+def createNoti(title, content, classID, date):
     try:
         query = f"select count(*) from class where class_id = '{classID}' and is_deleted = 0"
         mycursor.execute(query)
@@ -248,7 +236,7 @@ def createNoti(title, content, classID):
         selected_row = mycursor.fetchone()
         notiID = int(selected_row[0])
         query = "insert into notification values (%s, %s, %s, %s, %s, %s)"
-        values = (notiID, title, content, classID, datetime.datetime.now(), 0)
+        values = (notiID, title, content, classID, date, 0)
         mycursor.execute(query, values)
         mydb.commit()
         return ("Tạo thành công !", 1)
@@ -361,3 +349,4 @@ def stoScore(quizID, username, numberofCorrect):
         return ("Lưu thành công !", 1)
     except Exception as e:
         return (error(e), 0)
+    
