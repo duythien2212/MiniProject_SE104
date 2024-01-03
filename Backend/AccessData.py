@@ -4,7 +4,7 @@ from Object import *
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="09062004pP@"
+  password="duythien2212"
 )
 mycursor = mydb.cursor()
 mycursor.execute("use quizapp")
@@ -181,6 +181,7 @@ def getQuestionInQuiz(quiz_id):
             listQuestion = [getQuestion(row) for row in selected_row]
         return listQuestion
     except Exception as e:
+        print(error(e))
         return (error(e), 0)
 
 def getQuizinClass(classID):
