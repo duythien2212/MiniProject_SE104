@@ -349,4 +349,3 @@ def stoScore(quizID, username, numberofCorrect):
         return ("Lưu thành công !", 1)
     except Exception as e:
         return (error(e), 0)
-    
