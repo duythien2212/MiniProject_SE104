@@ -28,7 +28,7 @@ CREATE TABLE `CLASS` (
 -- Table structure for table `STUDENT_IN_CLASS`
 --
 CREATE TABLE `STUDENT_IN_CLASS` (
-  `ID` varchar(20) NOT NULL,
+  `ID` int NOT NULL,
   `CLASS_ID` varchar(20) NOT NULL,
   `STUDENT_ID` varchar(20) NOT NULL,
   `SCORE` DECIMAL(3, 2) CHECK (`SCORE` >= 0 AND `SCORE` <= 10),
@@ -41,7 +41,7 @@ CREATE TABLE `STUDENT_IN_CLASS` (
 -- Table structure for table `QUIZ`
 --
 CREATE TABLE `QUIZ` (
-  `QUIZ_ID` varchar(20) NOT NULL,
+  `QUIZ_ID` int NOT NULL,
   `CLASS_ID` varchar(20) NOT NULL,
   `QUIZ_NAME` varchar(20) NOT NULL,
   `START_TIME` datetime NOT NULL,
@@ -56,8 +56,8 @@ CREATE TABLE `QUIZ` (
 -- Table structure for table `QUIZ_QUESTION`
 --
 CREATE TABLE `QUIZ_QUESTION` (
-  `QUESTION_ID` varchar(20) NOT NULL,
-  `QUIZ_ID` varchar(20) NOT NULL,
+  `QUESTION_ID` int NOT NULL,
+  `QUIZ_ID` int NOT NULL,
   `QUESTION` varchar(10000) NOT NULL,
   `ANSWER_1` varchar(1000) NOT NULL,
   `ANSWER_2` varchar(1000),
@@ -72,8 +72,8 @@ CREATE TABLE `QUIZ_QUESTION` (
 -- Table structure for table `SCORE`
 --
 CREATE TABLE `SCORE` (
-  `SCORE_ID` varchar(20) NOT NULL,
-  `QUIZ_ID` varchar(20) NOT NULL,
+  `SCORE_ID` int NOT NULL,
+  `QUIZ_ID` int NOT NULL,
   `STUDENT_ID` varchar(20) NOT NULL,
   `NUMBER_OF_CORRECT` int NOT NULL,
   `DATE` datetime NOT NULL,
@@ -86,8 +86,8 @@ CREATE TABLE `SCORE` (
 -- Table structure for table `NOTIFICATION`
 --
 CREATE TABLE `NOTIFICATION` (
-  `NOTIFY_ID` varchar(20) NOT NULL,
-  `TITTLE` varchar(20) NOT NULL,
+  `NOTIFY_ID` int NOT NULL,
+  `TITTLE` varchar(200) NOT NULL,
   `CONTENT` varchar(10000) NOT NULL,
   `CLASS_ID` varchar(20) NOT NULL,
   `DATE` datetime NOT NULL,
