@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/importFile.dart';
+import 'package:http/http.dart' as http;
+import 'package:new_project/utils/showError.dart';
 
 class CreateClassScreen extends StatefulWidget {
   const CreateClassScreen({super.key, required this.addClass});
@@ -17,6 +21,23 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
   var nStudent = 0;
   String classID = '', className = '';
   List<String> studentIDs = [];
+  String rMessage = '';
+  int rStatus = 0;
+
+  Future<void> createClass() async {
+    final response = await http
+        .post(Uri.parse(url + '/api/createClass/' + userinfor.userName),
+            body: json.encode({
+              'classID': classID,
+              'className': className,
+              'stoStudent': studentIDs,
+            }))
+        .then((value) => value);
+
+    var response_data = jsonDecode(response.body);
+    rMessage = response_data['message'];
+    rStatus = response_data['status'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +103,19 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    widget.addClass(Class(
-                        classID: classID,
-                        teacherID: userinfor.userID,
-                        className: className));
-                    Navigator.pop(context);
+                    createClass().then(
+                      (value) {
+                        if (rStatus == 1) {
+                          widget.addClass(Class(
+                              classID: classID,
+                              teacherID: userinfor.userID,
+                              className: className));
+                          Navigator.pop(context);
+                        } else {
+                          showError(context, rMessage);
+                        }
+                      },
+                    );
                   },
                   child: const Text('Save'),
                 ),

@@ -52,8 +52,6 @@ class PreStartQuizScreen extends StatelessWidget {
                 Text('Weight: ${selectedQuiz.weight}', style: bodyTheme),
                 Text('Start time: ${selectedQuiz.startTime}', style: bodyTheme),
                 Text('Deadline: ${selectedQuiz.endTime}', style: bodyTheme),
-                Text('Notifications: ${selectedQuiz.notification}',
-                    style: bodyTheme),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

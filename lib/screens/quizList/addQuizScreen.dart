@@ -159,15 +159,14 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                           '', questions[i], answers[i], correctAnswers[i]));
                     }
                     widget.addQuiz(Quiz(
-                        'Q' + quizList.length.toString(),
+                        '',
                         widget.selectedClass.classID,
                         quizName,
                         dates[0]!,
                         dates[1]!,
                         length.toDouble(),
                         newQuestionList,
-                        weight.toInt(),
-                        notifications));
+                        weight.toInt()));
                     Navigator.pop(context);
                   },
                   child: const Text('Save'),

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:new_project/models/question.dart';
 import 'package:new_project/screens/quizList/addQuizScreen.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/data/quizList.dart';
@@ -7,6 +10,9 @@ import 'package:new_project/models/quiz.dart';
 import 'package:new_project/screens/quizList/preStartQuizScreen.dart';
 import 'package:new_project/screens/quizList/selectClassScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
+import 'package:http/http.dart' as http;
+
+// can sua
 
 class QuizListScreen extends StatefulWidget {
   const QuizListScreen({
@@ -23,14 +29,55 @@ class QuizListScreen extends StatefulWidget {
 }
 
 class _QuizListScreenState extends State<QuizListScreen> {
+  List<Quiz>? classQuiz;
+
+  Future<void> getQuiz() async {
+    String classID = widget.selectedClass.classID;
+    final response =
+        await http.get(Uri.parse(url + '/api/quizList/' + classID));
+    final parsedData = jsonDecode(response.body);
+
+    List<dynamic> newData = parsedData['quiz'];
+    List<Quiz> rQuiz = [];
+    for (var e in newData) {
+      getQuestions(e['quizID'].toString()).then((questions) {
+        rQuiz.add(Quiz(
+            e['quizID'].toString(),
+            classID,
+            e['quizName'],
+            DateTime.now(),
+            DateTime.now(),
+            e['length'],
+            questions,
+            e['weight']));
+
+        setState(() {
+          classQuiz = rQuiz;
+        });
+      });
+    }
+  }
+
+  Future<List<Question>> getQuestions(quizID) async {
+    List<Question> questions;
+    final response =
+        await http.get(Uri.parse(url + '/api/getQuestionQuiz/' + quizID));
+    final parsedData = jsonDecode(response.body);
+    List<dynamic> newData = parsedData['message'];
+    questions = newData
+        .map((e) =>
+            Question('', e['question'], e['listAnswer'], e['correctAnswer']))
+        .toList();
+    return questions;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (classQuiz == null) {
+      getQuiz();
+    }
     final Class selectedClass = widget.selectedClass;
     final void Function(Widget screen) setScreen = widget.setScreen;
-
-    List<Quiz> classQuiz = quizList
-        .where((quiz) => quiz.classID == selectedClass.classID)
-        .toList();
 
     return Column(
       children: [
@@ -59,34 +106,34 @@ class _QuizListScreenState extends State<QuizListScreen> {
           child: Expanded(
             child: ListView(
               children: [
-                for (var quiz in classQuiz)
-                  TextButton(
-                    onPressed: () {
-                      setScreen(PreStartQuizScreen(
-                        selectedQuiz: quiz,
-                        selectedClass: selectedClass,
-                        setScreen: setScreen,
-                      ));
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            quiz.quizName,
-                            style: const TextStyle(
-                                fontSize: 20, color: AppThemes.headingColor),
-                          ),
-                          Text('Length: ${quiz.length} minute'),
-                          Text('Deadline: ${quiz.endTime}'),
-                          Text('Weight: ${quiz.weight}'),
-                          Text('Notifications: ${quiz.notification}'),
-                        ],
+                if (classQuiz != null)
+                  for (var quiz in classQuiz!)
+                    TextButton(
+                      onPressed: () {
+                        setScreen(PreStartQuizScreen(
+                          selectedQuiz: quiz,
+                          selectedClass: selectedClass,
+                          setScreen: setScreen,
+                        ));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              quiz.quizName,
+                              style: const TextStyle(
+                                  fontSize: 20, color: AppThemes.headingColor),
+                            ),
+                            Text('Length: ${quiz.length} minute'),
+                            Text('Deadline: ${quiz.endTime}'),
+                            Text('Weight: ${quiz.weight}'),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
               ],
             ),
           ),
@@ -108,7 +155,7 @@ class _QuizListScreenState extends State<QuizListScreen> {
                       selectedClass: selectedClass,
                       addQuiz: (newQuiz) {
                         setState(() {
-                          quizList.add(newQuiz);
+                          classQuiz!.add(newQuiz);
                         });
                       },
                     ),
