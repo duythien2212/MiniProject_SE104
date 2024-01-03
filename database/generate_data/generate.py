@@ -134,6 +134,7 @@ def make_score():
                                             \'{quiz['QUIZ_ID'][(i+random.randint(1,10)) % len(quiz['QUIZ_ID'])]}\',
                                             \'{user['USER_NAME'][(i+random.randint(1,10)) % (len(user['USER_NAME'])-7) + 7]}\',
                                             \'{random.randint(0,2)}\',
+                                            \'2023-09-15 08:30:00\',
                                             \'{random.randint(0,2)}\',
                                             \'0\');\n'''
         file.write(cmd)
