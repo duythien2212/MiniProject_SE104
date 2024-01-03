@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/data/quizList.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/models/question.dart';
 import 'package:new_project/models/quiz.dart';
 import 'package:new_project/utils/custom_text_field.dart';
+import 'package:new_project/utils/importFile.dart';
 
 class AddQuizScreen extends StatefulWidget {
   const AddQuizScreen(
@@ -126,9 +130,11 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                     nQuestion = int.parse(input);
                   });
                 }).createTextField(),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                importFile();
+              },
               child: const Text('Import questions'),
             ),
             const SizedBox(height: 50),

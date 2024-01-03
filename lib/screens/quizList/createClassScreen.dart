@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/utils/custom_text_field.dart';
+import 'package:new_project/utils/importFile.dart';
 
 class CreateClassScreen extends StatefulWidget {
   const CreateClassScreen({super.key, required this.addClass});
@@ -54,7 +55,11 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
             ).createTextField(),
             const SizedBox(height: 10),
             ElevatedButton(
-                onPressed: () {}, child: const Text('Import classes')),
+              onPressed: () {
+                importFile();
+              },
+              child: const Text('Import classes'),
+            ),
             const SizedBox(height: 20),
             if (nStudent > 0) const Text('Students'),
             for (int i = 0; i < nStudent; i++)
