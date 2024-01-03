@@ -152,3 +152,13 @@ class Notification:
 
     def delete(self):
         self.isDeleted = 1
+
+class Score:
+    def __init__(self, scoreID, quizID, studentID, tr, numberofCorrect, date, isDeleted):
+        self.scoreID = scoreID
+        self.quizID = quizID
+        self.studentID = studentID
+        self.tr = tr
+        self.numberofCorrect = numberofCorrect
+        self.date = date
+        self.isDeleted = isDeleted

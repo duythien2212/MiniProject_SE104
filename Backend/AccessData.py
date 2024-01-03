@@ -138,30 +138,47 @@ def getInfoQuiz(quizID):
     except Exception as e:
         return (error(e), 0)
 
+def getQuestion(selected_row):
+    infoQuestion = []
+    for i in range(3, 7):
+        infoQuestion.append(selected_row[i])
+    return Question(selected_row[0], selected_row[1], selected_row[2], infoQuestion, selected_row[7], selected_row[8])
+
 # Function: get all information of a question
 def getInfoQuestion(questionID):
     try:
-        query = f"select * from quiz_question where question_id = {questionID}"
+        query = f"select * from quiz_question where question_id = {questionID} and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
-        infoQuestion = []
-        for i in range(3, 7):
-            infoQuestion.append(selected_row[i])
-        return Question(selected_row[0], selected_row[1], selected_row[2], infoQuestion, selected_row[7], selected_row[8])
+        if selected_row:
+            return (getQuestion(selected_row), 1)
+        else:
+            return ("Không tìm thấy câu hỏi !", 0)
     except Exception as e:
         return (error(e), 0)
 
 def getQuestionInQuiz(quiz_id):
     try:
-        query = f"select question_id from quiz_question where quiz_id = '{quiz_id}' and is_deleted = 0"
+        query = f"select * from quiz_question where quiz_id = '{quiz_id}' and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listQuestion = []
         if selected_row:
-            listQuestion.extend(row[0] for row in selected_row)
+            listQuestion = [getQuestion(row) for row in selected_row]
         return listQuestion
     except Exception as e:
         return (error(e), 0)
+
+def callgetQuestioninQuiz(quizID):
+    listQuestion = getQuestionInQuiz(quizID)
+    stoQuestion = []
+    for question in listQuestion:
+        correctAnswer = question.listAnswer[question.correctAnswer]
+        stoQuestion.append({"question": question.question,
+                           "listAnswer": question.shuffleAnswer(),
+                           "correctAnswer": correctAnswer})
+    response_data = {"message": stoQuestion}
+    return response_data
 
 def getQuizinClass(classID):
     try:
@@ -235,7 +252,7 @@ def updateProfile(username, firstname, lastname, email):
         newName = lastname + " " + firstname
         if email == "":
             email = userInstance.email
-        query = f"update user set name = '{newName}', email = '{email}' where user_name = '{username}'"
+        query = f"update user set name = '{newName}', email = '{email}' where user_name = '{username}' and is_deleted = 0"
         mycursor.execute(query)
         mydb.commit()
         return ("Thay đổi thành công !", 1)
@@ -253,52 +270,64 @@ def updatePassword(username, oldPassword, newPassword, cPassword):
             return ("Mật khẩu mới không được trống !", 0)
         if cPassword != newPassword:
             return ("Mật khẩu mới không đúng với mật khẩu xác nhận !", 0)
-        query = f"update user set password = '{newPassword}' where user_name = '{username}'"
+        query = f"update user set password = '{newPassword}' where user_name = '{username}' and is_deleted = 0"
         mycursor.execute(query)
         mydb.commit()
         return ("Thay đổi thành công !", 1)
     except Exception as e:
         return (error(e), 0)
-      
-def makeClass(clss):
-    try:
-        cmd = f"INSERT INTO class VALUES ({clss['classID']}, {clss['className']}, {clss['teachetID']}, 0);\n"
-        mycursor.execute(cmd)
-        return Class(clss['classID'], clss['className'], clss['teacherID'], 0)
-    except Exception as e:
-        return (error(e), 0)
-
-def addStudentToDatabase(listStudent, classID):
-    try:
-        cmd = f"SELECT COUNT(*) FROM student_in_class;"
-        mycursor.execute(cmd)
-        numID = mycursor.fetchall()
-        for i in range(len(listStudent)):
-            ID = numID + i + 1
-            studentID = listStudent[i]
-            cmd = f"INSERT INTO student_in_class VALUES ({ID}, {classID}, {studentID}, NULL, 0);"
-            mycursor.execute(cmd)
-    except Exception as e:
-        return (error(e), 0)
-
-def makeQuiz(quiz):
-    try:
-        cmd = f"SELECT COUNT(*) FROM quiz;"
-        mycursor.execute(cmd)
-        numID = mycursor.fetchall()
-        cmd = f"INSERT INTO quiz VALUE ({numID+1},{quiz['classID']},{quiz['quizName']},{quiz['startTime']},{quiz['endTime']},{quiz['length']},{quiz['weight']},0);"
-        mycursor.execute(cmd)
-        return (Quiz(numID+1, quiz['classID'], quiz['quizName'], quiz['startTime'], quiz['endTime'], quiz['length'], quiz['weight'], 0), numID+1)
-    except Exception as e:
-        return (error(e), 0)
     
-def addQuestionToDatabase(listQuestion, quizID):
+def getAllScoreofUser(username):
     try:
-        cmd = f"SELECT COUNT(*) FROM quiz_question;"
-        mycursor.execute(cmd)
-        numID = mycursor.fetchall()
-        for i in range(len(listQuestion)):
-            cmd = f"INSERT INTO quiz_question VALUE({numID+i+1},{quizID},{listQuestion['question'][i]},{listQuestion['answer1'][i]},{listQuestion['answer2'][i]},{listQuestion['answer3'][i]},{listQuestion['answer4'][i]},{listQuestion['correctAnswer'][i]},0)"
-            mycursor.execute(cmd)
+        query = f"select * from score where student_id = '{username}' and is_deleted = 0"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchall()
+        listScore = []
+        if selected_row:
+            listScore = [Score(*row) for row in selected_row]
+        stoScore = []
+        for score in listScore:
+            query = f"select quiz_name, length from quiz where quiz_id = '{score.quizID}'"
+            mycursor.execute(query)
+            selected_row = mycursor.fetchone()
+            print(selected_row)
+            name = selected_row[0]
+            cnt = int(selected_row[1])
+            sc = score.numberofCorrect / cnt
+            stoScore.append({"quizName": name,
+                             "try": score.tr,
+                             "score": sc,
+                             "date": score.date})
+        response = {"message": stoScore,
+                    "status": 1}
+        return response
+    
     except Exception as e:
-        return (error(e),0)
+        return (error(e), 0)
+
+def createClass(username, classID, className, stoStudent):
+    try:
+        if findUserName(username) == False:
+            return ("Không tồn tại username !", 0)
+        query = f"select count(*) from class where class_id = {classID} and is_deleted = 0"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchone()
+        cnt = int(selected_row[0])
+        if cnt != 0:
+            return ("Tồn tại mã lớp !", 0)
+        query = f"insert into class values ('{classID}', '{className}', '{username}', 0)"
+        mycursor.execute(query)
+        for studentID in stoStudent:
+            query = f"select count(*) from user where user_name = {studentID} and is_deleted = 0"
+            mycursor.execute(query)
+            selected_row = mycursor.fetchone()
+            cnt = int(selected_row[0])
+            if cnt == 0:
+                return ("Không tồn tại username !", 0)
+            query = f"insert into student_in_class values('', '{classID}', '{studentID}', , 0)"
+            mycursor.execute(query)
+
+        mydb.commit()
+        return ("Tạo thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
