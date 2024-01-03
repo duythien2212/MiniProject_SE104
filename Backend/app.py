@@ -83,7 +83,7 @@ def callMakeClass():
     return jsonify(response_data)
 
 @app.route('/api/createQuiz', methods=['POST'])
-def callMakeClass():
+def callMakeQuiz():
     input = json.loads(request.data.decode("utf-8"))
     b = io.BytesIO(input)
     data = pd.read_excel(b.read())
