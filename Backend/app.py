@@ -3,6 +3,7 @@ from AccessData import *
 import flask_cors
 import json
 import random
+import datetime
 
 app = Flask(__name__)
 
@@ -90,11 +91,13 @@ def callInfofQuiz(quizID):
         return jsonify({"message": quizInfo[0],
                         "status": quizInfo[1]})
     else:
-        response_data = {"quizName": quizInfo.quizName, 
-                        "startTime": quizInfo.startTime,
-                        "endTime"  : quizInfo.endTime,
-                        "length"   : quizInfo.length,
-                        "weight"   : quizInfo.weight}
+        response_data = {"quizID"  : quizInfo[0].quizID,
+                        "quizName" : quizInfo[0].quizName, 
+                        "startTime": quizInfo[0].startTime,
+                        "endTime"  : quizInfo[0].endTime,
+                        "length"   : quizInfo[0].length,
+                        "weight"   : quizInfo[0].weight,
+                        "status"   : quizInfo[1]}
         return jsonify(response_data)
 
 @app.route('/api/quizList/<classID>', methods=["GET"])
@@ -146,12 +149,16 @@ def callCreateClass(username):
                   "status": message[1]}
     return jsonify(response_data)
 
-@app.route('/api/createQuiz', methods=['POST'])
-def callCreateQuiz():
+@app.route('/api/createQuiz/<classID>', methods=['POST'])
+def callCreateQuiz(classID):
     data = json.loads(request.data.decode("utf-8"))
     quizName = data['quizName']
     length = data['length']
     weight = data['weight']
+    startTime = data['startTime']
+    endTime = data['endTime']
+    listQuestion = data['listQuestion']
+    createQuiz(classID, quizName, startTime, endTime, length, weight, listQuestion)
 
 @app.route('/api/getQuestionQuiz/<quizID>', methods=['GET'])
 def callgetQuestioninQuiz(quizID):
@@ -165,6 +172,16 @@ def callgetQuestioninQuiz(quizID):
                            "listAnswer": question.shuffleAnswer(),
                            "correctAnswer": correctAnswer})
     response_data = {"message": stoQuestion}
+    return jsonify(response_data)
+
+@app.route('/api/stoScore/<username>', methods=['POST'])
+def callStoScore(username):
+    data = json.loads(request.data.decode("utf-8"))
+    quizID = data['quizID']
+    numberofCorrect = data['numberofCorrect']
+    message = stoScore(quizID, username, numberofCorrect)
+    response_data = {"message": message[0],
+                     "status" : message[1]}
     return jsonify(response_data)
 
 if __name__ == '__main__':

@@ -158,7 +158,6 @@ class Score:
         self.scoreID = scoreID
         self.quizID = quizID
         self.studentID = studentID
-        self.tr = tr
         self.numberofCorrect = numberofCorrect
         self.date = date
         self.isDeleted = isDeleted

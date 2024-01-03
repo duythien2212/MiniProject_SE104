@@ -86,17 +86,32 @@ def getInfoAllQuiz():
         return (error(e), 0)
 
 # Function: create a new quiz and return it
-def createQuiz(classID, nameQuiz, startTime, endTime, length, weight):
+def createQuestion(quizID, content, listAnswer, correctAnswer):
+    query = f"select count(*) from quiz_question"
+    mycursor.execute(query)
+    selected_row = mycursor.fetchone()
+    cnt = int(selected_row[0])
+    query = f"insert into quiz_question values ({cnt}, '{quizID}', '{content}', '{listAnswer[0]}', '{listAnswer[1]}', '{listAnswer[2]}', '{listAnswer[3]}', '{correctAnswer}', 0)"
+    mycursor.execute(query)
+
+def createQuiz(classID, nameQuiz, startTime, endTime, length, weight, listQuestion):
     try:
-        quizID = None
+        query = "select count(*) from quiz"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchone()
+        quizID = int(selected_row[0])
         query = "insert into quiz values (%s, %s, %s, %s, %s, %s, %s, %s)"
         values = (quizID, classID, nameQuiz, startTime, endTime, length, weight, 0)
         mycursor.execute(query, values)
-        query = f"select * from quiz where quizID = {quizID}"
-        mycursor.execute(query)
-        row = mycursor.fetchone()
+        for question in listQuestion:
+            content = question['content']
+            listAnswer = question['listAnswer']
+            correctAnswer = question['correctAnswer']
+            if correctAnswer < 0 or correctAnswer > 3:
+                return {"Đáp án đúng phải nằm trong khoảng từ 1 đến 4", 0}
+            createQuestion(quizID, content, listAnswer, correctAnswer)
         mydb.commit()
-        return Quiz(*row)
+        return {"Tạo quiz thành công !", 0}
     except Exception as e:
         return (error(e), 0)
 
@@ -159,7 +174,7 @@ def getInfoQuestion(questionID):
 
 def getQuestionInQuiz(quiz_id):
     try:
-        query = f"select * from quiz_question where quiz_id = '{quiz_id}' and is_deleted = 0"
+        query = f"select * from quiz_question where quiz_id = {quiz_id} and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listQuestion = []
@@ -287,15 +302,13 @@ def getAllScoreofUser(username):
             listScore = [Score(*row) for row in selected_row]
         stoScore = []
         for score in listScore:
-            query = f"select quiz_name, length from quiz where quiz_id = '{score.quizID}'"
+            query = f"select quiz_name, length from quiz where quiz_id = {score.quizID}"
             mycursor.execute(query)
             selected_row = mycursor.fetchone()
-            print(selected_row)
             name = selected_row[0]
             cnt = int(selected_row[1])
             sc = score.numberofCorrect / cnt
             stoScore.append({"quizName": name,
-                             "try": score.tr,
                              "score": sc,
                              "date": score.date})
         response = {"message": stoScore,
@@ -309,7 +322,7 @@ def createClass(username, classID, className, stoStudent):
     try:
         if findUserName(username) == False:
             return ("Không tồn tại username !", 0)
-        query = f"select count(*) from class where class_id = {classID} and is_deleted = 0"
+        query = f"select count(*) from class where class_id = '{classID}'"
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
         cnt = int(selected_row[0])
@@ -318,16 +331,33 @@ def createClass(username, classID, className, stoStudent):
         query = f"insert into class values ('{classID}', '{className}', '{username}', 0)"
         mycursor.execute(query)
         for studentID in stoStudent:
-            query = f"select count(*) from user where user_name = {studentID} and is_deleted = 0"
+            query = f"select count(*) from user where user_name = '{studentID}' and is_deleted = 0"
             mycursor.execute(query)
             selected_row = mycursor.fetchone()
             cnt = int(selected_row[0])
             if cnt == 0:
                 return ("Không tồn tại username !", 0)
-            query = f"insert into student_in_class values('', '{classID}', '{studentID}', , 0)"
+            query = f"select count(*) from student_in_class"
+            mycursor.execute(query)
+            selected_row = mycursor.fetchone()
+            studnetInClassID = int(selected_row[0])
+            query = f"insert into student_in_class values({studnetInClassID}, '{classID}', '{studentID}', '', 0)"
             mycursor.execute(query)
 
         mydb.commit()
         return ("Tạo thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
+
+def stoScore(quizID, username, numberofCorrect):
+    try:
+        query = f"select count(*) from score"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchone()
+        cnt = int(selected_row[0])
+        query = f"insert into score values ({cnt}, {quizID}, '{username}', '{numberofCorrect}', 0)"
+        mycursor.execute(query)
+        selected_row = mycursor.fetchone()
+        return ("Lưu thành công !", 1)
     except Exception as e:
         return (error(e), 0)
