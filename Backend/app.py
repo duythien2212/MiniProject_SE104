@@ -169,11 +169,12 @@ def callgetQuestioninQuiz(quizID):
     listQuestion = getQuestionInQuiz(quizID)
 
     stoQuestion = []
-    for question in listQuestion:
-        correctAnswer = question.listAnswer[question.correctAnswer]
-        stoQuestion.append({"question": question.question,
-                           "listAnswer": question.shuffleAnswer(),
-                           "correctAnswer": correctAnswer})
+    if len(listQuestion) != 0:
+        for question in listQuestion:
+            correctAnswer = question.listAnswer[question.correctAnswer]
+            stoQuestion.append({"question": question.question,
+                            "listAnswer": question.shuffleAnswer(),
+                            "correctAnswer": correctAnswer})
     response_data = {"message": stoQuestion}
     return jsonify(response_data)
 
