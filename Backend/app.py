@@ -58,7 +58,8 @@ def callProfile(username):
     response_data = {"username": userInstance.userName,
                     "name": userInstance.name,
                     "class": userInstance.classes,
-                    "email": userInstance.email}
+                    "email": userInstance.email,
+                    "isTeacher": userInstance.isTeacher}
     return jsonify(response_data)
 
 @app.route('/api/createNoti', methods=['POST'])
@@ -167,7 +168,6 @@ def callCreateQuiz(classID):
 @app.route('/api/getQuestionQuiz/<quizID>', methods=['GET'])
 def callgetQuestioninQuiz(quizID):
     listQuestion = getQuestionInQuiz(quizID)
-
     stoQuestion = []
     if len(listQuestion) != 0:
         for question in listQuestion:
