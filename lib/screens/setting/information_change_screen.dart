@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/screens/setting/setting_page.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class InformationChangeScreen extends StatefulWidget {
   const InformationChangeScreen({super.key, required this.setScreen});
   final void Function(Widget screen) setScreen;
 
   @override
-  State<InformationChangeScreen> createState() => _InformationChangeScreenState();
+  State<InformationChangeScreen> createState() =>
+      _InformationChangeScreenState();
 }
 
 class _InformationChangeScreenState extends State<InformationChangeScreen> {
@@ -22,6 +27,19 @@ class _InformationChangeScreenState extends State<InformationChangeScreen> {
     lastnameController.dispose();
     emailController.dispose();
     return super.dispose();
+  }
+
+  Future<void> updateProfile() async {
+    final response = await http
+        .post(Uri.parse(url + '/api/updateProfile/' + userinfor.userName),
+            body: json.encode({
+              'lastname': lastnameController.text,
+              'firstname': firstNameController.text,
+              'email': emailController.text,
+            }))
+        .then((value) => value);
+
+    var response_data = jsonDecode(response.body);
   }
 
   @override
@@ -55,7 +73,9 @@ class _InformationChangeScreenState extends State<InformationChangeScreen> {
           children: [
             avatar(screenWidth / 1.5, screenHeight / 1.5),
             Padding(
-              padding: EdgeInsets.only(top: screenHeight / 30 + screenWidth / 165, left: screenWidth / 165),
+              padding: EdgeInsets.only(
+                  top: screenHeight / 30 + screenWidth / 165,
+                  left: screenWidth / 165),
               child: Container(
                 height: screenHeight / 15,
                 width: screenHeight / 15,
@@ -90,11 +110,27 @@ class _InformationChangeScreenState extends State<InformationChangeScreen> {
           ],
         ),
         SizedBox(height: screenHeight / 60),
-        customTextField(controller: firstNameController, text: "Enter new first name", screenWidth: screenWidth * 1.2, screenHeight: screenHeight),
-        customTextField(controller: lastnameController, text: "Enter new last name", screenWidth: screenWidth * 1.2, screenHeight: screenHeight),
-        customTextField(controller: emailController, text: "Enter new email", screenWidth: screenWidth * 1.2, screenHeight: screenHeight),
+        customTextField(
+            controller: firstNameController,
+            text: "Enter new first name",
+            screenWidth: screenWidth * 1.2,
+            screenHeight: screenHeight),
+        customTextField(
+            controller: lastnameController,
+            text: "Enter new last name",
+            screenWidth: screenWidth * 1.2,
+            screenHeight: screenHeight),
+        customTextField(
+            controller: emailController,
+            text: "Enter new email",
+            screenWidth: screenWidth * 1.2,
+            screenHeight: screenHeight),
         SizedBox(height: screenHeight / 60),
         settingButton(() {
+          updateProfile();
+          userinfor.lastName = lastnameController.text;
+          userinfor.firstName = firstNameController.text;
+          userinfor.email = emailController.text;
           setScreen(SettingPage(setScreen: setScreen));
         }, 'Save', screenHeight, screenWidth / 1.5),
       ],

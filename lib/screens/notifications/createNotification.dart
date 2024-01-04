@@ -27,6 +27,7 @@ class _createNotificationScreenState extends State<createNotificationScreen> {
               'title': title,
               'content': notify,
               'classID': classID,
+              'date': DateTime.now().toString(),
             }))
         .then((value) => value);
     var response_data = jsonDecode(response.body);

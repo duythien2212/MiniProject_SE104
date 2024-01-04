@@ -34,6 +34,7 @@ class PreStartQuizScreen extends StatelessWidget {
         listAnswer.add(e['listAnswer'][i].toString());
         if (e['correctAnswer'] == e['listAnswer'][i].toString()) {
           correctAnswer = i;
+          print(e['correctAnswer']);
         }
       }
       return Question('', e['question'], listAnswer, correctAnswer);

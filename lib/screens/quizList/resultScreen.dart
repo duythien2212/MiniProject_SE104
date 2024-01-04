@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/models/quiz.dart';
 import 'package:new_project/utils/app_styles.dart';
+import 'package:http/http.dart' as http;
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({
@@ -11,6 +15,16 @@ class ResultScreen extends StatelessWidget {
 
   final Quiz quiz;
   final List<int> selectedAnswer;
+
+  Future<void> updateScore(int nCorrect) async {
+    final response = await http.post(
+      Uri.parse(url + '/api/stoScore/' + userinfor.userName),
+      body: json.encode({
+        'quizID': quiz.quizID,
+        'numberofCorrect': nCorrect.toString(),
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +63,7 @@ class ResultScreen extends StatelessWidget {
           const SizedBox(height: 100),
           ElevatedButton(
             onPressed: () {
+              updateScore(nCorrect);
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(

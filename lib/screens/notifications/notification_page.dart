@@ -34,8 +34,8 @@ class _NotificationPageState extends State<NotificationPage> {
     setState(() {
       notifications = newData
           .map(
-            (e) => Notificate(
-                e['title'], e['content'], 'KHTN2022', DateTime.now()),
+            (e) => Notificate(e['title'], e['content'], 'KHTN2022',
+                DateTime.parse(e['date'])),
           )
           .toList();
     });

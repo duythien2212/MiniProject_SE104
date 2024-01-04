@@ -20,11 +20,12 @@ class _CurrentQuizPageState extends State<CurrentQuizPage> {
     final response =
         await http.get(Uri.parse(url + '/api/score/' + userinfor.userName));
     final parsedData = jsonDecode(response.body);
+    // print(parsedData);
     List<dynamic> newData = parsedData['message'];
     setState(() {
       currentQuizs = newData
-          .map((e) =>
-              CurrentQuiz(e['quizName'], '', e['try'], e['score'], e['date']))
+          .map((e) => CurrentQuiz(
+              e['quizName'], '', 0, (e['score']), DateTime.parse(e['date'])))
           .toList();
     });
   }
@@ -84,11 +85,11 @@ TableRow headingRow() {
 
 TableRow currentQuizItem(CurrentQuiz quizInfor) {
   return TableRow(children: [
-    Text('    ${quizInfor.quizName}-${quizInfor.quizClass}',
+    Text('    ${quizInfor.quizName}',
         textAlign: TextAlign.left, style: tableItemTextStyle()),
     Text((quizInfor.tryTime).toString(),
         textAlign: TextAlign.center, style: tableItemTextStyle()),
-    Text(quizInfor.score.toString(),
+    Text(quizInfor.score.toStringAsFixed(2),
         textAlign: TextAlign.center, style: tableItemTextStyle()),
     Text(quizInfor.date.toString(),
         textAlign: TextAlign.center, style: tableItemTextStyle()),
