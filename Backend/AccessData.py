@@ -132,7 +132,7 @@ def getClass():
 
 def getClassofUser(username):
     try:
-        query = f"select distinct class_id from student_in_class where student_id = {username} and is_deleted = 0"
+        query = f"select * from student_in_class where student_id = {username} and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         if selected_row:

@@ -37,7 +37,7 @@ def callNoti(username):
     stoNoti = []
     for noti in listNoti:
         print(noti)
-        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date, "classID": noti.classID})
+        stoNoti.append({"title": noti.title, "content": noti.content, "date": str(noti.date), "classID": noti.classID})
     response_data = {"notifications": stoNoti}
     return jsonify(response_data)
 
@@ -47,7 +47,7 @@ def callgetAllNoti():
     stoNoti = []
     for noti in listNoti:
         print(noti)
-        stoNoti.append({"title": noti.title, "content": noti.content, "date": noti.date, "classID": noti.classID})
+        stoNoti.append({"title": noti.title, "content": noti.content, "date": str(noti.date), "classID": noti.classID})
     response_data = {"notifications": stoNoti}
     return jsonify(response_data)
 
