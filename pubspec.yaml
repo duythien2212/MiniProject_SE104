@@ -37,6 +37,7 @@ dependencies:
     http: ^1.1.2
     file_picker: ^6.1.1
     timer_count_down: ^2.2.2
+    excel: ^4.0.2
 
 dev_dependencies:
     flutter_test:

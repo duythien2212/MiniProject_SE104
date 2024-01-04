@@ -77,7 +77,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                importFile();
+                // importFile();
               },
               child: const Text('Import classes'),
             ),

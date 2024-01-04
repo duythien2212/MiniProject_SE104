@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/data/quizList.dart';
@@ -58,6 +59,40 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
 
   void setCorrectAnswer(questionID, input) {
     correctAnswers[questionID] = int.parse(input) - 1;
+  }
+
+  void readQuestions(Uint8List? data) {
+    if (data != null) {
+      var excel = Excel.decodeBytes(data);
+      questions = [];
+      for (var table in excel.tables.keys) {
+        var tableData = excel.tables[table];
+        if (tableData != null) {
+          for (var i = 1; i < tableData.rows.length; i++) {
+            var row = tableData.rows[i];
+            String questionID =
+                i.toString(); // Sử dụng chỉ số dòng làm questionID
+            String question =
+                row[0]?.value?.toString() ?? ''; // Lấy câu hỏi từ cột A
+            List<String> listAnswers = [
+              row[1]?.value?.toString() ?? '', // Đáp án 1 từ cột B
+              row[2]?.value?.toString() ?? '', // Đáp án 2 từ cột C
+              row[3]?.value?.toString() ?? '', // Đáp án 3 từ cột D
+              row[4]?.value?.toString() ?? '', // Đáp án 4 từ cột E
+            ];
+            int correctAnswer = int.parse(
+                row[5]?.value?.toString() ?? '0'); // Đáp án đúng từ cột F
+
+            questions.add(question);
+            answers.add(listAnswers);
+            correctAnswers.add(correctAnswer - 1);
+          }
+        }
+      }
+    }
+    nQuestion = questions.length;
+
+    setState(() {});
   }
 
   @override
@@ -133,7 +168,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                importFile();
+                setState(() {
+                  importFile(readQuestions);
+                });
               },
               child: const Text('Import questions'),
             ),
