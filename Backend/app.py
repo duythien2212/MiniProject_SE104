@@ -69,6 +69,7 @@ def callCreateNoti():
     content = data['content']
     classID = data['classID']
     date = str(data['date'])
+    print(date)
     message = createNoti(title, content, classID, date)
     response_data = {"message": message[0],
                      "status": message[1]}

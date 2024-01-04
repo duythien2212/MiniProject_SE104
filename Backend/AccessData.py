@@ -243,7 +243,7 @@ def createNoti(title, content, classID, date):
         selected_row = mycursor.fetchone()
         notiID = int(selected_row[0])
         query = "insert into notification values (%s, %s, %s, %s, %s, %s)"
-        values = (notiID, title, content, classID, date, 0)
+        values = (notiID, title, content, classID, str(date), 0)
         mycursor.execute(query, values)
         mydb.commit()
         return ("Tạo thành công !", 1)
