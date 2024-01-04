@@ -194,7 +194,8 @@ def callStoScore(username):
     data = json.loads(request.data.decode("utf-8"))
     quizID = data['quizID']
     numberofCorrect = data['numberofCorrect']
-    message = stoScore(quizID, username, numberofCorrect)
+    date = data['date']
+    message = stoScore(quizID, username, numberofCorrect, date)
     response_data = {"message": message[0],
                      "status" : message[1]}
     return jsonify(response_data)

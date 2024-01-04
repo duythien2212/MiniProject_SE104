@@ -306,11 +306,14 @@ def getAllScoreofUser(username):
             listScore = [Score(*row) for row in selected_row]
         stoScore = []
         for score in listScore:
-            query = f"select quiz_name, length from quiz where quiz_id = {score.quizID}"
+            query = f"select quiz_name from quiz where quiz_id = {score.quizID}"
             mycursor.execute(query)
             selected_row = mycursor.fetchone()
             name = selected_row[0]
-            cnt = int(selected_row[1])
+            query = f"select count(*) from quiz_question where quiz_id = {score.quizID}"
+            mycursor.execute(query)
+            selected_row = mycursor.fetchone()
+            cnt = int(selected_row[0])
             sc = score.numberofCorrect / cnt
             stoScore.append({"quizName": name,
                              "score": sc,
