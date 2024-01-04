@@ -29,8 +29,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final response = await http
         .get(Uri.parse(url + '/api/profile/' + usernameController.text));
     var user = jsonDecode(response.body);
-    userinfor = Information(user['name'], user['name'], user['email'],
-        'avatarURL', user['username'], 'userID', user['class'], true);
+    userinfor = Information(
+        user['name'],
+        user['name'],
+        user['email'],
+        'avatarURL',
+        user['username'],
+        'userID',
+        user['class'],
+        user['isTeacher']);
   }
 
   @override

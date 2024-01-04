@@ -6,7 +6,11 @@ class DeleteAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(loginInput.username + " " + loginInput.password),
+      child: Column(
+        children: [
+          for (var userClass in userinfor.userClasses) Text(userClass)
+        ],
+      ),
     );
   }
 }

@@ -27,8 +27,17 @@ class _LoginScreenState extends State<LoginScreen> {
     final response = await http
         .get(Uri.parse(url + '/api/profile/' + usernameController.text));
     var user = jsonDecode(response.body);
-    userinfor = Information(user['name'], user['name'], user['email'],
-        'avatarURL', user['username'], 'userID', user['class'], true);
+    userinfor = Information(user['name'], '', user['email'], 'avatarURL',
+        user['username'], 'userID', [], user['isTeacher'] == 1);
+  }
+
+  Future<void> getClasses() async {
+    final response = await http
+        .get(Uri.parse(url + '/api/class/' + usernameController.text));
+    var parsedData = jsonDecode(response.body);
+    List<dynamic> classes = parsedData['class'];
+    userinfor.userClasses =
+        classes.map((e) => e['classID'].toString()).toList();
   }
 
   Future<void> _login() async {
@@ -84,8 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       if ((responseStatus) == 1) {
                         loginInput = loginInformation(
                             usernameController.text, passwordController.text);
-                        getInformation(usernameController.text);
-                        getUserInfor();
+                        // getInformation(usernameController.text);
+                        getUserInfor().then((value) {
+                          getClasses();
+                        });
                         navigateToPage(context, const MainScreen());
                       } else {
                         showDialog(
