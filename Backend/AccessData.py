@@ -132,11 +132,17 @@ def getClass():
 
 def getClassofUser(username):
     try:
-        query = f"select * from student_in_class where student_id = {username} and is_deleted = 0"
+        query = f"select distinct class_id from student_in_class where student_id = {username} and is_deleted = 0"
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         if selected_row:
-            return [Class(*row) for row in selected_row]
+            stoClass = []
+            for row in selected_row:
+                query = f"select * from class where is_deleted = 0 and class_id = '{row[0]}'"
+                mycursor.execute(query)
+                selected = mycursor.fetchone()
+                stoClass.append(Class(*selected))
+            return stoClass
         else:
             return list()
     except Exception as e:
@@ -220,7 +226,8 @@ def getAllNotiinClass(username):
         stoClass = getClassofUser(username)
         if len(stoClass) == 0:
             return []
-        query = "select * from notification where class_id in ('{}')".format("','".join(map(str, stoClass)))
+        stoClassID = [cl.classID for cl in stoClass]
+        query = "select * from notification where class_id in ('{}')".format("','".join(map(str, stoClassID)))
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listNoti = []
@@ -229,6 +236,8 @@ def getAllNotiinClass(username):
         return listNoti
     except Exception as e:
         return (error(e), 0)
+
+print(getAllNotiinClass("27520010"))
     
 def createNoti(title, content, classID, date):
     try:
