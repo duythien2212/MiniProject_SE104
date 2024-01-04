@@ -75,8 +75,20 @@ def callCreateNoti():
     return jsonify(response_data)
 
 @app.route('/api/class/<username>', methods=['GET'])
-def callClass(username):
+def callClassofUser(username):
     listClass = getClassofUser(username)
+    stoClass = []
+    for cl in listClass:
+        teacher = getUserName(cl.teacherID)
+        stoClass.append({"classID": cl.classID,
+                        "className": cl.className,
+                        "teacherName": teacher.name})
+    response_data = {"class": stoClass}
+    return jsonify(response_data)
+
+@app.route('/api/class', methods=['GET'])
+def callClass():
+    listClass = getClass()
     stoClass = []
     for cl in listClass:
         teacher = getUserName(cl.teacherID)
