@@ -154,7 +154,7 @@ class Notification:
         self.isDeleted = 1
 
 class Score:
-    def __init__(self, scoreID, quizID, studentID, tr, numberofCorrect, date, isDeleted):
+    def __init__(self, scoreID, quizID, studentID, numberofCorrect, date, isDeleted):
         self.scoreID = scoreID
         self.quizID = quizID
         self.studentID = studentID
