@@ -1,13 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/models/class.dart';
+import 'package:new_project/models/question.dart';
 import 'package:new_project/models/quiz.dart';
 import 'package:new_project/screens/quizList/quizListScreen.dart';
 import 'package:new_project/screens/quizList/startQuizScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
+import 'package:http/http.dart' as http;
 
 class PreStartQuizScreen extends StatelessWidget {
-  const PreStartQuizScreen(
+  PreStartQuizScreen(
       {super.key,
       required this.selectedQuiz,
       required this.selectedClass,
@@ -15,10 +19,33 @@ class PreStartQuizScreen extends StatelessWidget {
   final Class selectedClass;
   final Quiz selectedQuiz;
   final void Function(Widget screen) setScreen;
+  List<Question>? quizQuestions;
+
+  Future<void> getQuestions(quizID) async {
+    List<Question> questions;
+    final response = await http
+        .get(Uri.parse(url + '/api/getQuestionQuiz/' + quizID.toString()));
+    final parsedData = jsonDecode(response.body);
+    List<dynamic> newData = parsedData['message'];
+    questions = newData.map((e) {
+      List<String> listAnswer = [];
+      int correctAnswer = -1;
+      for (var i = 0; i < 4; i++) {
+        listAnswer.add(e['listAnswer'][i].toString());
+        if (e['correctAnswer'] == e['listAnswer'][i].toString()) {
+          correctAnswer = i;
+        }
+      }
+      return Question('', e['question'], listAnswer, correctAnswer);
+    }).toList();
+    quizQuestions = questions;
+    selectedQuiz.questions = quizQuestions!;
+  }
 
   @override
   Widget build(BuildContext context) {
     var bodyTheme = Theme.of(context).textTheme.bodyMedium;
+    getQuestions(selectedQuiz.quizID);
     return Expanded(
       child: Column(
         children: [

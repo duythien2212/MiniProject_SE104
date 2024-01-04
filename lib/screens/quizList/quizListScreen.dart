@@ -40,35 +40,13 @@ class _QuizListScreenState extends State<QuizListScreen> {
     List<dynamic> newData = parsedData['quiz'];
     List<Quiz> rQuiz = [];
     for (var e in newData) {
-      getQuestions(e['quizID'].toString()).then((questions) {
-        rQuiz.add(Quiz(
-            e['quizID'].toString(),
-            classID,
-            e['quizName'],
-            DateTime.now(),
-            DateTime.now(),
-            e['length'],
-            questions,
-            e['weight']));
+      rQuiz.add(Quiz(e['quizID'].toString(), classID, e['name'], DateTime.now(),
+          DateTime.now(), e['length'], [], e['weight']));
 
-        setState(() {
-          classQuiz = rQuiz;
-        });
+      setState(() {
+        classQuiz = rQuiz;
       });
     }
-  }
-
-  Future<List<Question>> getQuestions(quizID) async {
-    List<Question> questions;
-    final response =
-        await http.get(Uri.parse(url + '/api/getQuestionQuiz/' + quizID));
-    final parsedData = jsonDecode(response.body);
-    List<dynamic> newData = parsedData['message'];
-    questions = newData
-        .map((e) =>
-            Question('', e['question'], e['listAnswer'], e['correctAnswer']))
-        .toList();
-    return questions;
   }
 
   @override
