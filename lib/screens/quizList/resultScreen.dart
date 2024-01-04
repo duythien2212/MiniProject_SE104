@@ -22,8 +22,11 @@ class ResultScreen extends StatelessWidget {
       body: json.encode({
         'quizID': quiz.quizID,
         'numberofCorrect': nCorrect.toString(),
+        'date': DateTime.now().toString(),
       }),
     );
+    var response_data = jsonDecode(response.body);
+    print(response_data['message']);
   }
 
   @override
@@ -36,6 +39,7 @@ class ResultScreen extends StatelessWidget {
         nCorrect++;
       }
     }
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

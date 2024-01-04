@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_project/models/quiz.dart';
 import 'package:new_project/screens/quizList/resultScreen.dart';
 import 'package:new_project/utils/app_styles.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 
 class StartQuizScreen extends StatefulWidget {
   const StartQuizScreen({super.key, required this.selectedQuiz});
@@ -21,6 +22,17 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
     setState(() {
       selectedQuestion = index;
     });
+  }
+
+  void changeScreen() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (ctx) => ResultScreen(
+          quiz: widget.selectedQuiz,
+          selectedAnswer: selectedAnswer!,
+        ),
+      ),
+    );
   }
 
   @override
@@ -100,14 +112,7 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (ctx) => ResultScreen(
-                                quiz: widget.selectedQuiz,
-                                selectedAnswer: selectedAnswer!,
-                              ),
-                            ),
-                          );
+                          changeScreen();
                         },
                       ),
                     )
@@ -130,6 +135,10 @@ class _StartQuizScreenState extends State<StartQuizScreen> {
                         selectedAnswer: selectedAnswer!,
                       ),
                     ),
+                    Timer(
+                        context: context,
+                        length: widget.selectedQuiz.length.toInt(),
+                        changeScreen: changeScreen),
                   ],
                 ),
               ),
@@ -177,6 +186,31 @@ class SelectQuestion extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+class Timer extends StatelessWidget {
+  Timer(
+      {required this.context,
+      required this.length,
+      required this.changeScreen});
+  int length;
+  BuildContext context;
+
+  final void Function() changeScreen;
+  @override
+  Widget build(BuildContext context) {
+    return Countdown(
+      seconds: 60 * length,
+      build: (BuildContext context, double time) => Text(
+        'Time: ${(time / 60).toStringAsFixed(0)}:${(time % 60).toStringAsFixed(2)}',
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+      interval: Duration(milliseconds: 100),
+      onFinished: () {
+        changeScreen();
+      },
     );
   }
 }
