@@ -1,13 +1,16 @@
 import mysql.connector
 from Object import *
 
+
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="duythien2212"
+    host="localhost",
+    user="root",
+    password="09062004pP@"
 )
 mycursor = mydb.cursor()
 mycursor.execute("use quizapp")
+
+
 
 def error(e):
     return f"Error: {e} !"
@@ -173,13 +176,16 @@ def getInfoQuestion(questionID):
 
 def getQuestionInQuiz(quiz_id):
     try:
+        print(quiz_id)
         query = f"select * from quiz_question where quiz_id = {quiz_id} and is_deleted = 0"
+        print(query)
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         listQuestion = []
         if selected_row:
             listQuestion = [getQuestion(row) for row in selected_row]
         return listQuestion
+        
     except Exception as e:
         print(error(e))
         return (error(e), 0)
@@ -330,7 +336,7 @@ def createClass(username, classID, className, stoStudent):
             mycursor.execute(query)
             selected_row = mycursor.fetchone()
             studnetInClassID = int(selected_row[0])
-            query = f"insert into student_in_class values({studnetInClassID}, '{classID}', '{studentID}', '', 0)"
+            query = f"insert into student_in_class values({studnetInClassID}, '{classID}', '{studentID}', NULL,0)"
             mycursor.execute(query)
 
         mydb.commit()
