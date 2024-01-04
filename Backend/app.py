@@ -54,8 +54,8 @@ def callgetAllNoti():
 
 @app.route('/api/profile/<username>', methods=['GET'])
 def callProfile(username):
-    userInstance = findUserName(username)
-    response_data = {"username": userInstance.username,
+    userInstance = getUserName(username)
+    response_data = {"username": userInstance.userName,
                     "name": userInstance.name,
                     "class": userInstance.classes,
                     "email": userInstance.email,
