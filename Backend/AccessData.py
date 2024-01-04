@@ -136,7 +136,7 @@ def getClassofUser(username):
         mycursor.execute(query)
         selected_row = mycursor.fetchall()
         if selected_row:
-            return [row[0] for row in selected_row]
+            return [Class(*row) for row in selected_row]
         else:
             return list()
     except Exception as e:
