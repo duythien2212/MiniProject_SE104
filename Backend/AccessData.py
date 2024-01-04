@@ -305,7 +305,7 @@ def getAllScoreofUser(username):
             sc = score.numberofCorrect / cnt
             stoScore.append({"quizName": name,
                              "score": sc,
-                             "date": score.date})
+                             "date": str(score.date)})
         response = {"message": stoScore,
                     "status": 1}
         return response
