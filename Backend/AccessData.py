@@ -353,13 +353,13 @@ def createClass(username, classID, className, stoStudent):
     except Exception as e:
         return (error(e), 0)
 
-def stoScore(quizID, username, numberofCorrect):
+def stoScore(quizID, username, numberofCorrect, date):
     try:
         query = f"select count(*) from score"
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
         cnt = int(selected_row[0])
-        query = f"insert into score values ({cnt}, {quizID}, '{username}', '{numberofCorrect}', 0)"
+        query = f"insert into score values ({cnt}, {quizID}, '{username}', '{numberofCorrect}', '{date}', 0)"
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
         return ("Lưu thành công !", 1)
