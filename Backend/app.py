@@ -200,6 +200,31 @@ def callStoScore(username):
                      "status" : message[1]}
     return jsonify(response_data)
 
+@app.route('api/deleteAccount/<username>', methods=['POST'])
+def calldeleteAccount(username):
+    message = deleteAccount(username)
+    response_data = {"message": message[0],
+                     "status" : message[1]}
+    return response_data
+
+@app.route('api/deleteClass/<username>', methods=['POST'])
+def calldeleteClass(username):
+    data = json.loads(request.data.decode("utf-8"))
+    classID = data['classID']
+    message = deleteClass(username, classID)
+    response_data = {"message": message[0],
+                     "status" : message[1]}
+    return response_data
+
+@app.route('api/deleteQuiz/<username>', methods=['POST'])
+def calldeleteClass(username):
+    data = json.loads(request.data.decode("utf-8"))
+    quizID = data['quizID']
+    message = deleteClass(username, quizID)
+    response_data = {"message": message[0],
+                     "status" : message[1]}
+    return response_data
+
 if __name__ == '__main__':
     flask_cors.CORS(app, max_age=3600)
     app.run(port=4000)

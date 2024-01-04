@@ -10,8 +10,6 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 mycursor.execute("use quizapp")
 
-
-
 def error(e):
     return f"Error: {e} !"
 
@@ -366,5 +364,38 @@ def stoScore(quizID, username, numberofCorrect, date):
         mycursor.execute(query)
         selected_row = mycursor.fetchone()
         return ("Lưu thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
+
+def deleteAccount(username):
+    try:
+        query = f"update user set is_deleted = 1 where user_name = '{username}'"
+        mycursor.execute(query)
+        mydb.commit()
+        return ("Xóa tài khoản thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
+
+def deleteClass(username, classID):
+    try:
+        userInstance = getUserName(username)
+        if userInstance.isTeacher == 0:
+            return (error("Bạn không phải là giáo viên !"), 0)
+        query = f"update class set is_deleted = 1 where class_id = '{classID}'"
+        mycursor.execute(query)
+        mydb.commit()
+        return ("Xóa lớp thành công !", 1)
+    except Exception as e:
+        return (error(e), 0)
+
+def deleteQuiz(username, quizID):
+    try:
+        userInstance = getUserName(username)
+        if userInstance.isTeacher == 0:
+            return (error("Bạn không phải là giáo viên !"), 0)
+        query = f"update quiz set is_deleted = 1 where quiz_id = '{quizID}'"
+        mycursor.execute(query)
+        mydb.commit()
+        return ("Xóa quiz thành công !", 1)
     except Exception as e:
         return (error(e), 0)
