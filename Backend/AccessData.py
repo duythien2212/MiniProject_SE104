@@ -5,7 +5,7 @@ from Object import *
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="duythien2212"
+    password="09062004pP@"
 )
 mycursor = mydb.cursor()
 mycursor.execute("use quizapp")
@@ -243,7 +243,7 @@ def createNoti(title, content, classID, date):
         selected_row = mycursor.fetchone()
         notiID = int(selected_row[0])
         query = "insert into notification values (%s, %s, %s, %s, %s, %s)"
-        values = (notiID, title, content, classID, str(date), 0)
+        values = (notiID, title, content, classID, date, 0)
         mycursor.execute(query, values)
         mydb.commit()
         return ("Tạo thành công !", 1)
@@ -305,7 +305,7 @@ def getAllScoreofUser(username):
             sc = score.numberofCorrect / cnt
             stoScore.append({"quizName": name,
                              "score": sc,
-                             "date": str(score.date)})
+                             "date": score.date})
         response = {"message": stoScore,
                     "status": 1}
         return response

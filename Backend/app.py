@@ -55,7 +55,7 @@ def callgetAllNoti():
 @app.route('/api/profile/<username>', methods=['GET'])
 def callProfile(username):
     userInstance = findUserName(username)
-    response_data = {"username": userInstance.userName,
+    response_data = {"username": userInstance.username,
                     "name": userInstance.name,
                     "class": userInstance.classes,
                     "email": userInstance.email,
@@ -68,8 +68,7 @@ def callCreateNoti():
     title = data['title']
     content = data['content']
     classID = data['classID']
-    date = str(data['date'])
-    print(date)
+    date = data['date']
     message = createNoti(title, content, classID, date)
     response_data = {"message": message[0],
                      "status": message[1]}
