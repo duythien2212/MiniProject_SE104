@@ -75,7 +75,7 @@
     - SCORE_TABLE
         
         
-        | SCORE_ID | QUIZ_ID | STUDENT_ID | TRY | SCORE | IS_DELETED |
+        | SCORE_ID | QUIZ_ID | STUDENT_ID | NUMBER_OF_CORRECT | DATE | IS_DELETED |
         | --- | --- | --- | --- | --- | --- |
     - NOTIFICATION
     
