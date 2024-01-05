@@ -65,7 +65,7 @@ def register(lastname, firstname, email, username, password, cPassword):
             return ("Tồn tại username !", 0)
         else:
             fullname = lastname + " " + firstname
-            query = f"insert into user values ('{username}', '{email}', '{fullname}', '{password}', '0', '1')"
+            query = f"insert into user values ('{username}', '{email}', '{fullname}', '{password}', '0', '0')"
             mycursor.execute(query)
             mydb.commit()
             return ("Đăng ký thành công !", 1)
