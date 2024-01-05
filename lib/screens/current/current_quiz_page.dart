@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/data/currentQuizList.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/utils/app_styles.dart';
 import 'package:new_project/utils/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'dart:html' as html;
 
 class CurrentQuizPage extends StatefulWidget {
   const CurrentQuizPage({super.key});
@@ -67,10 +69,43 @@ class _CurrentQuizPageState extends State<CurrentQuizPage> {
           Positioned(
               bottom: 0,
               right: 10,
-              child: settingButton(() => null, "Get Result", height, width / 2))
+              child: DownloadButton(currentQuizs: currentQuizs))
         ],
       ),
     );
+  }
+}
+
+class DownloadButton extends StatelessWidget {
+  // final List<List<dynamic>> rows;
+  List<CurrentQuiz>? currentQuizs;
+  DownloadButton({required this.currentQuizs});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        if (currentQuizs != null) exportToExcel();
+      },
+      child: Text('Download Result'),
+    );
+  }
+
+  void exportToExcel() {
+    List<List<dynamic>> rows = [];
+    for (var quiz in currentQuizs!) {
+      List<dynamic> newRow = [quiz.quizName, quiz.score, quiz.date];
+      rows.add(newRow);
+    }
+
+    String csv = const ListToCsvConverter().convert(rows);
+
+    final blob = html.Blob([csv], 'text/csv');
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute("download", "result.csv")
+      ..click();
+    html.Url.revokeObjectUrl(url);
   }
 }
 

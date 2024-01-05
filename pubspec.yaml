@@ -38,6 +38,7 @@ dependencies:
     file_picker: ^6.1.1
     timer_count_down: ^2.2.2
     excel: ^4.0.2
+    csv: ^5.1.1
 
 dev_dependencies:
     flutter_test:

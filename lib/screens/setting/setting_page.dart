@@ -1,13 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:new_project/screens/setting/delete_account_screen.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/screens/setting/information_change_screen.dart';
 import 'package:new_project/screens/setting/password_change_screen.dart';
+import 'package:new_project/screens/startScreen/start_screen.dart';
 import 'package:new_project/utils/app_styles.dart';
+import 'package:new_project/utils/functions.dart';
 import 'package:new_project/utils/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({super.key, required this.setScreen});
+  SettingPage({super.key, required this.setScreen});
   final void Function(Widget screen) setScreen;
+
+  int rStatus = 0;
+  String rMessage = '';
+
+  Future<void> deleteAccount() async {
+    final response = await http
+        .post(Uri.parse(url + '/api/deleteAccount/' + userinfor.userName),
+            body: json.encode({}))
+        .then((value) => value);
+
+    var response_data = jsonDecode(response.body);
+    rMessage = response_data['message'];
+    rStatus = response_data['status'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +49,29 @@ class SettingPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(bottom: screenHeight / 70),
               child: settingButton(() {
-                setScreen(const DeleteAccountScreen());
+                deleteAccount().then((value) {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text(
+                        rStatus == 1 ? 'Successfully' : 'Error',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      content: Text(rMessage),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(ctx);
+                            if (rStatus == 1) {
+                              navigateToPage(context, const StartScreen());
+                            }
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                });
               }, 'Delete Account', screenHeight, screenWidth),
             ),
             Container(
