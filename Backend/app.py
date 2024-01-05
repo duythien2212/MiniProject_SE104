@@ -174,7 +174,10 @@ def callCreateQuiz(classID):
     startTime = data['startTime']
     endTime = data['endTime']
     listQuestion = data['listQuestion']
-    createQuiz(classID, quizName, startTime, endTime, length, weight, listQuestion)
+    message = createQuiz(classID, quizName, startTime, endTime, length, weight, listQuestion)
+    response_data = {"message": message[0],
+                     "status": message[1]}
+    return jsonify(response_data)  
 
 @app.route('/api/getQuestionQuiz/<quizID>', methods=['GET'])
 def callgetQuestioninQuiz(quizID):
