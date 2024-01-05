@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:new_project/utils/app_styles.dart';
 
 Widget bigLogo(double screenWidth, double screenHeight) {
-  return ClipOval(
+  return ClipRect(
     child: Image.asset(
-      'assets/images/logo_test.png',
+      'assets/images/logo.jpg',
       width: screenWidth / 3,
       height: screenWidth / 3,
       fit: BoxFit.cover,
@@ -17,7 +17,7 @@ Widget avatar(double screenWidth, double screenHeight) {
     padding: EdgeInsets.symmetric(vertical: screenHeight / 20),
     child: ClipOval(
       child: Image.asset(
-        'assets/images/avatar.jpg',
+        'assets/images/avatar.png',
         width: screenWidth / 4,
         height: screenWidth / 4,
         fit: BoxFit.cover,
@@ -26,7 +26,8 @@ Widget avatar(double screenWidth, double screenHeight) {
   );
 }
 
-ElevatedButton homeButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
+ElevatedButton homeButton(Function()? onPressed, String title,
+    double screenHeight, double screenWidth) {
   return ElevatedButton(
     onPressed: onPressed,
     style: homeButtonStyle(screenHeight, screenWidth),
@@ -34,7 +35,8 @@ ElevatedButton homeButton(Function()? onPressed, String title, double screenHeig
   );
 }
 
-ElevatedButton settingButton(Function()? onPressed, String title, double screenHeight, double screenWidth) {
+ElevatedButton settingButton(Function()? onPressed, String title,
+    double screenHeight, double screenWidth) {
   return ElevatedButton(
     onPressed: onPressed,
     style: settingButtonStyle(screenHeight, screenWidth),
@@ -55,4 +57,4 @@ ElevatedButton logoutMainButton(Function()? onPressed) {
 }
 
 String appName = 'App Name';
-String logoPath = 'assets/images/logo_test.png';
+String logoPath = 'assets/images/logo_appbar.jpg';
