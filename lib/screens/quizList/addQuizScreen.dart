@@ -1,14 +1,17 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:new_project/data/information.dart';
 import 'package:new_project/data/quizList.dart';
 import 'package:new_project/models/class.dart';
 import 'package:new_project/models/question.dart';
 import 'package:new_project/models/quiz.dart';
 import 'package:new_project/utils/custom_text_field.dart';
 import 'package:new_project/utils/importFile.dart';
+import 'package:http/http.dart' as http;
 
 class AddQuizScreen extends StatefulWidget {
   const AddQuizScreen(
@@ -32,6 +35,29 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   String notifications = '';
 
   List<DateTime?> dates = [DateTime.now(), DateTime.now()];
+
+  Future<void> createQuiz() async {
+    List<dynamic> listQuestion = [];
+    for (int i = 0; i < nQuestion; i++) {
+      listQuestion.add({
+        'content': questions[i],
+        'listAnswer': answers[i],
+        'correctAnswer': correctAnswers[i]
+      });
+    }
+    final response = await http
+        .post(
+            Uri.parse(url + '/api/createQuiz/' + widget.selectedClass.classID),
+            body: json.encode({
+              'quizName': quizName,
+              'length': length,
+              'weight': weight,
+              'startTime': dates[0].toString(),
+              'endTime': dates[1].toString(),
+              'listQuestion': listQuestion,
+            }))
+        .then((value) => value);
+  }
 
   void _presentDatePicker(i) async {
     final now = DateTime.now();
@@ -195,6 +221,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                       newQuestionList.add(Question(
                           '', questions[i], answers[i], correctAnswers[i]));
                     }
+                    createQuiz().then((value) {
+                      Navigator.pop(context);
+                    });
                     widget.addQuiz(Quiz(
                         '',
                         widget.selectedClass.classID,
@@ -204,7 +233,6 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         length.toDouble(),
                         newQuestionList,
                         weight.toInt()));
-                    Navigator.pop(context);
                   },
                   child: const Text('Save'),
                 ),
