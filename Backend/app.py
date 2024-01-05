@@ -210,7 +210,7 @@ def calldeleteAccount(username):
                      "status" : message[1]}
     return response_data
 
-@app.route('api/deleteClass/<username>', methods=['POST'])
+@app.route('/api/deleteClass/<username>', methods=['POST'])
 def calldeleteClass(username):
     data = json.loads(request.data.decode("utf-8"))
     classID = data['classID']
