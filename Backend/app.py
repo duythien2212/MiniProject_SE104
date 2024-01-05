@@ -200,7 +200,7 @@ def callStoScore(username):
                      "status" : message[1]}
     return jsonify(response_data)
 
-@app.route('api/deleteAccount/<username>', methods=['POST'])
+@app.route('/api/deleteAccount/<username>', methods=['POST'])
 def calldeleteAccount(username):
     message = deleteAccount(username)
     response_data = {"message": message[0],
@@ -216,11 +216,11 @@ def calldeleteClass(username):
                      "status" : message[1]}
     return response_data
 
-@app.route('api/deleteQuiz/<username>', methods=['POST'])
-def calldeleteClass(username):
+@app.route('/api/deleteQuiz/<username>', methods=['POST'])
+def calldeleteQuiz(username):
     data = json.loads(request.data.decode("utf-8"))
     quizID = data['quizID']
-    message = deleteClass(username, quizID)
+    message = deleteQuiz(username, quizID)
     response_data = {"message": message[0],
                      "status" : message[1]}
     return response_data
