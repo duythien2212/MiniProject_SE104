@@ -2,7 +2,7 @@ import pandas as pd
 import random
 import os 
 
-path = r'D:\Code\Flutter\backend\MiniProject_SE104\database\generate_data'
+path = r'D:/UIT/HOC KI 3/Nhập môn SE/Thực hành/generate_data'
 
 user = pd.read_excel(os.path.join(path,'user_table.xlsx'))
 classes = pd.read_excel(os.path.join(path,'class_table.xlsx'))
