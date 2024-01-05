@@ -17,7 +17,7 @@ Widget avatar(double screenWidth, double screenHeight) {
     padding: EdgeInsets.symmetric(vertical: screenHeight / 20),
     child: ClipOval(
       child: Image.asset(
-        'assets/images/avatar.png',
+        'assets/images/avatar.jpg',
         width: screenWidth / 4,
         height: screenWidth / 4,
         fit: BoxFit.cover,
