@@ -127,6 +127,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    studentIDs.add(userinfor.userName);
                     createClass().then(
                       (value) {
                         if (rStatus == 1) {
