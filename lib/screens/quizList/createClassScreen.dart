@@ -11,8 +11,11 @@ import 'package:http/http.dart' as http;
 import 'package:new_project/utils/showError.dart';
 
 class CreateClassScreen extends StatefulWidget {
-  const CreateClassScreen({super.key, required this.addClass});
+  const CreateClassScreen(
+      {super.key, required this.addClass, required this.getClasses});
   final void Function(Class newClass) addClass;
+  final Future<void> Function() getClasses;
+
   @override
   State<StatefulWidget> createState() {
     return _CreateClassScreenState();
@@ -135,7 +138,10 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                               classID: classID,
                               teacherID: userinfor.userID,
                               className: className));
-                          Navigator.pop(context);
+                          userinfor.userClasses.add(classID);
+                          widget.getClasses().then((value) {
+                            Navigator.pop(context);
+                          });
                         } else {
                           showError(context, rMessage);
                         }

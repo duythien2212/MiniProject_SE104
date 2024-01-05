@@ -105,6 +105,7 @@ class _SelectClassScreen extends State<SelectClassScreen> {
                       context: context,
                       builder: (ctx) => CreateClassScreen(
                         addClass: addClass,
+                        getClasses: getClasses,
                       ),
                     );
                   },
