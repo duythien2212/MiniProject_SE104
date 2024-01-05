@@ -2,7 +2,7 @@ import pandas as pd
 import random
 import os 
 
-path = r'D:\Code\Flutter\backend\MiniProject_SE104\database\generate_data'
+path = r'D:/UIT/HOC KI 3/Nhập môn SE/Thực hành/generate_data'
 
 user = pd.read_excel(os.path.join(path,'user_table.xlsx'))
 classes = pd.read_excel(os.path.join(path,'class_table.xlsx'))
@@ -66,6 +66,13 @@ def make_student_in_class():
         cmd = f'''INSERT INTO `STUDENT_IN_CLASS` VALUES (\'{i}\',
                                                         \'{classes['CLASS_ID'][(i+random.randint(1,10)) % len(classes['CLASS_ID'])]}\',
                                                         \'{user['USER_NAME'][(i+random.randint(1,10)) % (len(user['USER_NAME'])-7) + 7]}\',
+                                                        NULL,
+                                                        \'0\');\n'''
+        file.write(cmd)
+    for i in range(6):
+        cmd = f'''INSERT INTO `STUDENT_IN_CLASS` VALUES (\'{n+i}\',
+                                                        \'{classes['CLASS_ID'][i]}\',
+                                                        \'{user['USER_NAME'][i]}\',
                                                         NULL,
                                                         \'0\');\n'''
         file.write(cmd)
