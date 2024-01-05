@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/data/information.dart';
 import 'package:new_project/models/class.dart';
@@ -37,6 +39,27 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
     var response_data = jsonDecode(response.body);
     rMessage = response_data['message'];
     rStatus = response_data['status'];
+  }
+
+  void readStudentID(Uint8List? data) {
+    if (data != null) {
+      List<String> newStudentID = [];
+      var excel = Excel.decodeBytes(data);
+      for (var table in excel.tables.keys) {
+        var tableData = excel.tables[table];
+        if (tableData != null) {
+          for (var i = 1; i < tableData.rows.length; i++) {
+            var row = tableData.rows[i];
+            String studentID = row[0]?.value?.toString() ?? ''; // Lấy studentID
+            print(studentID);
+            newStudentID.add(studentID);
+          }
+        }
+      }
+      studentIDs = newStudentID;
+      nStudent = studentIDs.length;
+    }
+    setState(() {});
   }
 
   @override
@@ -77,19 +100,20 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // importFile();
+                importFile(readStudentID);
               },
-              child: const Text('Import classes'),
+              child: const Text('Import student ID'),
             ),
             const SizedBox(height: 20),
             if (nStudent > 0) const Text('Students'),
             for (int i = 0; i < nStudent; i++)
-              TextInput(
-                name: 'Student ID',
-                onChange: (input) {
+              TextField(
+                controller: TextEditingController(text: studentIDs[i]),
+                onChanged: (input) {
                   studentIDs[i] = input;
                 },
-              ).createTextField(),
+                decoration: const InputDecoration(label: Text('Student ID')),
+              ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
