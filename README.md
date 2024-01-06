@@ -161,13 +161,15 @@
   | IS_DELETED | tinyint | not null, 0 hoặc 1 | 0: chưa xóa, 1: đã xóa |
 
 ## 4. Thiết kế giao diện
+(xem slide)[https://www.canva.com/design/DAF3x4Mfkew/bDBT3Vo74yZKO5kxbC1n_w/edit]
 ## 5. Thiết kế kiến trúc
+(xem slide)[https://www.canva.com/design/DAF3x4Mfkew/bDBT3Vo74yZKO5kxbC1n_w/edit]
 ## 6. Kết quả
 ### 6.1 Kết quả đã hoàn thành
-Chương trình đã hoàn thành hầu hết các chức năng cơ bản của ứng dụng, nhưng vẫn còn một số chức năng chưa được phát triển như: ...(thêm vào sau)
+Chương trình đã hoàn thành được hầu hết các chức năng cơ bản, nhưng vẫn còn các chức năng chưa hoàn thiện như: Các ràng buộc chặt chẽ trong dữ liệu, tốc độ chạy chương trình, ...
 ### 6.2 Hướng phát triển
-- Hoàn thiện các chức năng chưa hoàn thành
-- Cải thiện hiệu năng của chương trình
-- Phát triển thêm các tính năng mới như: ... (thêm vào sau)
-- Bổ sung các chức năng liên quan đến backup
+- Hoàn thiện các chức năng chưa hoàn tất.
+- Cải thiện hiệu năng của chương trình.
+- Phát triển thêm các tính năng mới như: xem profile của người khác, on-time ranking, ... 
+- Bổ sung các chức năng liên quan đến backup.
  
