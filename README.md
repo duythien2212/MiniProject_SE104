@@ -63,11 +63,7 @@
     
     | ID | USERNAME | EMAIL | NAME | PASSWORD | IS_TEACHER | IS_DELETED |
     | --- | --- | --- | --- | --- | --- | --- |
-- PERMISSIONS
-    
-    
-    | ROLE |  |  |  |
-    | --- | --- | --- | --- |
+  
 - SCORE
     
     
