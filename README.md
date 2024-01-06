@@ -161,9 +161,9 @@
   | IS_DELETED | tinyint | not null, 0 hoặc 1 | 0: chưa xóa, 1: đã xóa |
 
 ## 4. Thiết kế giao diện
-(xem slide)[https://www.canva.com/design/DAF3x4Mfkew/bDBT3Vo74yZKO5kxbC1n_w/edit]
+[(xem slide)](https://www.canva.com/design/DAF3x4Mfkew/bDBT3Vo74yZKO5kxbC1n_w/edit)
 ## 5. Thiết kế kiến trúc
-(xem slide)[https://www.canva.com/design/DAF3x4Mfkew/bDBT3Vo74yZKO5kxbC1n_w/edit]
+[(xem slide)](https://www.canva.com/design/DAF3x4Mfkew/bDBT3Vo74yZKO5kxbC1n_w/edit)
 ## 6. Kết quả
 ### 6.1 Kết quả đã hoàn thành
 Chương trình đã hoàn thành được hầu hết các chức năng cơ bản, nhưng vẫn còn các chức năng chưa hoàn thiện như: Các ràng buộc chặt chẽ trong dữ liệu, tốc độ chạy chương trình, ...
